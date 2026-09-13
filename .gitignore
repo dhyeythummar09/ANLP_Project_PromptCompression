@@ -1,0 +1,38 @@
+# --- Secrets ---
+.env
+*.env
+
+# --- Generated data / artifacts (these are outputs, not source code) ---
+data/
+logs/
+outputs/
+scorer_model/
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+build/
+dist/
+.ipynb_checkpoints/
+
+# --- Virtual environments ---
+venv/
+.venv/
+env/
+anlp_project/
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+
+# --- Editor/IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- spaCy model downloads (reinstalled via requirements.txt, not committed) ---
+*.whl
