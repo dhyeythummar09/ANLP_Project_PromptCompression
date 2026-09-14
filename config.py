@@ -51,6 +51,7 @@ SPAN_CATEGORIES = [
     "number",
     "comparison_conditional",
     "entity",
+    "action_verb",
     "distractor_context",  # GSM-IC's inserted irrelevant sentence
     "random_control",
 ]

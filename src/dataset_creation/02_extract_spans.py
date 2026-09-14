@@ -28,6 +28,7 @@ import random
 import pandas as pd
 import spacy
 from spacy.matcher import PhraseMatcher
+from spacy.util import filter_spans
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 import config
@@ -61,19 +62,14 @@ def _granularity_for_length(n_tokens: int) -> str:
     return "clause"
 
 
-# def _matcher_spans(doc, matcher, category: str) -> list[tuple]:
-#     """Run a PhraseMatcher over `doc` and return (text, start, end, category, granularity) tuples."""
-#     results = []
-#     for _, start, end in matcher(doc):
-#         span = doc[start:end]
-#         results.append((span.text, span.start_char, span.end_char, category, _granularity_for_length(end - start)))
-#     return results
-
-from spacy.util import filter_spans
-
+# Runs a spaCy PhraseMatcher over a document and extracts matching spans, automatically filtering out redundant overlapping sub-spans
 def _matcher_spans(doc, matcher, category):
+    
+    # Extract all raw span objects found by the matcher
     spans = [doc[start:end] for _, start, end in matcher(doc)]
+    # Resolve overlaps by keeping only the longest, most complete span boundaries
     spans = filter_spans(spans)  # drops "than" when "more than" already covers it
+    # Format the filtered spans into the required tuple structure for the dataset
     return [(s.text, s.start_char, s.end_char, category, _granularity_for_length(len(s))) for s in spans]
 
 
@@ -105,6 +101,25 @@ def _entity_spans(doc) -> list[tuple]:
         if ent.label_ in ENTITY_LABELS:
             n_tokens = ent.end - ent.start
             results.append((ent.text, ent.start_char, ent.end_char, "entity", _granularity_for_length(n_tokens)))
+    return results
+
+
+def _action_verb_spans(doc) -> list[tuple]:
+    """
+    Capture main clausal verbs -- the operation a problem's numbers and
+    entities get plugged into (e.g. "sold" vs "bought" changes the correct
+    arithmetic direction even when every number/entity stays the same).
+
+    We rely on pos_ == "VERB" to exclude auxiliaries/copulas: spaCy already
+    tags auxiliary and copular "be" as pos_ == "AUX", not "VERB", so a
+    separate lemma-based exclusion list isn't needed and would wrongly
+    throw away genuine main-verb uses of "have" (e.g. "I have 3 apples"),
+    which matter a lot for this dataset.
+    """
+    results = []
+    for tok in doc:
+        if tok.pos_ == "VERB" and tok.dep_ in {"ROOT", "advcl", "conj", "xcomp", "relcl"}:
+            results.append((tok.text, tok.idx, tok.idx + len(tok.text), "action_verb", "token"))
     return results
 
 
@@ -162,6 +177,7 @@ def find_spans(text: str, inserted_context: str = "") -> list[tuple]:
     spans += _matcher_spans(doc, _comparison_matcher, "comparison_conditional")
     spans += _number_spans(doc)
     spans += _entity_spans(doc)
+    spans += _action_verb_spans(doc)
     spans += _distractor_span(text, inserted_context)
 
     used_ranges = {(s, e) for _, s, e, _, _ in spans}
