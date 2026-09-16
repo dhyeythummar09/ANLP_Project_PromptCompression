@@ -6,3 +6,4 @@ requests
 scikit-learn
 transformers
 torch
+python-dotenv

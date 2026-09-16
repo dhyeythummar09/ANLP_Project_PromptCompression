@@ -17,6 +17,7 @@ import os
 import sys
 
 import pandas as pd
+import glob
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 import config
@@ -25,6 +26,16 @@ GROUP_KEYS = [
     "example_id", "source_dataset", "span_text", "span_start", "span_end",
     "span_category", "span_granularity",
 ]
+
+
+def _load_all_worker_labels() -> pd.DataFrame:
+    """Combine every worker's label file into one DataFrame before aggregating."""
+    pattern = config.LABELS_FILE.replace(".csv", "_part*.csv")
+    files = sorted(glob.glob(pattern))
+    if not files:
+        raise FileNotFoundError(f"No worker label files found matching {pattern}")
+    print(f"Merging {len(files)} worker files: {files}")
+    return pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
 
 
 def main():

@@ -1,22 +1,36 @@
 """
-STEP 3: The core loop. For every candidate span, ask each of the 4 models
-the ORIGINAL question once (cached per example+model), then ask the
-PERTURBED question, and record whether each model's answer changed from
+STEP 3: The core loop. For every candidate span, evaluate the ORIGINAL
+question once per problem per model (cached to disk), then evaluate the
+PERTURBED question. Record whether each model's answer flipped from
 correct to incorrect.
 
-This is the expensive step (many API calls) -- run it in the background,
-it can take a while depending on rate limits. It's resumable: already-
-labeled rows are skipped if you re-run it after a crash or a stop.
+Includes:
+  - provider-level rate-limiting (requests per MINUTE)
+  - daily-quota tracking (requests per DAY) -- this is the cap that
+    actually matters. RPM just controls how fast you queue up against the
+    RPD ceiling; it doesn't prevent hitting it.
+  - disk-cached baseline ("original question") answers, so they're never
+    re-asked even across separate days
+  - problem-level filtering (skip a model on a problem it already got
+    wrong before touching any spans)
+  - automatic checkpointing, so a crash or a deliberate stop never loses
+    completed work
+  - round-robin workload distribution across teammates
+  - graceful handling when a model's daily cap is hit: that ONE model is
+    skipped for the rest of today, other models keep going, and the whole
+    script only exits once every model is exhausted for the day -- never
+    just spins retrying against a wall it can't get past.
 
 Run: python src/dataset_creation/03_counterfactual_labeling.py
-Output: data/03_per_model_labels.csv
+Output: data/03_per_model_labels_part{WORKER_ID}.csv
 """
 
 import os
 import sys
 import time
+import json
 import logging
-
+import datetime
 import pandas as pd
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
@@ -24,16 +38,31 @@ import config
 from src.utils.api_clients import call_model
 from src.utils.answer_matching import answers_match
 
+# --- TEAM DISTRIBUTION SETTINGS ---
+WORKER_ID = 1  # Teammates must change this to their assigned number (1, 2, 3, or 4)
+TOTAL_WORKERS = 4
+
+os.makedirs(config.DATA_DIR, exist_ok=True)
 os.makedirs(config.LOGS_DIR, exist_ok=True)
+
+# Dynamically name output/log/cache files so teammates don't overwrite each other
+WORKER_LABELS_FILE = config.LABELS_FILE.replace(".csv", f"_part{WORKER_ID}.csv")
+WORKER_CACHE_FILE = os.path.join(config.DATA_DIR, f"03_original_answers_cache_part{WORKER_ID}.json")
+WORKER_LOG_FILE = config.LABELING_LOG_FILE.replace(".log", f"_part{WORKER_ID}.log")
+WORKER_USAGE_FILE = os.path.join(config.DATA_DIR, f"03_daily_usage_part{WORKER_ID}.json")
+
 logging.basicConfig(
-    filename=config.LABELING_LOG_FILE,
+    filename=WORKER_LOG_FILE,
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
 )
 logger = logging.getLogger("counterfactual_labeling")
 
-# Allowing brief reasoning (unlike the original bare-answer prompt) and asking for an explicit marker before the final answer, so
-# extract_final_answer() in answer_matching.py has something reliable to find regardless of how much the model reasons first.
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)
+console_handler.setFormatter(logging.Formatter("[%(levelname)s] %(message)s"))
+logger.addHandler(console_handler)
+
 PROMPT_TEMPLATE = """Solve this problem. You may reason briefly, but you MUST end your \
 response with a line in exactly this format:
 Final Answer: <your answer>
@@ -41,98 +70,303 @@ Final Answer: <your answer>
 Problem: {question}
 """
 
-# How often (in number of new labels produced) to write a checkpoint to disk, so a crash partway through doesn't lose everything.
-CHECKPOINT_EVERY = 50
+CHECKPOINT_EVERY = 25
+
+# Minimum seconds between calls to the same provider, to stay under its
+# per-minute limit. This does NOT prevent hitting the daily cap below --
+# it just controls how fast you approach it.
+#
+# VERIFY these live before a long run:
+#   https://console.groq.com/docs/rate-limits
+#   https://ai.google.dev/gemini-api/docs/rate-limits
+PROVIDER_MIN_SLEEP = {
+    "groq": 2.2,   # ~30 RPM free tier -> 60/30 = 2.0s + buffer
+    "google": 6.8,  # ~10 RPM free tier (NOT 15) -> 60/10 = 6.0s + buffer
+}
+
+# Daily request caps, per model. These are the numbers that actually stop
+# a long labeling run, not the per-minute ones above. Set slightly BELOW
+# the documented limit (safety margin), since a model's own retries inside
+# call_model() can themselves burn a request even when the outer loop only
+# "sees" one attempt, and provider-published numbers do shift over time.
+#
+# VERIFY these live before trusting them -- they are the single most
+# likely thing to be stale by the time you read this:
+#   https://console.groq.com/docs/models
+#   https://ai.google.dev/gemini-api/docs/rate-limits
+DAILY_CALL_CAP = {
+    "llama-3.3-70b-versatile": 950,
+    "qwen/qwen3.6-27b": 470,
+    "openai/gpt-oss-20b": 950,
+    "gemini-2.5-flash": 230,
+}
+
+
+# ---------------------------------------------------------------------------
+# Daily usage tracking
+# ---------------------------------------------------------------------------
+def _today_str() -> str:
+    return datetime.date.today().isoformat()
+
+
+def _load_daily_usage() -> dict:
+    """
+    Load today's per-model call counts. If the stored date isn't today
+    (i.e. we're running on a new day, or for the first time), start fresh
+    -- this is what makes "try again tomorrow" actually work: the cap
+    resets automatically just by the date changing, no manual reset needed.
+    """
+    if os.path.exists(WORKER_USAGE_FILE):
+        try:
+            with open(WORKER_USAGE_FILE) as f:
+                saved = json.load(f)
+            if saved.get("date") == _today_str():
+                return saved.get("counts", {})
+        except Exception as e:
+            logger.warning("Could not read usage file, starting fresh: %s", e)
+    return {}
+
+
+def _save_daily_usage(counts: dict):
+    try:
+        with open(WORKER_USAGE_FILE, "w") as f:
+            json.dump({"date": _today_str(), "counts": counts}, f, indent=2)
+    except Exception as e:
+        logger.warning("Failed to save usage file: %s", e)
+
+
+def _is_exhausted(model_name: str, counts: dict) -> bool:
+    cap = DAILY_CALL_CAP.get(model_name)
+    if cap is None:
+        return False  # no configured cap -- verify this is intentional
+    return counts.get(model_name, 0) >= cap
+
+
+def _record_call(model_name: str, counts: dict):
+    counts[model_name] = counts.get(model_name, 0) + 1
+    _save_daily_usage(counts)
+
+
+# ---------------------------------------------------------------------------
+# Existing-work loading (resumability)
+# ---------------------------------------------------------------------------
+def _load_cache() -> dict:
+    if os.path.exists(WORKER_CACHE_FILE):
+        try:
+            with open(WORKER_CACHE_FILE) as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning("Could not read existing cache file, starting fresh: %s", e)
+    return {}
+
+
+def _save_cache(cache: dict):
+    try:
+        with open(WORKER_CACHE_FILE, "w") as f:
+            json.dump(cache, f, indent=2)
+    except Exception as e:
+        logger.warning("Failed to save cache file: %s", e)
 
 
 def _load_existing_labels():
-    """Load already-labeled rows (if any) so a re-run skips them, and build
-    a lookup set of (example_id, span_text, span_start, model) keys already done."""
-    if os.path.exists(config.LABELS_FILE):
-        done = pd.read_csv(config.LABELS_FILE)
-        done_keys = set(zip(done["example_id"], done["span_text"], done["span_start"], done["labeling_model"]))
-    else:
-        done = pd.DataFrame()
-        done_keys = set()
-    return done, done_keys
+    if os.path.exists(WORKER_LABELS_FILE):
+        try:
+            done = pd.read_csv(WORKER_LABELS_FILE)
+            done_keys = set(
+                zip(
+                    done["example_id"].astype(str),
+                    done["span_text"].astype(str),
+                    done["span_start"].astype(int),
+                    done["labeling_model"].astype(str),
+                )
+            )
+            return done, done_keys
+        except Exception as e:
+            logger.warning("Could not parse existing labels file: %s", e)
+    return pd.DataFrame(), set()
 
 
-def _get_original_answer(cache: dict, example_id, model_cfg, original_prompt):
+def _wait_for_rate_limit(provider: str, model_cfg: dict, last_call_timestamps: dict):
+    configured_sleep = model_cfg.get("sleep_seconds", 0.0)
+    min_required_sleep = PROVIDER_MIN_SLEEP.get(provider.lower(), 2.0)
+    delay = max(configured_sleep, min_required_sleep)
+
+    last_call = last_call_timestamps.get(provider, 0.0)
+    elapsed = time.time() - last_call
+    if elapsed < delay:
+        time.sleep(delay - elapsed)
+    last_call_timestamps[provider] = time.time()
+
+
+def _get_original_answer(
+    cache: dict,
+    example_id: str,
+    model_cfg: dict,
+    original_prompt: str,
+    last_call_timestamps: dict,
+    daily_counts: dict,
+) -> str | None:
     """
-    Get (and cache) a model's answer to the UNPERTURBED question. Cached per
-    (example_id, model) so we ask the original question once per problem per
-    model, no matter how many spans that problem has.
+    Fetch (or return the cached) baseline answer for an unperturbed
+    question. Cached PERMANENTLY across days -- once a model has answered
+    a given problem's original question, we never ask again, regardless
+    of how many days this takes overall.
     """
-    cache_key = (example_id, model_cfg["name"])
+    cache_key = f"{example_id}::{model_cfg['name']}"
     if cache_key in cache:
         return cache[cache_key]
 
-    response = call_model(model_cfg, PROMPT_TEMPLATE.format(question=original_prompt))
-    if response is None:
-        logger.error("Original-question call failed after retries: example=%s model=%s", example_id, model_cfg["name"])
-    cache[cache_key] = response
-    time.sleep(model_cfg["sleep_seconds"])
+    provider = model_cfg.get("provider", "groq")
+    _wait_for_rate_limit(provider, model_cfg, last_call_timestamps)
+
+    prompt = PROMPT_TEMPLATE.format(question=original_prompt)
+    response = call_model(model_cfg, prompt)
+    _record_call(model_cfg["name"], daily_counts)
+
+    if response is not None:
+        cache[cache_key] = response
+        _save_cache(cache)
+    else:
+        logger.error("Original call failed after retries: example=%s model=%s", example_id, model_cfg["name"])
+        time.sleep(5.0)
+
     return response
 
 
 def main():
-    spans = pd.read_csv(config.SPANS_FILE)
-    done, done_keys = _load_existing_labels()
+    if not os.path.exists(config.SPANS_FILE):
+        logger.error("Spans file not found: %s", config.SPANS_FILE)
+        sys.exit(1)
 
-    original_answer_cache: dict = {}
-    results = []
-    total_calls_planned = len(spans) * len(config.MODELS)
-    n_attempted = 0
+    spans_df = pd.read_csv(config.SPANS_FILE).fillna("")
+    done_df, done_keys = _load_existing_labels()
+    original_cache = _load_cache()
+    daily_counts = _load_daily_usage()
 
-    for _, row in spans.iterrows():
-        for model_cfg in config.MODELS:
-            n_attempted += 1
-            key = (row["example_id"], row["span_text"], row["span_start"], model_cfg["name"])
-            if key in done_keys:
+    last_call_timestamps = {}
+    new_results = []
+
+    logger.info("Loaded %d candidate spans from %s", len(spans_df), config.SPANS_FILE)
+    logger.info("Loaded %d previously completed labels for Worker %d", len(done_keys), WORKER_ID)
+    logger.info("Today's usage so far: %s", daily_counts)
+
+    exhausted_models = set()
+
+    for model_cfg in config.MODELS:
+        model_name = model_cfg["name"]
+        provider = model_cfg.get("provider", "groq")
+
+        if _is_exhausted(model_name, daily_counts):
+            logger.info("Model %s already hit today's cap before this run started -- skipping.", model_name)
+            exhausted_models.add(model_name)
+            continue
+
+        logger.info("--- Starting Model: %s (Provider: %s) ---", model_name, provider)
+        problem_groups = spans_df.groupby("example_id", sort=False)
+
+        for problem_index, (example_id, group) in enumerate(problem_groups):
+            if (problem_index % TOTAL_WORKERS) + 1 != WORKER_ID:
                 continue
 
-            orig_ans = _get_original_answer(original_answer_cache, row["example_id"], model_cfg, row["original_prompt"])
-            if orig_ans is None:
-                continue  # API call failed after retries; skip, already logged
-
-            is_correct_original = answers_match(orig_ans, row["ground_truth_answer"])
-            if not is_correct_original:
-                # This model was already wrong before we touched anything ==> removing a span can't give us a clean "did this cause the
-                # failure" signal here, so skip this model for this problem.
-                continue
-
-            pert_ans = call_model(model_cfg, PROMPT_TEMPLATE.format(question=row["perturbed_prompt"]))
-            time.sleep(model_cfg["sleep_seconds"])
-            if pert_ans is None:
-                logger.error(
-                    "Perturbed-question call failed after retries: example=%s span=%r model=%s",
-                    row["example_id"], row["span_text"], model_cfg["name"],
+            # Check BEFORE every call, not just once at the top of the model
+            # loop -- we can cross the cap mid-problem, and need to notice
+            # immediately rather than after wastefully finishing the batch.
+            if _is_exhausted(model_name, daily_counts):
+                logger.info(
+                    "Model %s's daily limit is reached for today -- try again tomorrow. "
+                    "Moving on to remaining models.",
+                    model_name,
                 )
+                exhausted_models.add(model_name)
+                break  # stop THIS model's problem loop; other models keep going
+
+            first_row = group.iloc[0]
+            orig_prompt = first_row["original_prompt"]
+            ground_truth = str(first_row["ground_truth_answer"])
+
+            orig_ans = _get_original_answer(
+                original_cache, example_id, model_cfg, orig_prompt, last_call_timestamps, daily_counts
+            )
+            if orig_ans is None:
                 continue
 
-            is_correct_perturbed = answers_match(pert_ans, row["ground_truth_answer"])
-            label = "critical" if (is_correct_original and not is_correct_perturbed) else "non_critical"
+            is_correct_orig = answers_match(orig_ans, ground_truth)
+            if not is_correct_orig:
+                continue  # no clean criticality signal possible for this model+problem
 
-            results.append({
-                **row.to_dict(),
-                "labeling_model": model_cfg["name"],
-                "model_answer_original": orig_ans,
-                "is_correct_original": is_correct_original,
-                "model_answer_perturbed": pert_ans,
-                "is_correct_perturbed": is_correct_perturbed,
-                "model_specific_label": label,
-                "decoding_settings": "temperature=0",
-            })
+            for _, row in group.iterrows():
+                span_key = (str(row["example_id"]), str(row["span_text"]), int(row["span_start"]), str(model_name))
+                if span_key in done_keys:
+                    continue
 
-            if len(results) % CHECKPOINT_EVERY == 0:
-                print(f"  progress: {n_attempted}/{total_calls_planned} calls attempted, {len(results)} new labels so far")
-                pd.concat([done, pd.DataFrame(results)], ignore_index=True).to_csv(config.LABELS_FILE, index=False)
+                if _is_exhausted(model_name, daily_counts):
+                    logger.info("Model %s's daily limit is reached for today -- try again tomorrow.", model_name)
+                    exhausted_models.add(model_name)
+                    break  # stop spans for this problem; outer break below stops the model
 
-    final = pd.concat([done, pd.DataFrame(results)], ignore_index=True) if results else done
-    final.to_csv(config.LABELS_FILE, index=False)
-    print(f"Done. {len(final)} total per-model labels saved to {config.LABELS_FILE}")
-    print(f"See {config.LABELING_LOG_FILE} for any calls that failed after retries.")
+                _wait_for_rate_limit(provider, model_cfg, last_call_timestamps)
+                pert_prompt = PROMPT_TEMPLATE.format(question=row["perturbed_prompt"])
+                pert_ans = call_model(model_cfg, pert_prompt)
+                _record_call(model_name, daily_counts)
+
+                if pert_ans is None:
+                    logger.error(
+                        "Perturbed call failed: example=%s span=%r model=%s",
+                        row["example_id"], row["span_text"], model_name,
+                    )
+                    time.sleep(5.0)
+                    continue
+
+                is_correct_pert = answers_match(pert_ans, ground_truth)
+                label = "critical" if not is_correct_pert else "non_critical"
+
+                new_results.append({
+                    **row.to_dict(),
+                    "labeling_model": model_name,
+                    "model_answer_original": orig_ans,
+                    "is_correct_original": is_correct_orig,
+                    "model_answer_perturbed": pert_ans,
+                    "is_correct_perturbed": is_correct_pert,
+                    "model_specific_label": label,
+                    "decoding_settings": "temperature=0",
+                })
+                done_keys.add(span_key)
+
+                if len(new_results) % CHECKPOINT_EVERY == 0:
+                    combined = (
+                        pd.concat([done_df, pd.DataFrame(new_results)], ignore_index=True)
+                        if not done_df.empty else pd.DataFrame(new_results)
+                    )
+                    combined.to_csv(WORKER_LABELS_FILE, index=False)
+                    logger.info("Checkpoint: %d total labels saved (%d from this session)", len(combined), len(new_results))
+
+            if model_name in exhausted_models:
+                break  # exit the problem loop for this model; move to the next model
+
+    # Final save, regardless of how we got here
+    if new_results:
+        final_df = (
+            pd.concat([done_df, pd.DataFrame(new_results)], ignore_index=True)
+            if not done_df.empty else pd.DataFrame(new_results)
+        )
+        final_df.to_csv(WORKER_LABELS_FILE, index=False)
+        logger.info("Session complete. Total labels: %d saved to %s", len(final_df), WORKER_LABELS_FILE)
+    else:
+        logger.info("No new labels produced this session.")
+
+    remaining_models = [m["name"] for m in config.MODELS if m["name"] not in exhausted_models]
+    if not remaining_models:
+        logger.info(
+            "All models' daily limits are reached for today -- try again tomorrow. "
+            "Progress is saved; re-running this script tomorrow will pick up exactly where it left off."
+        )
+    else:
+        logger.info("All available spans processed for today's remaining-quota models: %s", remaining_models)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        logger.warning("Execution interrupted by user. Existing checkpoints remain intact.")
+        sys.exit(0)

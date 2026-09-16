@@ -6,23 +6,30 @@ Central config for the whole dataset-creation pipeline.
 """
 
 import os
+from dotenv import load_dotenv
+# Load .env into os.environ before reading keys
+load_dotenv()
 
 # ---------------------------------------------------------------------------
 # API keys
 # ---------------------------------------------------------------------------
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+CEREBRAS_API_KEY = os.environ.get("CEREBRAS_API_KEY", "")
 
 # ---------------------------------------------------------------------------
 # The labeling models. Each dict describes how to call it. "provider" is either "groq" or "google" -- api_clients.py branches on this.
 # "sleep_seconds" is how long to wait between calls to that provider, to stay under its rate limits. Groq's free tier is generous; Google's is stricter,
 # hence the longer sleep for Gemini.
 # ---------------------------------------------------------------------------
+
+
 MODELS = [
-    {"name": "llama-3.3-70b-versatile", "provider": "groq", "sleep_seconds": 0.3},
-    {"name": "qwen/qwen3.6-27b", "provider": "groq", "sleep_seconds": 0.3},
-    {"name": "openai/gpt-oss-20b", "provider": "groq", "sleep_seconds": 0.3},
-    {"name": "gemini-2.5-flash", "provider": "google", "sleep_seconds": 1.5},
+    {"name": "openai/gpt-oss-120b", "provider": "groq", "sleep_seconds": 2.2},
+    {"name": "gemini-3.6-flash", "provider": "google", "sleep_seconds": 4.2},
+    #{"name": "nvidia/nemotron-3-ultra-550b-a55b:free", "provider": "openrouter", "sleep_seconds": 3.2},
+    {"name": "qwen-3.8-27b", "provider": "cerebras", "sleep_seconds": 0.2},
 ]
 
 # ---------------------------------------------------------------------------
