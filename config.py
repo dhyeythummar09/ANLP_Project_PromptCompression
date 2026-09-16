@@ -11,25 +11,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ---------------------------------------------------------------------------
-# API keys
+# API keys (loaded from .env)
 # ---------------------------------------------------------------------------
+MOTAPIS_API_KEY = os.environ.get("MOTAPIS_API_KEY", "")
+MOTAPIS_BASE_URL = os.environ.get("MOTAPIS_BASE_URL", "https://api.motapis.com/v1")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
-CEREBRAS_API_KEY = os.environ.get("CEREBRAS_API_KEY", "")
+
+WORKER_ID = int(os.environ.get("WORKER_ID", 1))
 
 # ---------------------------------------------------------------------------
-# The labeling models. Each dict describes how to call it. "provider" is either "groq" or "google" -- api_clients.py branches on this.
-# "sleep_seconds" is how long to wait between calls to that provider, to stay under its rate limits. Groq's free tier is generous; Google's is stricter,
-# hence the longer sleep for Gemini.
+# Labeling models (4 diverse architectures across providers)
 # ---------------------------------------------------------------------------
-
 
 MODELS = [
+    {"name": "qwen3.7-max", "provider": "motapis", "sleep_seconds": 0.5},
+    {"name": "glm-5.3-flash", "provider": "motapis", "sleep_seconds": 0.5},
     {"name": "openai/gpt-oss-120b", "provider": "groq", "sleep_seconds": 2.2},
     {"name": "gemini-3.6-flash", "provider": "google", "sleep_seconds": 4.2},
-    #{"name": "nvidia/nemotron-3-ultra-550b-a55b:free", "provider": "openrouter", "sleep_seconds": 3.2},
-    {"name": "qwen-3.8-27b", "provider": "cerebras", "sleep_seconds": 0.2},
 ]
 
 # ---------------------------------------------------------------------------

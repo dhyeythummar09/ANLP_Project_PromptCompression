@@ -39,7 +39,7 @@ from src.utils.api_clients import call_model
 from src.utils.answer_matching import answers_match
 
 # --- TEAM DISTRIBUTION SETTINGS ---
-WORKER_ID = 1  # Teammates must change this to their assigned number (1, 2, 3, or 4)
+WORKER_ID = int(os.environ.get("WORKER_ID", getattr(config, "WORKER_ID", 1)))
 TOTAL_WORKERS = 4
 
 os.makedirs(config.DATA_DIR, exist_ok=True)
@@ -72,33 +72,19 @@ Problem: {question}
 
 CHECKPOINT_EVERY = 25
 
-# Minimum seconds between calls to the same provider, to stay under its
-# per-minute limit. This does NOT prevent hitting the daily cap below --
-# it just controls how fast you approach it.
-#
-# VERIFY these live before a long run:
-#   https://console.groq.com/docs/rate-limits
-#   https://ai.google.dev/gemini-api/docs/rate-limits
+# Minimum seconds between calls to the same provider, to stay under rate limits
 PROVIDER_MIN_SLEEP = {
-    "groq": 2.2,   # ~30 RPM free tier -> 60/30 = 2.0s + buffer
-    "google": 6.8,  # ~10 RPM free tier (NOT 15) -> 60/10 = 6.0s + buffer
+    "motapis": 0.5,     # Fast API proxy
+    "groq": 2.2,        # ~30 RPM free tier
+    "google": 4.2,      # Google AI Studio
 }
 
-# Daily request caps, per model. These are the numbers that actually stop
-# a long labeling run, not the per-minute ones above. Set slightly BELOW
-# the documented limit (safety margin), since a model's own retries inside
-# call_model() can themselves burn a request even when the outer loop only
-# "sees" one attempt, and provider-published numbers do shift over time.
-#
-# VERIFY these live before trusting them -- they are the single most
-# likely thing to be stale by the time you read this:
-#   https://console.groq.com/docs/models
-#   https://ai.google.dev/gemini-api/docs/rate-limits
+# Daily request caps per model
 DAILY_CALL_CAP = {
-    "llama-3.3-70b-versatile": 950,
-    "qwen/qwen3.6-27b": 470,
-    "openai/gpt-oss-20b": 950,
-    "gemini-2.5-flash": 230,
+    "qwen3.7-max": 5000,
+    "glm-5.3-flash": 5000,
+    "openai/gpt-oss-120b": 1000,
+    "gemini-3.6-flash": 1500,
 }
 
 
@@ -290,7 +276,7 @@ def main():
             if orig_ans is None:
                 continue
 
-            is_correct_orig = answers_match(orig_ans, ground_truth)
+            is_correct_orig = answers_match(orig_ans, ground_truth, orig_prompt)
             if not is_correct_orig:
                 continue  # no clean criticality signal possible for this model+problem
 
@@ -317,7 +303,7 @@ def main():
                     time.sleep(5.0)
                     continue
 
-                is_correct_pert = answers_match(pert_ans, ground_truth)
+                is_correct_pert = answers_match(pert_ans, ground_truth, row["perturbed_prompt"])
                 label = "critical" if not is_correct_pert else "non_critical"
 
                 new_results.append({

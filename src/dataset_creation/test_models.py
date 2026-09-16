@@ -1,35 +1,30 @@
 """
-test_models.py -- a one-off smoke test, NOT part of the labeling pipeline.
+test_models.py -- smoke test for model API keys and reasoning correctness.
 
-Purpose: before committing to a multi-day labeling run, verify three things
-for each of our 3 models:
-  1. Does the API key work at all? (auth / 401)
-  2. Is the model ID correct? (404 / "model not found")
-  3. Do we actually get correct answers back on real problems from each of
-     our 3 dataset families?
+Purpose: before committing to a multi-day labeling run, verify:
+  1. Does the API key work? (auth / 401)
+  2. Is the model ID recognized by the provider? (404 / "model not found")
+  3. Does the model output match our expected answer format (Final Answer: ...)?
+  4. Accuracy on a tiny sample (default 1 question per family = 3 questions total).
 
-It also reports HTTP 429s distinctly, so you can tell "my quota is gone"
-apart from "my key is wrong" -- those look similar in a generic error
-message but need completely different fixes.
+Usage:
+  # Test all configured active models:
+  python src/dataset_creation/test_models.py
 
-IMPORTANT: this script is deliberately self-contained for API calls (it does
-not import src/utils/api_clients.py). That's so you can run it BEFORE
-refactoring api_clients.py to add Cerebras -- it's an independent check, not
-a test of our own wrapper code. It does reuse answer_matching.py, since
-verifying that our correctness-checking logic works on real model output is
-part of what we want to test here.
+  # Test only motapis:
+  python src/dataset_creation/test_models.py --provider motapis
 
-Cost warning: with the defaults below (5 questions x 3 models = 15 calls),
-this burns 5 of Gemini's ~20 daily requests. Run it once; don't re-run
-casually.
+  # Test a specific model:
+  python src/dataset_creation/test_models.py --model deepseek-v4-flash --provider motapis
 
-Place in: src/dataset_creation/test_models.py
-Run:      python src/dataset_creation/test_models.py
+  # Test with custom number of questions per dataset family (default is 1 to save tokens):
+  python src/dataset_creation/test_models.py --questions 1
 """
 
 import os
 import sys
 import time
+import argparse
 import textwrap
 
 import requests
@@ -44,66 +39,59 @@ load_dotenv()
 
 # ---------------------------------------------------------------------------
 # Models under test.
-#
-# NOTE on sleep values: these come straight from the measured rate-limit
-# table, NOT from config.MODELS. Gemini in particular needs 12.5s (5 RPM ->
-# 60/5 = 12s + buffer); a 4.2s value would be ~14 RPM and would 429 within
-# seconds. Fix config.MODELS to match before running the real pipeline.
+# Adjust or filter using CLI flags (--provider, --model).
 # ---------------------------------------------------------------------------
 TEST_MODELS = [
-    # {
-    #     "name": "openai/gpt-oss-120b",
-    #     "provider": "groq",
-    #     "sleep_seconds": 2.2,      # 30 RPM
-    #     "daily_cap": 1000,
-    # },
-    # {
-    #     "name": "gemini-3.6-flash",
-    #     "provider": "google",
-    #     "sleep_seconds": 12.5,     # 5 RPM -- NOT 4.2
-    #     "daily_cap": 20,           # brutally low; see note in the chat
-    # },
     {
-        "name": "qwen2.5",
-        "provider": "ollama",
-        "sleep_seconds": 0.0,      # No rate limits on your own laptop!
-        "daily_cap": 999999,       # Unlimited calls
+        "name": "qwen3.7-max",
+        "provider": "motapis",
+        "sleep_seconds": 0.5,
+        "daily_cap": 2000,
     },
-    # {
-    #     "name": "qwen-3.8-27b",
-    #     "provider": "cerebras",
-    #     "sleep_seconds": 0.2,      # 450 RPM
-    #     "daily_cap": 648_000,
-    # },
+    {
+        "name": "glm-5.3-flash",
+        "provider": "motapis",
+        "sleep_seconds": 0.5,
+        "daily_cap": 2000,
+    },
+    {
+        "name": "openai/gpt-oss-120b",
+        "provider": "groq",
+        "sleep_seconds": 2.2,
+        "daily_cap": 1000,
+    },
+    {
+        "name": "gemini-3.6-flash",
+        "provider": "google",
+        "sleep_seconds": 4.2,
+        "daily_cap": 1000,
+    },
 ]
 
-# How many questions to pull from each dataset family. 2 per family = 6
-# questions = 18 calls total, which stays under Gemini's 20/day ceiling.
-# Raising this to 5 (15 questions, 45 calls) will exhaust Gemini partway
-# through -- the script handles that gracefully, but you'll get an
-# incomplete picture for that one model.
-QUESTIONS_PER_DATASET = 2
-
-# Which dataset families to sample from. BBH is matched by prefix since it's
-# stored as "bbh_<subtask>" in the raw problems file.
 DATASET_FAMILIES = {
     "GSM8K": lambda s: s == "gsm8k",
     "GSM-IC": lambda s: s == "gsm_ic",
     "BBH": lambda s: s.startswith("bbh_"),
 }
 
-PROMPT_TEMPLATE = """Solve this problem. You may reason briefly, but you MUST end your \
-response with a line in exactly this format:
+PROMPT_TEMPLATE = """Solve this problem. You may reason briefly, but you MUST end your response with a line in exactly this format:
 Final Answer: <your answer>
 
 Problem: {question}
 """
 
-# OpenAI-compatible providers: same request/response shape, different host.
+def _resolve_motapis_url() -> str:
+    base = (os.environ.get("MOTAPIS_BASE_URL") or config.MOTAPIS_BASE_URL or "https://api.motapis.com/v1").strip().rstrip("/")
+    if base.endswith("/chat/completions"):
+        return base
+    return f"{base}/chat/completions"
+
 OPENAI_COMPATIBLE_BASE_URLS = {
     "groq": "https://api.groq.com/openai/v1/chat/completions",
     "cerebras": "https://api.cerebras.ai/v1/chat/completions",
     "ollama": "http://localhost:11434/v1/chat/completions",
+    "openrouter": "https://openrouter.ai/api/v1/chat/completions",
+    "huggingface": "https://router.huggingface.co/hf-inference/v1/chat/completions",
 }
 
 PROVIDER_ENV_VARS = {
@@ -111,48 +99,49 @@ PROVIDER_ENV_VARS = {
     "google": "GOOGLE_API_KEY",
     "cerebras": "CEREBRAS_API_KEY",
     "ollama": "OLLAMA_API_KEY",
+    "openrouter": "OPENROUTER_API_KEY",
+    "motapis": "MOTAPIS_API_KEY",
+    "huggingface": "HF_TOKEN",
 }
 
 
 class ApiError(Exception):
-    """Wraps an API failure with a human-readable diagnosis of what went wrong."""
-
     def __init__(self, kind: str, detail: str):
-        self.kind = kind          # "auth" | "rate_limit" | "not_found" | "network" | "parse" | "other"
+        self.kind = kind  # "auth" | "rate_limit" | "not_found" | "quota" | "network" | "parse" | "other"
         self.detail = detail
         super().__init__(f"[{kind}] {detail}")
 
 
 def _diagnose_http_error(resp: requests.Response) -> ApiError:
-    """
-    Turn an HTTP error response into a specific, actionable diagnosis.
-    The whole point of this script is telling these cases apart -- a generic
-    "request failed" tells you nothing about whether to fix your key, wait
-    a day, or correct a model ID.
-    """
     status = resp.status_code
-    body = resp.text[:300]
+    body = resp.text[:400]
 
     if status in (401, 403):
-        return ApiError("auth", f"HTTP {status} -- API key rejected or lacks access. Check your .env. Body: {body}")
+        return ApiError("auth", f"HTTP {status} -- API key rejected or unauthorized. Check .env. Body: {body}")
+    if status == 402 or "insufficient" in body.lower() or "balance" in body.lower():
+        return ApiError("quota", f"HTTP {status} -- Quota/balance exhausted on this provider. Body: {body}")
     if status == 404:
-        return ApiError("not_found", f"HTTP 404 -- model ID not recognized by this provider. Body: {body}")
+        return ApiError("not_found", f"HTTP 404 -- Model ID not found. Verify model name with provider docs. Body: {body}")
     if status == 429:
-        return ApiError("rate_limit", f"HTTP 429 -- rate limit or daily quota exhausted. Body: {body}")
+        return ApiError("rate_limit", f"HTTP 429 -- Rate limit or request ceiling exceeded. Body: {body}")
     if status >= 500:
-        return ApiError("other", f"HTTP {status} -- provider-side error, usually transient. Body: {body}")
+        return ApiError("other", f"HTTP {status} -- Provider server error/overloaded. Body: {body}")
     return ApiError("other", f"HTTP {status}. Body: {body}")
 
 
 def _call_openai_compatible(model_cfg: dict, prompt: str, api_key: str) -> str:
-    """Call Groq or Cerebras (both expose an OpenAI-compatible chat endpoint)."""
-    url = OPENAI_COMPATIBLE_BASE_URLS[model_cfg["provider"]]
+    provider = model_cfg["provider"]
+    if provider == "motapis":
+        url = _resolve_motapis_url()
+    else:
+        url = OPENAI_COMPATIBLE_BASE_URLS[provider]
+
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
     body = {
         "model": model_cfg["name"],
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0,
-        "max_tokens": 1024,
+        "max_tokens": 512,
     }
     try:
         resp = requests.post(url, headers=headers, json=body, timeout=45)
@@ -163,97 +152,63 @@ def _call_openai_compatible(model_cfg: dict, prompt: str, api_key: str) -> str:
         raise _diagnose_http_error(resp)
 
     try:
-        return resp.json()["choices"][0]["message"]["content"].strip()
+        data = resp.json()
+        msg = data["choices"][0]["message"]
+        content = msg.get("content") or ""
+        if not content.strip() and ("reasoning" in msg or "reasoning_content" in msg):
+            content = msg.get("reasoning") or msg.get("reasoning_content") or ""
+        return content.strip()
     except (KeyError, IndexError, ValueError) as e:
         raise ApiError("parse", f"Unexpected response shape: {e}. Body: {resp.text[:300]}")
 
 
-# def _call_google(model_cfg: dict, prompt: str, api_key: str) -> str:
-#     """Call a Gemini model via the generateContent endpoint."""
-#     url = (
-#         f"https://generativelanguage.googleapis.com/v1beta/models/"
-#         f"{model_cfg['name']}:generateContent?key={api_key}"
-#     )
-#     body = {
-#         "contents": [{"parts": [{"text": prompt}]}],
-#         "generationConfig": {"temperature": 0, "maxOutputTokens": 300},
-#     }
-#     try:
-#         resp = requests.post(url, json=body, timeout=45)
-#     except requests.exceptions.RequestException as e:
-#         raise ApiError("network", f"Could not reach Gemini endpoint: {e}")
-
-#     if not resp.ok:
-#         raise _diagnose_http_error(resp)
-
-#     try:
-#         return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-#     except (KeyError, IndexError, ValueError) as e:
-#         # A common cause here is a safety block or an empty candidates list,
-#         # which returns HTTP 200 but no usable text -- so this is not
-#         # necessarily a bug in our parsing.
-#         raise ApiError("parse", f"No usable text in response ({e}). Body: {resp.text[:300]}")
-
-
 def _call_google(model_cfg: dict, prompt: str, api_key: str) -> str:
-    """Call a Gemini model with retries and strict system instructions."""
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"{model_cfg['name']}:generateContent?key={api_key}"
     )
-    
-    # Force Gemini to obey formatting by using a strict System Instruction
     body = {
         "systemInstruction": {
             "parts": [{"text": "You are a mathematical and logical reasoning assistant. You may reason briefly, but you MUST end your response with a line in exactly this format:\nFinal Answer: <your answer>"}]
         },
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0, "maxOutputTokens": 1024},
+        "generationConfig": {"temperature": 0, "maxOutputTokens": 512},
     }
-    
-    # Add a retry loop to wait out the free-tier 503 High Demand spikes
     max_retries = 3
     for attempt in range(max_retries):
         try:
             resp = requests.post(url, json=body, timeout=45)
-            
-            # If we hit a 503, wait 10 seconds and try again
             if resp.status_code == 503:
                 print(f"      [Google 503] Server busy, retrying in 10s... (Attempt {attempt + 1}/{max_retries})")
                 time.sleep(10)
                 continue
-                
             if not resp.ok:
                 raise _diagnose_http_error(resp)
-
             return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-            
         except requests.exceptions.RequestException as e:
             raise ApiError("network", f"Could not reach Gemini endpoint: {e}")
-            
-    # If it fails 3 times in a row, then raise the error
+
     raise ApiError("other", f"HTTP 503 -- Google servers remained busy after {max_retries} retries.")
 
 
 def call_model(model_cfg: dict, prompt: str) -> str:
-    """Dispatch to the right provider. Raises ApiError with a diagnosis on failure."""
     provider = model_cfg["provider"]
-    api_key = os.environ.get(PROVIDER_ENV_VARS[provider], "")
-    if not api_key:
-        raise ApiError("auth", f"{PROVIDER_ENV_VARS[provider]} is not set in your environment/.env")
+    env_var = PROVIDER_ENV_VARS.get(provider)
+    if not env_var:
+        raise ApiError("other", f"No env var mapped for provider: {provider}")
 
-    if provider in OPENAI_COMPATIBLE_BASE_URLS:
+    api_key = os.environ.get(env_var, "").strip()
+    if not api_key:
+        raise ApiError("auth", f"{env_var} is not set in your .env file")
+
+    if provider in OPENAI_COMPATIBLE_BASE_URLS or provider == "motapis":
         return _call_openai_compatible(model_cfg, prompt, api_key)
     elif provider == "google":
         return _call_google(model_cfg, prompt, api_key)
     raise ApiError("other", f"Unknown provider: {provider}")
 
 
-def load_test_questions() -> list[dict]:
-    """
-    Pull a few problems from each dataset family out of the raw problems CSV.
-    Requires 01_load_data.py to have been run first.
-    """
+def load_test_questions(questions_per_dataset: int = 1) -> list[dict]:
     if not os.path.exists(config.RAW_PROBLEMS_FILE):
         print(f"ERROR: {config.RAW_PROBLEMS_FILE} not found.")
         print("Run `python src/dataset_creation/01_load_data.py` first.")
@@ -267,9 +222,7 @@ def load_test_questions() -> list[dict]:
         if subset.empty:
             print(f"  [warning] no problems found for family '{family_name}' -- skipping")
             continue
-        # Fixed seed so repeated runs test the same questions and results
-        # stay comparable across runs.
-        sampled = subset.sample(n=min(QUESTIONS_PER_DATASET, len(subset)), random_state=42)
+        sampled = subset.sample(n=min(questions_per_dataset, len(subset)), random_state=42)
         for _, row in sampled.iterrows():
             questions.append({
                 "family": family_name,
@@ -283,20 +236,18 @@ def load_test_questions() -> list[dict]:
 
 
 def test_one_model(model_cfg: dict, questions: list[dict]) -> dict:
-    """Run every test question against one model and collect results."""
     name = model_cfg["name"]
+    provider = model_cfg["provider"]
     print("\n" + "=" * 78)
-    print(f"TESTING: {name}  (provider: {model_cfg['provider']}, sleep: {model_cfg['sleep_seconds']}s)")
+    print(f"TESTING: {name}  (provider: {provider}, sleep: {model_cfg.get('sleep_seconds', 1.0)}s)")
     print("=" * 78)
 
     n_calls_made = 0
     results = []
 
     for i, q in enumerate(questions, 1):
-        # Respect the daily cap -- stop cleanly rather than hammering 429s.
-        if n_calls_made >= model_cfg["daily_cap"]:
-            print(f"\n  ! Reached this model's daily cap ({model_cfg['daily_cap']}) -- stopping early.")
-            print(f"    {len(questions) - i + 1} question(s) not tested for this model.")
+        if n_calls_made >= model_cfg.get("daily_cap", 10000):
+            print(f"\n  ! Reached model daily cap -- stopping early.")
             break
 
         print(f"\n  [{i}/{len(questions)}] {q['family']} / {q['example_id']}")
@@ -310,58 +261,53 @@ def test_one_model(model_cfg: dict, questions: list[dict]) -> dict:
             print(f"      FAILED -> {e}")
             results.append({**q, "model": name, "status": f"error:{e.kind}", "correct": False,
                             "parsed_answer": "", "raw_response": ""})
-            # A rate-limit or auth error will hit every subsequent question
-            # too, so there's no point continuing with this model.
-            if e.kind in ("auth", "rate_limit", "not_found"):
-                print(f"      -> This error affects all remaining questions; skipping rest of {name}.")
+            if e.kind in ("auth", "rate_limit", "not_found", "quota"):
+                print(f"      -> Skipping remaining test questions for {name}.")
                 break
-            time.sleep(model_cfg["sleep_seconds"])
+            time.sleep(model_cfg.get("sleep_seconds", 1.0))
             continue
 
         parsed = extract_final_answer(raw)
-        correct = answers_match(raw, q["ground_truth"])
+        correct = answers_match(raw, q["ground_truth"], q["question"])
         symbol = "PASS" if correct else "FAIL"
         print(f"      Got: {textwrap.shorten(parsed, width=80)}")
-        print(f"      {symbol}")
+        print(f"      Result: {symbol}")
 
         results.append({**q, "model": name, "status": "ok", "correct": correct,
                         "parsed_answer": parsed, "raw_response": raw})
 
-        time.sleep(model_cfg["sleep_seconds"])
+        time.sleep(model_cfg.get("sleep_seconds", 1.0))
 
-    return {"model": name, "results": results, "calls_made": n_calls_made}
+    return {"model": name, "provider": provider, "results": results, "calls_made": n_calls_made}
 
 
 def print_summary(all_results: list[dict]):
-    """Print a compact per-model and per-dataset breakdown."""
     print("\n\n" + "=" * 78)
-    print("SUMMARY")
+    print("SMOKE TEST SUMMARY")
     print("=" * 78)
 
     for entry in all_results:
         name = entry["model"]
+        provider = entry.get("provider", "")
         rows = entry["results"]
         if not rows:
-            print(f"\n{name}: no results (model never responded)")
+            print(f"\n{name} ({provider}): no results")
             continue
 
         ok_rows = [r for r in rows if r["status"] == "ok"]
         errors = [r for r in rows if r["status"] != "ok"]
         n_correct = sum(1 for r in ok_rows if r["correct"])
 
-        print(f"\n{name}")
-        print(f"  API calls succeeded: {len(ok_rows)}/{len(rows)}")
+        print(f"\n{name} ({provider})")
+        print(f"  Calls succeeded: {len(ok_rows)}/{len(rows)}")
         if ok_rows:
-            print(f"  Answers correct:     {n_correct}/{len(ok_rows)}")
+            print(f"  Answers correct: {n_correct}/{len(ok_rows)}")
         if errors:
             kinds = {}
             for r in errors:
                 kinds[r["status"]] = kinds.get(r["status"], 0) + 1
-            print(f"  Errors: {kinds}")
+            print(f"  Errors encountered: {kinds}")
 
-        # Per-dataset-family accuracy -- useful for spotting a family that
-        # systematically fails (e.g. answer-format mismatches on BBH, which
-        # would point at answer_matching.py rather than the model).
         by_family = {}
         for r in ok_rows:
             by_family.setdefault(r["family"], []).append(r["correct"])
@@ -369,43 +315,44 @@ def print_summary(all_results: list[dict]):
             print(f"    {family:8s}: {sum(flags)}/{len(flags)} correct")
 
     print("\n" + "-" * 78)
-    print("How to read this:")
-    print("  error:auth       -> wrong/missing key in .env for that provider")
-    print("  error:not_found  -> model ID string is wrong; check the provider's docs")
-    print("  error:rate_limit -> quota gone; wait, or lower QUESTIONS_PER_DATASET")
-    print("  error:parse      -> got HTTP 200 but no usable text (often a safety block)")
-    print("  Low accuracy but no errors -> the API works; check whether it's the")
-    print("    model genuinely failing, or answer_matching.py mis-parsing the format.")
-    print("-" * 78)
 
 
 def main():
-    questions = load_test_questions()
-    if not questions:
-        print("No test questions could be loaded. Aborting.")
+    parser = argparse.ArgumentParser(description="Smoke test models on GSM8K / GSM-IC / BBH")
+    parser.add_argument("--provider", type=str, help="Only test models for this provider (e.g. motapis, groq, google, huggingface)")
+    parser.add_argument("--model", type=str, help="Only test this specific model name")
+    parser.add_argument("--questions", type=int, default=1, help="Number of questions per dataset family (default 1 to save tokens)")
+    args = parser.parse_args()
+
+    models_to_test = TEST_MODELS
+    if args.provider:
+        models_to_test = [m for m in models_to_test if m["provider"].lower() == args.provider.lower()]
+    if args.model:
+        models_to_test = [m for m in models_to_test if args.model.lower() in m["name"].lower()]
+
+    if not models_to_test:
+        print(f"No models matched provider={args.provider}, model={args.model}.")
+        print("Available models:")
+        for m in TEST_MODELS:
+            print(f"  - {m['name']} ({m['provider']})")
         sys.exit(1)
 
-    total_calls = len(questions) * len(TEST_MODELS)
+    questions = load_test_questions(questions_per_dataset=args.questions)
+    total_calls = len(questions) * len(models_to_test)
     print(f"Loaded {len(questions)} test questions across {len(DATASET_FAMILIES)} dataset families.")
-    print(f"Will make up to {total_calls} API calls ({len(questions)} per model x {len(TEST_MODELS)} models).")
-
-    gemini = next((m for m in TEST_MODELS if m["provider"] == "google"), None)
-    if gemini and len(questions) > gemini["daily_cap"]:
-        print(f"\n  ! WARNING: {len(questions)} questions exceeds {gemini['name']}'s "
-              f"daily cap of {gemini['daily_cap']}. It will stop partway through.")
+    print(f"Testing {len(models_to_test)} model(s). Max calls planned: {total_calls} ({args.questions} per family/model).")
 
     all_results = []
-    for model_cfg in TEST_MODELS:
+    for model_cfg in models_to_test:
         all_results.append(test_one_model(model_cfg, questions))
 
     print_summary(all_results)
 
-    # Save raw responses so you can eyeball exactly what each model returned
-    # -- essential for debugging answer_matching.py against real output.
     flat = [r for entry in all_results for r in entry["results"]]
-    out_path = os.path.join(config.DATA_DIR, "00_model_smoke_test_results.csv")
-    pd.DataFrame(flat).to_csv(out_path, index=False)
-    print(f"\nFull results (including raw responses) saved to {out_path}")
+    if flat:
+        out_path = os.path.join(config.DATA_DIR, "00_model_smoke_test_results.csv")
+        pd.DataFrame(flat).to_csv(out_path, index=False)
+        print(f"Results saved to {out_path}")
 
 
 if __name__ == "__main__":

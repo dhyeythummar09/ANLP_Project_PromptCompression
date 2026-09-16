@@ -39,7 +39,16 @@ def _load_all_worker_labels() -> pd.DataFrame:
 
 
 def main():
-    df = pd.read_csv(config.LABELS_FILE)
+    pattern = config.LABELS_FILE.replace(".csv", "_part*.csv")
+    part_files = glob.glob(pattern)
+    if part_files:
+        df = _load_all_worker_labels()
+        # Save consolidated labels for reproducibility
+        df.to_csv(config.LABELS_FILE, index=False)
+    elif os.path.exists(config.LABELS_FILE):
+        df = pd.read_csv(config.LABELS_FILE)
+    else:
+        raise FileNotFoundError(f"Neither worker files ({pattern}) nor {config.LABELS_FILE} found.")
 
     agg = df.groupby(GROUP_KEYS).agg(
         n_models_labeled=("model_specific_label", "count"),
