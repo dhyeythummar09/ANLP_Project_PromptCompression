@@ -44,13 +44,13 @@ load_dotenv()
 TEST_MODELS = [
     {
         "name": "qwen3.7-max",
-        "provider": "motapis",
+        "provider": "motapis_qwen",
         "sleep_seconds": 0.5,
         "daily_cap": 2000,
     },
     {
         "name": "glm-5.3-flash",
-        "provider": "motapis",
+        "provider": "motapis_glm",
         "sleep_seconds": 0.5,
         "daily_cap": 2000,
     },
@@ -100,7 +100,8 @@ PROVIDER_ENV_VARS = {
     "cerebras": "CEREBRAS_API_KEY",
     "ollama": "OLLAMA_API_KEY",
     "openrouter": "OPENROUTER_API_KEY",
-    "motapis": "MOTAPIS_API_KEY",
+    "motapis_qwen": "MOTAPIS_API_KEY_QWEN",
+    "motapis_glm": "MOTAPIS_API_KEY_GLM",
     "huggingface": "HF_TOKEN",
 }
 
@@ -131,7 +132,7 @@ def _diagnose_http_error(resp: requests.Response) -> ApiError:
 
 def _call_openai_compatible(model_cfg: dict, prompt: str, api_key: str) -> str:
     provider = model_cfg["provider"]
-    if provider == "motapis":
+    if provider.startswith("motapis"):
         url = _resolve_motapis_url()
     else:
         url = OPENAI_COMPATIBLE_BASE_URLS[provider]
@@ -201,7 +202,7 @@ def call_model(model_cfg: dict, prompt: str) -> str:
     if not api_key:
         raise ApiError("auth", f"{env_var} is not set in your .env file")
 
-    if provider in OPENAI_COMPATIBLE_BASE_URLS or provider == "motapis":
+    if provider in OPENAI_COMPATIBLE_BASE_URLS or provider.startswith("motapis"):
         return _call_openai_compatible(model_cfg, prompt, api_key)
     elif provider == "google":
         return _call_google(model_cfg, prompt, api_key)

@@ -74,7 +74,8 @@ CHECKPOINT_EVERY = 25
 
 # Minimum seconds between calls to the same provider, to stay under rate limits
 PROVIDER_MIN_SLEEP = {
-    "motapis": 0.5,     # Fast API proxy
+    "motapis_qwen": 0.5,     # Account 1
+    "motapis_glm": 0.5,      # Account 2
     "groq": 2.2,        # ~30 RPM free tier
     "google": 4.2,      # Google AI Studio
 }

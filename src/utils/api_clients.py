@@ -34,7 +34,7 @@ def _call_openai_compatible(url: str, api_key: str, model_name: str, prompt: str
         "model": model_name,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0,  # deterministic decoding
-        "max_tokens": 350,  # concise room for reasoning + Final Answer (conserves tokens)
+        "max_tokens": 1024,  # concise room for reasoning + Final Answer (conserves tokens)
     }
     resp = requests.post(url, headers=headers, json=body, timeout=45)
     resp.raise_for_status()
@@ -45,6 +45,27 @@ def _call_openai_compatible(url: str, api_key: str, model_name: str, prompt: str
         content = msg.get("reasoning") or msg.get("reasoning_content") or ""
     return content.strip()
 
+
+# def _call_google(model_name: str, prompt: str) -> str:
+#     """Call a Gemini model's generateContent endpoint."""
+#     url = (
+#         f"https://generativelanguage.googleapis.com/v1beta/models/"
+#         f"{model_name}:generateContent?key={config.GOOGLE_API_KEY}"
+#     )
+#     body = {
+#         "systemInstruction": {
+#             "parts": [{
+#                 "text": "You are a mathematical and logical reasoning assistant. "
+#                         "You may reason briefly, but you MUST end your response with a line in exactly this format:\n"
+#                         "Final Answer: <your answer>"
+#             }]
+#         },
+#         "contents": [{"parts": [{"text": prompt}]}],
+#         "generationConfig": {"temperature": 0, "maxOutputTokens": 512},
+#     }
+#     resp = requests.post(url, json=body, timeout=45)
+#     resp.raise_for_status()
+#     return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
 
 def _call_google(model_name: str, prompt: str) -> str:
     """Call a Gemini model's generateContent endpoint."""
@@ -61,11 +82,28 @@ def _call_google(model_name: str, prompt: str) -> str:
             }]
         },
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0, "maxOutputTokens": 512},
+        "generationConfig": {"temperature": 0, "maxOutputTokens": 1024},
+        # Tell Gemini to stop aggressively blocking text
+        "safetySettings": [
+            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+        ]
     }
+    
     resp = requests.post(url, json=body, timeout=45)
     resp.raise_for_status()
-    return resp.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
+    
+    data = resp.json()
+    
+    # Safely try to extract the text
+    try:
+        return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+    except (KeyError, IndexError):
+        # If the structure is broken (safety block or empty response), 
+        # trick the script into thinking it was a network error so it retries or gracefully skips.
+        raise requests.exceptions.RequestException(f"Gemini returned invalid structure: {data}")
 
 
 def call_model(model_cfg: dict, prompt: str) -> str | None:
@@ -79,12 +117,10 @@ def call_model(model_cfg: dict, prompt: str) -> str | None:
 
     # Check key presence upfront so we don't hammer retries if key is not configured
     key_map = {
-        "motapis": config.MOTAPIS_API_KEY,
+        "motapis_qwen": config.MOTAPIS_API_KEY_QWEN, 
+        "motapis_glm": config.MOTAPIS_API_KEY_GLM,  
         "groq": config.GROQ_API_KEY,
         "google": config.GOOGLE_API_KEY,
-        "huggingface": config.HF_TOKEN,
-        "cerebras": config.CEREBRAS_API_KEY,
-        "openrouter": config.OPENROUTER_API_KEY,
     }
     if provider in key_map and not key_map[provider]:
         logger.warning("API key for provider %s is not set. Skipping %s.", provider, model_name)
@@ -99,10 +135,12 @@ def call_model(model_cfg: dict, prompt: str) -> str | None:
                     model_name,
                     prompt,
                 )
-            elif provider == "motapis":
+            elif provider.startswith("motapis"):
+                # Dynamically grab the correct key from the key_map based on the specific provider name
+                api_key = key_map[provider]
                 return _call_openai_compatible(
                     _get_motapis_endpoint(),
-                    config.MOTAPIS_API_KEY,
+                    api_key,
                     model_name,
                     prompt,
                 )

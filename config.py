@@ -13,7 +13,8 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # API keys (loaded from .env)
 # ---------------------------------------------------------------------------
-MOTAPIS_API_KEY = os.environ.get("MOTAPIS_API_KEY", "")
+MOTAPIS_API_KEY_QWEN = os.environ.get("MOTAPIS_API_KEY_QWEN", "")
+MOTAPIS_API_KEY_GLM = os.environ.get("MOTAPIS_API_KEY_GLM", "")
 MOTAPIS_BASE_URL = os.environ.get("MOTAPIS_BASE_URL", "https://api.motapis.com/v1")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
@@ -25,10 +26,10 @@ WORKER_ID = int(os.environ.get("WORKER_ID", 1))
 # ---------------------------------------------------------------------------
 
 MODELS = [
-    {"name": "qwen3.7-max", "provider": "motapis", "sleep_seconds": 0.5},
-    {"name": "glm-5.3-flash", "provider": "motapis", "sleep_seconds": 0.5},
-    {"name": "openai/gpt-oss-120b", "provider": "groq", "sleep_seconds": 2.2},
-    {"name": "gemini-3.6-flash", "provider": "google", "sleep_seconds": 4.2},
+    {"name": "qwen3.7-max", "provider": "motapis_qwen", "sleep_seconds": 0.5},
+    {"name": "glm-5.3-flash", "provider": "motapis_glm", "sleep_seconds": 0.5},
+    #{"name": "openai/gpt-oss-120b", "provider": "groq", "sleep_seconds": 2.2},
+    #{"name": "gemini-3.6-flash", "provider": "google", "sleep_seconds": 4.2},
 ]
 
 # ---------------------------------------------------------------------------
