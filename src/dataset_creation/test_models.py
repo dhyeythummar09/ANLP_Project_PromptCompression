@@ -327,7 +327,7 @@ def main():
 
     models_to_test = TEST_MODELS
     if args.provider:
-        models_to_test = [m for m in models_to_test if m["provider"].lower() == args.provider.lower()]
+        models_to_test = [m for m in models_to_test if m["provider"].lower().startswith(args.provider.lower())]
     if args.model:
         models_to_test = [m for m in models_to_test if args.model.lower() in m["name"].lower()]
 

@@ -28,7 +28,7 @@ WORKER_ID = int(os.environ.get("WORKER_ID", 1))
 MODELS = [
     {"name": "qwen3.7-max", "provider": "motapis_qwen", "sleep_seconds": 0.5},
     {"name": "glm-5.3-flash", "provider": "motapis_glm", "sleep_seconds": 0.5},
-    #{"name": "openai/gpt-oss-120b", "provider": "groq", "sleep_seconds": 2.2},
+    {"name": "openai/gpt-oss-120b", "provider": "groq", "sleep_seconds": 2.2},
     #{"name": "gemini-3.6-flash", "provider": "google", "sleep_seconds": 4.2},
 ]
 

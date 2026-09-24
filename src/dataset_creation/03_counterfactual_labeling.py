@@ -30,6 +30,7 @@ import sys
 import time
 import json
 import logging
+import argparse
 import datetime
 import pandas as pd
 
@@ -42,14 +43,25 @@ from src.utils.answer_matching import answers_match
 WORKER_ID = int(os.environ.get("WORKER_ID", getattr(config, "WORKER_ID", 1)))
 TOTAL_WORKERS = 4
 
+# --- CLI: optional single-model mode for parallel execution ---
+_parser = argparse.ArgumentParser(add_help=False)
+_parser.add_argument("--model", type=str, default=None,
+                     help="Run only this model (by name). Launches an isolated process "
+                          "with its own output/cache/log files — safe to run in parallel.")
+_args, _ = _parser.parse_known_args()
+MODEL_FILTER = _args.model  # None = run all models sequentially (default)
+
 os.makedirs(config.DATA_DIR, exist_ok=True)
 os.makedirs(config.LOGS_DIR, exist_ok=True)
 
-# Dynamically name output/log/cache files so teammates don't overwrite each other
-WORKER_LABELS_FILE = config.LABELS_FILE.replace(".csv", f"_part{WORKER_ID}.csv")
-WORKER_CACHE_FILE = os.path.join(config.DATA_DIR, f"03_original_answers_cache_part{WORKER_ID}.json")
-WORKER_LOG_FILE = config.LABELING_LOG_FILE.replace(".log", f"_part{WORKER_ID}.log")
-WORKER_USAGE_FILE = os.path.join(config.DATA_DIR, f"03_daily_usage_part{WORKER_ID}.json")
+# Slug used in filenames: empty when running all models, model-name-based when single-model
+_model_slug = ("_" + MODEL_FILTER.replace("/", "-")) if MODEL_FILTER else ""
+
+# Each parallel process gets fully isolated files — no write conflicts
+WORKER_LABELS_FILE = config.LABELS_FILE.replace(".csv", f"_part{WORKER_ID}{_model_slug}.csv")
+WORKER_CACHE_FILE = os.path.join(config.DATA_DIR, f"03_original_answers_cache_part{WORKER_ID}{_model_slug}.json")
+WORKER_LOG_FILE = config.LABELING_LOG_FILE.replace(".log", f"_part{WORKER_ID}{_model_slug}.log")
+WORKER_USAGE_FILE = os.path.join(config.DATA_DIR, f"03_daily_usage_part{WORKER_ID}{_model_slug}.json")
 
 logging.basicConfig(
     filename=WORKER_LOG_FILE,
@@ -225,6 +237,18 @@ def main():
         logger.error("Spans file not found: %s", config.SPANS_FILE)
         sys.exit(1)
 
+    # Filter to a single model when --model is specified (parallel mode)
+    active_models = config.MODELS
+    if MODEL_FILTER:
+        active_models = [m for m in config.MODELS if MODEL_FILTER.lower() in m["name"].lower()]
+        if not active_models:
+            logger.error(
+                "--model '%s' didn't match any model in config.MODELS. Available: %s",
+                MODEL_FILTER, [m['name'] for m in config.MODELS]
+            )
+            sys.exit(1)
+        logger.info("Running in single-model mode: %s", active_models[0]['name'])
+
     spans_df = pd.read_csv(config.SPANS_FILE).fillna("")
     done_df, done_keys = _load_existing_labels()
     original_cache = _load_cache()
@@ -239,7 +263,7 @@ def main():
 
     exhausted_models = set()
 
-    for model_cfg in config.MODELS:
+    for model_cfg in active_models:
         model_name = model_cfg["name"]
         provider = model_cfg.get("provider", "groq")
 
@@ -341,7 +365,7 @@ def main():
     else:
         logger.info("No new labels produced this session.")
 
-    remaining_models = [m["name"] for m in config.MODELS if m["name"] not in exhausted_models]
+    remaining_models = [m["name"] for m in active_models if m["name"] not in exhausted_models]
     if not remaining_models:
         logger.info(
             "All models' daily limits are reached for today -- try again tomorrow. "
