@@ -138,10 +138,11 @@ def call_model(model_cfg: dict, prompt: str) -> str | None:
             elif provider.startswith("motapis"):
                 # Dynamically grab the correct key from the key_map based on the specific provider name
                 api_key = key_map[provider]
+                target_model = "qwen3.8-max" if model_name == "qwen3.7-max" else model_name
                 return _call_openai_compatible(
                     _get_motapis_endpoint(),
                     api_key,
-                    model_name,
+                    target_model,
                     prompt,
                 )
             elif provider == "huggingface":

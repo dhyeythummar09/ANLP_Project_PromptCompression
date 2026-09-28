@@ -233,6 +233,7 @@ def _get_original_answer(
 
 
 def main():
+
     if not os.path.exists(config.SPANS_FILE):
         logger.error("Spans file not found: %s", config.SPANS_FILE)
         sys.exit(1)

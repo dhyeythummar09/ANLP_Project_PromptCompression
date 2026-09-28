@@ -35,7 +35,8 @@ def _load_all_worker_labels() -> pd.DataFrame:
     if not files:
         raise FileNotFoundError(f"No worker label files found matching {pattern}")
     print(f"Merging {len(files)} worker files: {files}")
-    return pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+    combined = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
+    return combined.drop_duplicates(subset=["example_id", "span_text", "span_start", "labeling_model"])
 
 
 def main():
