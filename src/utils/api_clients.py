@@ -11,10 +11,14 @@ import logging
 import requests
 import config
 
+import itertools
+import threading
+
 logger = logging.getLogger("api_clients")
 
 MAX_RETRIES = 3
 BACKOFF_BASE_SECONDS = 2
+
 
 
 def _get_motapis_endpoint() -> str:
@@ -106,7 +110,7 @@ def _call_google(model_name: str, prompt: str) -> str:
         raise requests.exceptions.RequestException(f"Gemini returned invalid structure: {data}")
 
 
-def call_model(model_cfg: dict, prompt: str) -> str | None:
+def call_model(model_cfg: dict, prompt: str):
     """
     Call whichever provider `model_cfg` points to, with retry + exponential
     backoff on failure. Returns the model's text response, or None if every
@@ -119,6 +123,7 @@ def call_model(model_cfg: dict, prompt: str) -> str | None:
     key_map = {
         "motapis_qwen": config.MOTAPIS_API_KEY_QWEN, 
         "motapis_glm": config.MOTAPIS_API_KEY_GLM,  
+        "motapis_deepseek": config.MOTAPIS_API_KEY_DEEPSEEK,
         "groq": config.GROQ_API_KEY,
         "google": config.GOOGLE_API_KEY,
     }
@@ -129,15 +134,38 @@ def call_model(model_cfg: dict, prompt: str) -> str | None:
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             if provider == "groq":
+                import threading
+                import itertools
+                if not hasattr(call_model, "_groq_key_lock"):
+                    call_model._groq_key_lock = threading.Lock()
+                    keys = [k.strip() for k in config.GROQ_API_KEY.split(",") if k.strip()]
+                    call_model._groq_key_cycle = itertools.cycle(keys)
+                
+                with call_model._groq_key_lock:
+                    api_key = next(call_model._groq_key_cycle)
+                    
                 return _call_openai_compatible(
                     "https://api.groq.com/openai/v1/chat/completions",
-                    config.GROQ_API_KEY,
+                    api_key,
                     model_name,
                     prompt,
                 )
             elif provider.startswith("motapis"):
                 # Dynamically grab the correct key from the key_map based on the specific provider name
-                api_key = key_map[provider]
+                api_key_str = key_map[provider]
+                
+                # Perfect round-robin to guarantee two workers NEVER use the same key at the same time
+                import threading
+                import itertools
+                
+                if not hasattr(call_model, "_key_lock"):
+                    call_model._key_lock = threading.Lock()
+                    keys = [k.strip() for k in api_key_str.split(",") if k.strip()]
+                    call_model._key_cycle = itertools.cycle(keys)
+                
+                with call_model._key_lock:
+                    api_key = next(call_model._key_cycle)
+
                 target_model = "qwen3.8-max" if model_name == "qwen3.7-max" else model_name
                 return _call_openai_compatible(
                     _get_motapis_endpoint(),
@@ -159,13 +187,7 @@ def call_model(model_cfg: dict, prompt: str) -> str | None:
                     model_name,
                     prompt,
                 )
-            elif provider == "openrouter":
-                return _call_openai_compatible(
-                    "https://openrouter.ai/api/v1/chat/completions",
-                    config.OPENROUTER_API_KEY,
-                    model_name,
-                    prompt,
-                )
+
             elif provider == "google":
                 return _call_google(model_name, prompt)
             else:

@@ -74,7 +74,7 @@ def _normalize_text(text: str) -> str:
     return cleaned
 
 
-def _extract_choice_letter(text: str) -> str | None:
+def _extract_choice_letter(text: str):
     """Extract multiple-choice letter like '(A)' or 'A' if at start of string."""
     m = re.match(r"^\s*\(?([A-Za-z0-9])\)?(?:\s|$|[:.)])", text.strip())
     if m:
