@@ -1,6 +1,6 @@
 # Reasoning-Critical Prompt Compression: Cross-Model Counterfactual Identification of Answer-Critical Spans
 
-**Team Symbiote** | Advanced Natural Language Processing (ANLP), Monsoon 2024  
+**Team Symbiote** | Advanced Natural Language Processing (ANLP), Monsoon 2026
 International Institute of Information Technology, Hyderabad (IIIT-H)  
 GitHub Repository: [https://github.com/dhyeythummar09/ANLP_Project_PromptCompression](https://github.com/dhyeythummar09/ANLP_Project_PromptCompression)
 
