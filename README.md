@@ -4,6 +4,8 @@
 International Institute of Information Technology, Hyderabad (IIIT-H)  
 GitHub Repository: [https://github.com/dhyeythummar09/ANLP_Project_PromptCompression](https://github.com/dhyeythummar09/ANLP_Project_PromptCompression)
 
+HF link for our compression model: https://huggingface.co/flashstep/reasoning-critical-span-scorer
+
 **Team Members**:
 - Pranav Srivastava
 - Vikhyath Pattipaty
