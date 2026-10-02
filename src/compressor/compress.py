@@ -270,12 +270,23 @@ class BaselineRunner:
             out = self._obj[method].compress_prompt(text, rate=keep_ratio, **kw)  # rate = fraction KEPT
             return out["compressed_prompt"]
         if method == "selective_context":
+            # Selective context ranks tokens by self-information (surprisal) and deletes the lowest.
+            # Our InfoScorer does exactly this using GPT-2. We just rank and delete.
+            # We initialize it lazily like the others if we have to, but since `info` is already instantiated in main(),
+            # we will just use the global `info` instance passed to it, or reconstruct it here.
             if method not in self._obj:
-                from selective_context import SelectiveContext
-                self._obj[method] = SelectiveContext(model_type="gpt2", lang="en")
-            compressed, _ = self._obj[method](text, reduce_ratio=1.0 - keep_ratio,  # ratio REMOVED
-                                              reduce_level="phrase")
-            return compressed
+                from src.compressor.compress import InfoScorer, delete_to_budget
+                import re
+                self._obj[method] = (InfoScorer("gpt2", self.device), delete_to_budget, re)
+            
+            info_scorer, del_budget, regex = self._obj[method]
+            words = [(m.start(), m.end(), m.group()) for m in regex.finditer(r"\S+", text)]
+            if not words:
+                return text
+            # Surprisal (higher = more information = higher priority to keep)
+            prio = info_scorer.word_info(text, words)
+            return del_budget(words, prio, keep_ratio)
+            
         raise ValueError(method)
 
 
