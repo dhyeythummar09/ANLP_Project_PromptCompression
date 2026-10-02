@@ -1,161 +1,136 @@
-# Reasoning-Critical Prompt Compression
-**Cross-Model Counterfactual Identification of Answer-Critical Spans**
+# Reasoning-Critical Prompt Compression: Cross-Model Counterfactual Identification of Answer-Critical Spans
 
-This repository implements the end-to-end dataset creation, counterfactual labeling, consensus aggregation, and evaluation pipeline for reasoning-critical prompt compression (GSM8K, GSM-IC, and BBH).
+**Team Symbiote** | Advanced Natural Language Processing (ANLP), Monsoon 2024  
+International Institute of Information Technology, Hyderabad (IIIT-H)  
+GitHub Repository: [https://github.com/dhyeythummar09/ANLP_Project_PromptCompression](https://github.com/dhyeythummar09/ANLP_Project_PromptCompression)
+
+**Team Members**:
+- Pranav Srivastava
+- Vikhyath Pattipaty
+- Chatrathi Abhinav
+- Dhyey Thummar
 
 ---
 
-## 1. Environment Setup
+## Overview
 
-### Install Dependencies
-Activate your virtual environment and install the required packages:
-```powershell
+Existing prompt compression frameworks (such as LLMLingua and Selective-Context) rely on surrogate model perplexity or self-information to discard "redundant" tokens. While effective for verbose documents and multi-shot prompts, these proxy signals often fail on compact reasoning tasks (such as math word problems and deductive logic), where predictable or low-information tokens (e.g., small numbers, negations, units) are strictly necessary to arrive at the correct answer.
+
+This project investigates **reasoning-critical prompt compression** through offline counterfactual necessity testing:
+1. **Counterfactual Labeling**: Masking candidate linguistic spans across three architecturally diverse LLMs (GPT-OSS 120B, Qwen 3.7-Max, GLM 5.3-Flash) over 1,000 reasoning problems (GSM8K, GSM-IC, and BigBench Hard) to measure whether removing a span flips an answer from correct to incorrect.
+2. **Consensus Modeling**: Aggregating multi-model votes into a consensus criticality score for 14,162 spans.
+3. **Lightweight Neural Scorer**: Training a DistilBERT-base span classifier (5-fold cross-validation) to predict criticality on unseen prompts without runtime LLM calls.
+4. **Budgeted Compression & Evaluation**: Compressing prompts to strict token budgets (e.g., 50%, 25%) and evaluating downstream accuracy on both seen and unseen target LLMs (DeepSeek-V4-Flash), as well as benchmarking against SOTA compressors (LLMLingua, LLMLingua-2, and Selective-Context).
+
+---
+
+## Repository Structure
+
+```
+ANLP_Project_PromptCompression/
+├── config.py                 # Central configurations (benchmark splits, span types, API endpoints)
+├── requirements.txt          # Python dependencies
+├── README.md                 # Project documentation
+│
+├── src/
+│   ├── dataset_creation/     # Pipeline for dataset curation and counterfactual labeling
+│   │   ├── 01_load_data.py               # Downloads and standardizes GSM8K, GSM-IC, and BBH
+│   │   ├── 02_extract_spans.py            # Extracts candidate linguistic spans via spaCy
+│   │   ├── 03_counterfactual_labeling.py  # Masks spans and queries labeling LLMs with checkpoints
+│   │   ├── 04_build_consensus.py          # Aggregates multi-model labels into consensus scores
+│   │   └── test_models.py                # API connectivity and sanity testing utility
+│   │
+│   ├── scorer/               # Neural criticality scoring
+│   │   └── train_scorer.py               # Trains DistilBERT span classifier with 5-fold CV
+│   │
+│   ├── compressor/           # Budgeted compression and evaluation
+│   │   ├── compress.py                   # Implements our hybrid compressor and baselines
+│   │   └── evaluate.py                   # Evaluates compressed prompts on target LLMs
+│   │
+│   └── utils/                # Shared utilities
+│       ├── api_clients.py                # Unified LLM provider client with backoff and retry
+│       └── answer_matching.py            # Extraction and answer validation for math & MCQ
+│
+└── notebooks/
+    └── 01_eda_counterfactuals.ipynb      # Analysis of span distributions, agreement, and failure rates
+```
+
+*Note: Raw problem caches, generated datasets (`data/`), model checkpoints (`models/`), and run logs (`logs/`) are excluded from version control via `.gitignore`.*
+
+---
+
+## Setup & Installation
+
+### 1. Environment Setup
+Clone the repository and install dependencies in a Python 3.10+ virtual environment:
+```bash
+git clone https://github.com/dhyeythummar09/ANLP_Project_PromptCompression.git
+cd ANLP_Project_PromptCompression
+
+python -m venv .venv
+# On Linux/macOS:
+source .venv/bin/activate
+# On Windows:
+.venv\Scripts\activate
+
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-### Configure `.env` (No terminal exports needed)
-Copy `.env.example` to `.env` (or open the existing `.env` file in the root folder):
-```powershell
-cp .env.example .env
-```
-Fill in your API keys in `.env`:
-```dotenv
-# --- MOTAPIS (https://motapis.com) ---
-# Used for Qwen 3.7 Max and GLM 5.3 Flash (2M free tokens)
-MOTAPIS_API_KEY=your_motapis_key_here
-MOTAPIS_BASE_URL=https://motapis.com/v1
-
-# --- GROQ (https://console.groq.com) ---
-# Used for OpenAI GPT-OSS 120B (Free tier)
-GROQ_API_KEY=your_groq_key_here
-
-# --- GOOGLE AI STUDIO (https://aistudio.google.com) ---
-# Used for Gemini 3.6 Flash
-GOOGLE_API_KEY=your_google_key_here
-
-# --- WORKER ID (1, 2, 3, or 4) ---
-WORKER_ID=1
+### 2. Environment Variables
+Create a `.env` file in the root directory following `.env.example`:
+```env
+MOTAPIS_API_KEY_QWEN=your_key_here
+MOTAPIS_API_KEY_GLM=your_key_here
+GROQ_API_KEY=your_key_here
+MOTAPIS_BASE_URL=https://api.motapis.com/v1
 ```
 
 ---
 
-## 2. Models & Architectures
+## Execution Workflow
 
-To satisfy the project proposal's requirement of cross-model counterfactual necessity testing across distinct architectures, four model families are configured in `config.py`:
-
-| # | Model | Provider | Architecture / Family | Quota / Cost |
-| :-: | :--- | :--- | :--- | :--- |
-| **1** | `qwen3.7-max` | **Motapis** | Alibaba Qwen Architecture | Free tier (~480k / 2M tokens per person) |
-| **2** | `glm-5.3-flash` | **Motapis** | Zhipu AI GLM Architecture | Free tier (~480k / 2M tokens per person) |
-| **3** | `openai/gpt-oss-120b` | **Groq** | OpenAI Open-Weights MoE | Free tier (Request-based ceiling) |
-| **4** | `gemini-3.6-flash` | **Google** | Google DeepMind Transformer | Google AI Studio |
-
-### Token Consumption Feasibility
-- 1,000 problems = **15,024 candidate spans**.
-- Divided among 4 teammates = **250 problems** and **~3,750 candidate spans** per teammate.
-- Each call is capped at `max_tokens: 350`, producing concise mathematical reasoning (~150 tokens/call).
-- **Both `qwen3.7-max` and `glm-5.3-flash` combined require ~960k tokens per teammate**, which is well below the **2,000,000 free token allowance** on Motapis (leaving >1M tokens safety buffer).
-
----
-
-## 3. Team Workload Distribution (Workers 1 to 4)
-
-The 1,000 problems are deterministically partitioned into 4 non-overlapping splits of 250 problems each:
-- **Worker 1**: `WORKER_ID=1` (Problems 0, 4, 8, ...)
-- **Worker 2**: `WORKER_ID=2` (Problems 1, 5, 9, ...)
-- **Worker 3**: `WORKER_ID=3` (Problems 2, 6, 10, ...)
-- **Worker 4**: `WORKER_ID=4` (Problems 3, 7, 11, ...)
-
-Each teammate simply sets their assigned `WORKER_ID` in their local `.env` file before running Step 3.
-
-> [!NOTE]
-> If a teammate does not have a Google API key, the script will log an informational message and gracefully proceed with Motapis and Groq models without crashing.
-
----
-
-## 4. End-to-End Execution Pipeline
-
-### Optional Smoke Test (Verify API Keys)
-To verify that your API key works without consuming many tokens (tests only 1 question per dataset family = ~500 tokens total):
-```powershell
-python src/dataset_creation/test_models.py --provider motapis
-```
-
----
-
-### Step 1: Load Raw Problems
-Loads 200 GSM8K, 200 GSM-IC, and 600 BBH problems (1,000 problems total):
-```powershell
+### Step 1: Benchmark Loading & Span Extraction
+Fetch the 1,000 reasoning problems and extract candidate linguistic spans (numbers, entities, verbs, negations, conditionals, and length-matched random controls):
+```bash
 python src/dataset_creation/01_load_data.py
-```
-*Output: `data/raw_problems.csv`*
-
----
-
-### Step 2: Extract Candidate Spans
-Extracts reasoning-critical spans (negation, numbers, comparisons, entities, action verbs, and length-matched random controls):
-```powershell
 python src/dataset_creation/02_extract_spans.py
 ```
-*Output: `data/candidate_spans.csv` (15,024 candidate spans)*
 
----
-
-### Step 3: Counterfactual Labeling (Split among 4 Workers)
-Runs the baseline check and counterfactual masking loop for the worker's assigned 250 problems:
-```powershell
+### Step 2: Counterfactual Labeling & Consensus Aggregation
+Evaluate span necessity across the labeling panel (Qwen, GLM, GPT-OSS) and aggregate consensus labels:
+```bash
 python src/dataset_creation/03_counterfactual_labeling.py
-```
-- Automatically checkpoints every 25 labels to `data/per_model_labels_part{WORKER_ID}.csv`.
-- Completely resumable if paused or interrupted (re-running continues from the last completed span).
-- Tracks daily request caps and caches original prompt answers permanently in `data/03_original_answers_cache_part{WORKER_ID}.json`.
-
----
-
-### Step 4: Build Consensus Dataset
-Once all 4 workers have completed their labeling runs:
-1. Place all four files in `data/`:
-   - `data/per_model_labels_part1.csv`
-   - `data/per_model_labels_part2.csv`
-   - `data/per_model_labels_part3.csv`
-   - `data/per_model_labels_part4.csv`
-2. Run the consensus aggregation script:
-```powershell
 python src/dataset_creation/04_build_consensus.py
 ```
-*Output: `data/consensus_dataset.csv`*
 
-This computes the cross-model agreement score for every span, applies the consensus threshold (`agreement_score > 0.5`), and filters out spans below `MIN_MODELS_FOR_CONSENSUS`.
+### Step 3: Train the Criticality Scorer
+Train the DistilBERT-base span classifier across 5 folds:
+```bash
+python src/scorer/train_scorer.py --epochs 5 --batch-size 32
+```
+
+### Step 4: Budgeted Prompt Compression
+Compress prompts at target token retention budgets (e.g., 50% and 25%) across our methods and baselines:
+```bash
+# Run our hybrid compressor and baselines
+python src/compressor/compress.py --methods ours ours_scorer ours_signal random --ratios 0.5 0.25
+
+# Run external baselines (LLMLingua, LLMLingua-2, Selective-Context)
+python src/compressor/compress.py --methods llmlingua llmlingua2 selective_context --ratios 0.5 0.25
+```
+
+### Step 5: Downstream & Intrinsic Evaluation
+Evaluate exact-match answer accuracy on target models (seen Groq vs. unseen DeepSeek) and compute reference-free intrinsic metrics (Perplexity, Critical Span Recall, ROUGE-L):
+```bash
+python src/compressor/evaluate.py --model deepseek --mode summarize
+```
 
 ---
 
-## 5. Directory Structure
+## Key Experimental Results
 
-```
-ANLP_Project_PromptCompression/
-├── .env                                  # API keys & WORKER_ID (git-ignored)
-├── .env.example                          # Template for environment configuration
-├── config.py                             # Central project configuration & model definitions
-├── requirements.txt                      # Project dependencies
-├── README.md                             # Documentation & pipeline execution guide
-├── data/
-│   ├── raw_problems.csv                  # 1,000 raw benchmark questions
-│   ├── candidate_spans.csv               # 15,024 extracted candidate spans
-│   ├── per_model_labels_part{1..4}.csv   # Partitioned labels per worker
-│   └── consensus_dataset.csv             # Final aggregated consensus dataset
-├── logs/
-│   └── labeling_errors_part{1..4}.log    # Detailed run logs per worker
-└── src/
-    ├── dataset_creation/
-    │   ├── 01_load_data.py               # Step 1: Download & normalize data
-    │   ├── 02_extract_spans.py            # Step 2: Extract linguistic spans
-    │   ├── 03_counterfactual_labeling.py  # Step 3: Multi-worker counterfactual labeling
-    │   ├── 04_build_consensus.py          # Step 4: Merge worker parts & score consensus
-    │   └── test_models.py                # Smoke testing utility
-    ├── utils/
-    │   ├── api_clients.py                # Unified LLM API client with backoff
-    │   └── answer_matching.py            # Robust correctness & option matching logic
-    ├── scorer/                           # Phase 2: Lightweight DistilBERT span scorer
-    └── compressor/                       # Phase 3: Token budget prompt compressor
-```
+- **Math Word Problems (GSM8K & GSM-IC)**: At 50% token compression, our hybrid compressor retains **40.6% to 43.3% downstream accuracy** on an unseen model (DeepSeek-V4-Flash), outperforming random deletion (**4.6%**) by roughly 10x.
+- **Cross-Model Generalization**: Performance transfers near-identically between seen (Groq 120B: 43.5%) and unseen (DeepSeek: 43.3%) target models, confirming that arithmetic answer-criticality is an intrinsic property of the problem text rather than model-specific artifact.
+- **Distractor Filtering**: On GSM-IC (injected irrelevant sentences), our hybrid method discards 100% of distractor tokens while retaining over 88% of task-critical numbers.
+- **Baseline Budget Analysis**: In intrinsic evaluations across 1,000 problems, LLMLingua-1 exhibits severe budget failure on short reasoning questions (mean ratio error of 0.43 at 0.50 target, retaining ~93% of tokens and 98.9% of distractors). At 25% budget, our method retains **67.7% of numeric spans** compared to 43.7% for LLMLingua-2 and 26.6% for Selective-Context.
