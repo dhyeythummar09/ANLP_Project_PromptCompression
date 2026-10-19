@@ -19,7 +19,7 @@ def main():
         ap.error("Duplicate input paths")
     inputs = {str(Path(p)): file_hash(p) for p in [args.problems] + args.labels}
     problems = prepare_problems(pd.read_csv(args.problems, keep_default_na=False, dtype={"ground_truth_answer": str}))
-    raw = pd.concat([pd.read_csv(p, keep_default_na=False, dtype={"ground_truth_answer": str}).assign(input_file=str(p))
+    raw = pd.concat([pd.read_csv(p, keep_default_na=False, dtype={"ground_truth_answer": str,"span_text":str}).assign(input_file=str(p))
                      for p in args.labels], ignore_index=True)
     votes = normalize_votes(raw, problems, regrade=True)
     consensus = build_consensus(votes, args.minimum_models)

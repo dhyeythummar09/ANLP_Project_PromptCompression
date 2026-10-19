@@ -14,6 +14,7 @@ def main():
     ap.add_argument("--output", required=True)
     ap.add_argument("--max-questions", type=int, default=None, help="Upper cap; families are never split to fill it")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--exclude-cohort", help="Exclude every base family in this separate pilot cohort")
     args = ap.parse_args()
     claim_output(args.output)
     problems = prepare_problems(pd.read_csv(args.problems, keep_default_na=False, dtype={"ground_truth_answer": str}))
@@ -21,6 +22,13 @@ def main():
     if split.get("protocol") != "symbiote-v2":
         raise ValueError("This cohort builder requires a v2 family-safe split")
     eligible = problems[problems.uid.isin(split["folds"])].copy()
+    excluded_groups = set()
+    if args.exclude_cohort:
+        other = pd.read_csv(args.exclude_cohort, keep_default_na=False)
+        if "base_group_id" not in other:
+            raise ValueError("Excluded cohort needs base_group_id")
+        excluded_groups = set(other.base_group_id)
+        eligible = eligible[~eligible.base_group_id.isin(excluded_groups)].copy()
     # A family may contain label-ineligible variants: do not add those variants
     # without their own held-out scorer assignment.
     strata = {}
@@ -48,7 +56,9 @@ def main():
     atomic_json(str(args.output) + ".cohort.json", {"problems": file_hash(args.problems), "split": file_hash(args.split),
         "seed": args.seed, "requested_question_cap": cap, "n_questions": len(result),
         "n_base_groups": result.base_group_id.nunique(), "datasets": result.source_dataset.value_counts().to_dict(),
-        "excluded_without_fold": len(problems) - len(eligible),
+        "excluded_without_fold": (~problems.uid.isin(split["folds"])).sum(),
+        "excluded_pilot_families": len(excluded_groups),
+        "excluded_cohort_hash": file_hash(args.exclude_cohort) if args.exclude_cohort else None,
         "selection": "round-robin dataset strata, complete label-eligible families, no outcome-based selection"})
     print(f"Frozen {len(result)} questions / {result.base_group_id.nunique()} base groups at {args.output}")
 

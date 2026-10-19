@@ -12,7 +12,11 @@ PROTOCOL_VERSION = "symbiote-v2"
 
 def source_fingerprint():
     root = Path(__file__).resolve().parents[2]
-    files = sorted((root / "final_eval").rglob("*.py")) + sorted((root / "final_eval").glob("requirements*.txt"))
+    # Report/plot/test additions do not change trained weights or generations.
+    package = root / "final_eval"
+    files = [package / "settings.py"] + sorted(package.glob("requirements*.txt"))
+    for directory in ("compressor", "inference", "scorer", "spans", "utils", "preparation"):
+        files += sorted((package / directory).rglob("*.py"))
     return digest({p.relative_to(root).as_posix(): file_hash(p) for p in files})
 
 def package_versions():

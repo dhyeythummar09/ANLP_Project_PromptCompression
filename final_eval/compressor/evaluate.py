@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from final_eval.utils.answer_matching import grade_answer, GRADER_VERSION
 from final_eval.utils.artifacts import source_fingerprint, package_versions, digest, file_hash, resume_manifest, require_unique, parse_bool, atomic_csv, atomic_json, claim_output
 from final_eval.utils.statistics import cluster_ci
-from final_eval.inference.client import make_client, public_config
+from final_eval.inference.client import make_client, public_config, generation_config
 
 PROMPT_TEMPLATE = "Solve this problem. You may reason briefly, but you MUST end your response with a line in exactly this format:\nFinal Answer: <your answer>\n\nProblem: {question}\n"
 KEY = ["uid", "eval_model", "method", "target_ratio"]
@@ -40,6 +40,12 @@ def run_eval(args):
     comp = pd.read_csv(args.input_csv, keep_default_na=False, dtype={"ground_truth_answer": str})
     if "base_group_id" not in comp:
         raise ValueError("Use prepared v2 compression outputs with base_group_id")
+    if getattr(args,"pilot_check",None):
+        pilot=json.loads(Path(args.pilot_check).read_text())
+        if not pilot.get("passed") or pilot.get("target_config_hash")!=digest(generation_config(cfg)):
+            raise ValueError("Main inference requires a passed pilot with identical target configuration")
+        if set(comp.base_group_id)&set(pilot["pilot_base_groups"]):
+            raise ValueError("Pilot families overlap the main cohort")
     if args.methods:
         comp = comp[comp.method.isin(args.methods)]
     if args.ratios:
@@ -54,8 +60,9 @@ def run_eval(args):
     if args.dry_run:
         return
     manifest_hash = resume_manifest(args.output_csv, {"stage": "evaluation", "input": file_hash(args.input_csv),
-        "source": source_fingerprint(), "packages": package_versions(), "config": cfg, "grader": GRADER_VERSION, "wrapper": PROMPT_TEMPLATE,
-        "methods": args.methods, "ratios": args.ratios, "limit": args.limit})
+        "source": source_fingerprint(), "packages": package_versions(), "config": generation_config(cfg), "grader": GRADER_VERSION, "wrapper": PROMPT_TEMPLATE,
+        "methods": args.methods, "ratios": args.ratios, "limit": args.limit,
+        "pilot_check":file_hash(args.pilot_check) if getattr(args,"pilot_check",None) else None})
     previous = pd.read_csv(args.output_csv, keep_default_na=False) if Path(args.output_csv).exists() else pd.DataFrame()
     if not previous.empty:
         require_unique(previous, KEY, "evaluation")
@@ -68,7 +75,7 @@ def run_eval(args):
         if old and (not args.retry_failed or old.get("response_status") == "ok"):
             continue
         query = PROMPT_TEMPLATE.format(question=task["compressed_prompt"])
-        query_hash = digest([cfg, query])
+        query_hash = digest([generation_config(cfg), query])
         record = {"uid": task["uid"], "example_id": task.get("example_id", ""),
                   "source_dataset": task["source_dataset"], "base_group_id": task["base_group_id"],
                   "eval_model": name, "method": task["method"], "target_ratio": task["target_ratio"],
@@ -185,7 +192,7 @@ def deletion_check(args):
     if not args.model_config:
         raise ValueError("--model-config required")
     cfg = public_config(json.loads(Path(args.model_config).read_text(encoding="utf-8")))
-    spans = pd.read_csv(args.input_csv, keep_default_na=False, dtype={"ground_truth_answer": str})
+    spans = pd.read_csv(args.input_csv, keep_default_na=False, dtype={"ground_truth_answer": str,"span_text":str})
     from final_eval.utils.artifacts import require_columns
     require_columns(spans, ["example_id", "source_dataset", "span_start", "span_end", "span_text", "span_category", "original_prompt", "ground_truth_answer"])
     spans["uid"] = spans.source_dataset.astype(str) + "|" + spans.example_id.astype(str)
@@ -204,7 +211,7 @@ def deletion_check(args):
     if args.dry_run:
         return
     resume_manifest(args.output_csv, {"stage": "fresh_mask_deletion", "source": source_fingerprint(), "packages": package_versions(),
-        "input": file_hash(args.input_csv), "config": cfg, "n": args.n, "seed": args.seed, "grader": GRADER_VERSION})
+        "input": file_hash(args.input_csv), "config": generation_config(cfg), "n": args.n, "seed": args.seed, "grader": GRADER_VERSION})
     records = pd.read_csv(args.output_csv, keep_default_na=False).to_dict("records") if Path(args.output_csv).exists() else []
     done = {(r["uid"], int(r["span_start"]), int(r["span_end"])) for r in records}
     client = make_client(cfg, usage_path=str(args.output_csv) + ".usage.json")
@@ -235,7 +242,7 @@ def deletion_check(args):
         if any(v in {"auth_failed", "quota_exhausted", "request_budget_exhausted", "configuration_error", "model_not_found"}
                for k, v in record.items() if k.endswith("_status")):
             break
-    completed = [r for r in records if all(r[c + "_status"] == "ok" for c in interventions)
+    completed = [r for r in records if all(r[c + "_status"] == "ok" for c in ("original", "mask", "delete"))
                  and parse_bool(r["original_correct"])]
     agree = sum(parse_bool(r["mask_correct"]) == parse_bool(r["delete_correct"]) for r in completed)
     atomic_json(str(args.output_csv) + ".summary.json", {"n_attempted": len(records),
@@ -256,6 +263,7 @@ def main():
     ap.add_argument("--focus", default="grouped_hybrid")
     ap.add_argument("--bootstrap", type=int, default=1000)
     ap.add_argument("--retry-failed", action="store_true")
+    ap.add_argument("--pilot-check",help="Require a passed disjoint pilot with identical target settings before main inference")
     ap.add_argument("--n", type=int, default=30, help="Spans in fresh mask/deletion diagnostic")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--dry-run", action="store_true")
@@ -265,4 +273,5 @@ def main():
     {"run": run_eval, "summarize": summarize, "deletion-check": deletion_check}[args.mode](args)
 
 if __name__ == "__main__":
-    main()
+    from final_eval.utils.profiling import profile_cli
+    profile_cli(main, "--output-csv")

@@ -22,6 +22,7 @@ OURS_ALPHA = {"ours": 0.5, "ours_scorer": 1.0, "ours_signal": 0.0,
               "grouped_hybrid": 0.5, "grouped_signal": 0.5}
 NEURAL = {"ours", "ours_scorer", "grouped_hybrid"}
 BASELINES = ["random", "surprisal_word", "llmlingua", "llmlingua2", "selective_context"]
+BASELINES += [m+"_budgeted" for m in ("llmlingua","llmlingua2","selective_context")]
 DEFAULT_METHODS = list(OURS_ALPHA) + BASELINES
 MODEL_NAME = "distilbert-base-uncased"
 MODEL_OUTPUT_DIR = "models/span_scorer_v2"
@@ -154,7 +155,8 @@ class BaselineRunner:
                 from llmlingua import PromptCompressor
                 self.objects[method] = PromptCompressor(model_name=self.models[method],
                     use_llmlingua2=method == "llmlingua2", device_map=self.device)
-            out = self.objects[method].compress_prompt(text, rate=ratio, target_token=budget)
+            settings={"iterative_size":50} if method=="llmlingua" else {}
+            out = self.objects[method].compress_prompt(text, rate=ratio, target_token=budget, **settings)
             return out["compressed_prompt"]
         if method == "selective_context":
             if method not in self.objects:
@@ -163,6 +165,47 @@ class BaselineRunner:
             output, _ = self.objects[method](text, reduce_ratio=1 - ratio)
             return output
         raise ValueError(method)
+
+    def run_budgeted(self, method, text, ratio, budget, counter):
+        """Predeclared black-box budget calibration; never cuts returned text.
+
+        Keep the native attempt and try progressively lower public keep/target
+        controls, then three bracket refinements. No gold, labels or outcomes
+        enter this controller. All attempted outputs/controls are recorded.
+        """
+        base=method.removesuffix("_budgeted")
+        native=self.run(base,text,ratio,budget)
+        attempts=[{"factor":1.,"text":native,"tokens":counter(native)}]
+        valid=[a for a in attempts if a["text"].strip() and a["tokens"]<=budget]
+        low=None; high=1.
+        def attempt(factor):
+            try:
+                output=self.run(base,text,max(.0001,ratio*factor),max(1,int(budget*factor)))
+                row={"factor":factor,"text":output,"tokens":counter(output)}
+            except Exception as exc:
+                row={"factor":factor,"text":"","tokens":None,"error":type(exc).__name__}
+            attempts.append(row)
+            if row["text"].strip() and row["tokens"]<=budget:
+                valid.append(row)
+                return True
+            return False
+        if not valid and budget>0:
+            for factor in (.9,.75,.5,.25,.05):
+                if attempt(factor):
+                    low=factor; break
+                high=factor
+            if low is not None:
+                for _ in range(3):
+                    midpoint=(low+high)/2
+                    if attempt(midpoint):
+                        low=midpoint
+                    else:
+                        high=midpoint
+        chosen=max(valid,key=lambda a:a["tokens"]) if valid else attempts[0]
+        details={"baseline_base_method":base,"native_compressed_prompt":native,"native_comp_tokens":counter(native),
+                 "budget_controller":"official-controls-bracket-v1",
+                 "budget_search_json":json.dumps(attempts)}
+        return chosen["text"],"ok" if valid else "baseline_budget_infeasible",details
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
@@ -267,9 +310,12 @@ def main():
                           "run_hash": run_hash, "tokenizer": counter.name, "orig_tokens": counter(text),
                           "budget_tokens": int(ratio * counter(text)), "crit_total": None, "crit_kept": None,
                           "crit_kept_lower": None, "crit_kept_upper": None, "all_critical_kept": None,
-                          "cat_retention_json": "{}", "alignment_status": "not_annotated"}
+                          "cat_retention_json": "{}", "alignment_status": "not_annotated",
+                          "baseline_base_method":"","native_compressed_prompt":"","native_comp_tokens":None,
+                          "budget_controller":"none","budget_search_json":"[]"}
                 try:
                     selection = None
+                    baseline_status="ok"
                     rng = np.random.default_rng(int(digest([row.uid, method, ratio, args.seed])[:16], 16))
                     if method in OURS_ALPHA:
                         kind = "prior" if method == "grouped_signal" else "neural" if method in NEURAL else "signal"
@@ -299,9 +345,13 @@ def main():
                         compressed = selection.text
                         elapsed = (time.perf_counter() - started) * 1000
                     else:
-                        compressed = baseline.run(method, text, ratio, record["budget_tokens"])
+                        if method.endswith("_budgeted"):
+                            compressed,baseline_status,details=baseline.run_budgeted(method,text,ratio,record["budget_tokens"],counter)
+                            record.update(details)
+                        else:
+                            compressed = baseline.run(method, text, ratio, record["budget_tokens"])
                         elapsed = (time.perf_counter() - started) * 1000
-                    status = selection.status if selection else "ok"
+                    status = selection.status if selection else baseline_status
                     tokens = counter(compressed)
                     record.update(compressed_prompt=compressed, comp_tokens=tokens,
                         actual_ratio=tokens / max(record["orig_tokens"], 1), latency_ms=elapsed,
@@ -321,4 +371,5 @@ def main():
     print(f"Saved compression records to {args.output_csv}; failures remain explicit. Use a new run for changed configurations.")
 
 if __name__ == "__main__":
-    main()
+    from final_eval.utils.profiling import profile_cli
+    profile_cli(main, "--output-csv")

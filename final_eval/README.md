@@ -17,12 +17,14 @@ Target-model evaluation is a later step that does generate new answers. Choose i
 | Location | Purpose |
 | --- | --- |
 | `preparation/` | Import/regrade saved responses, recover verified question families, freeze a cohort, merge compression outputs. |
+| `analysis/` | Labeler agreement, a train-fold feature baseline, retention prediction, plots and a scoped claims ledger; no inference calls. |
 | `scorer/` | Corrected training targets and grouped folds; inspect/download the historical checkpoint explicitly. |
 | `compressor/` | Budget checks, compression adapters, retention metrics, response evaluation, paired reports. |
 | `inference/`, `utils/`, `spans/` | Helpers used by this experiment, isolated from the original pipeline. |
 | `configs/` | Placeholder target configurations; fill confirmed settings in an ignored run directory. |
 | `requirements*.txt` | Extra dependencies for this experiment; root requirements remain the submitted version. |
 | `tests/` | Offline regression checks with fabricated fixtures and mocked generation. |
+| `batch.py`, `handoff.py` | Sequential compressor execution, pilot gates, environment inventory, and a local results ZIP without checkpoint weights or `.env`. |
 
 Start with the [execution runbook](RUNBOOK.md). It gives the order of server commands, required inputs, outputs to return, and checks that can stop an invalid run. The broader [research plan](../PROJECT_COMPLETION_PLAN.md) contains proposed experiments; that proposal does not mean every experiment has been implemented or validated.
 
@@ -31,6 +33,12 @@ python -m unittest discover -s final_eval/tests -v
 ```
 
 GPU model loading, official baseline compatibility, provider settings, throughput, and research outcomes still require execution-machine checks. Offline tests do not establish that the new method beats a baseline.
+
+**Execution order:** run sections A, B, C of the runbook; section D builds the archive to return at any checkpoint. A reuses saved data and trains the corrected scorer once. B is a disjoint pilot that must pass before the main sweep. C runs the main comparison and offline reports. Interaction studies, extra targets and extra training ablations are outside the core scope. A skipped optional reliability check remains an explicit limitation.
+
+The offline analyses can be improved from saved results without repeating the main experiment. Process profiles include cold loads and report peak PyTorch memory where available. Request-ceiling/backoff adjustments preserve successful cached generations and the usage ledger; model/decoding/input changes remain separate experiments.
+
+The main external comparators have explicit `_budgeted` names: official compressors plus a fixed controller that adjusts public rate/token settings and checks final output length. Native outputs and all controller attempts are saved; outputs are never manually truncated. Report the controller's extra runtime and actual retained lengths. Native methods remain available for separately labeled analysis.
 
 ## Which files belong to which work
 

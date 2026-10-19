@@ -38,6 +38,12 @@ def public_config(cfg):
             raise ValueError("base_url must not contain inline credentials or query parameters")
     return dict(cfg)
 
+
+def generation_config(cfg):
+    """Quota/backoff changes do not change a prompt's generation conditions."""
+    return {k:v for k,v in public_config(cfg).items()
+            if k not in {"request_budget","max_attempts","sleep_seconds","timeout"}}
+
 class HostedClient:
     def __init__(self, cfg, usage_path=None):
         self.cfg = public_config(cfg)
@@ -55,13 +61,18 @@ class HostedClient:
         self.lock = threading.Lock()
         self.next_allowed = 0.0
         self.attempts = 0
+        self.execution_history = []
         self.stopped = None
         self.usage_path = Path(usage_path) if usage_path else None
         if self.usage_path and self.usage_path.exists():
             saved = json.loads(self.usage_path.read_text(encoding="utf-8"))
-            if saved["config_hash"] != digest(self.cfg):
+            if saved["config_hash"] != digest(generation_config(self.cfg)):
                 raise ValueError("Usage ledger configuration mismatch")
             self.attempts = int(saved["attempts"])
+            self.execution_history = saved.get("execution_history",[])
+        settings={k:self.cfg.get(k) for k in ("request_budget","max_attempts","sleep_seconds","timeout")}
+        if not self.execution_history or self.execution_history[-1]["settings"]!=settings:
+            self.execution_history.append({"settings":settings,"timestamp_utc":datetime.now(timezone.utc).isoformat()})
         if int(cfg.get("max_attempts", 3)) < 1 or float(cfg.get("sleep_seconds", 0)) < 0:
             raise ValueError("Invalid retry/rate configuration")
 
@@ -87,7 +98,8 @@ class HostedClient:
                 self.attempts += 1
                 result.attempts += 1
                 if self.usage_path:
-                    atomic_json(self.usage_path, {"config_hash": digest(self.cfg), "attempts": self.attempts})
+                    atomic_json(self.usage_path, {"config_hash": digest(generation_config(self.cfg)), "attempts": self.attempts,
+                        "execution_history":self.execution_history})
                 self.next_allowed = time.monotonic() + float(self.cfg.get("sleep_seconds", 1.0))
             try:
                 if self.google:

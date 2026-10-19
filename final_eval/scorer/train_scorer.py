@@ -450,4 +450,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    from final_eval.utils.profiling import profile_cli
+    profile_cli(main, "--output-dir", MODEL_OUTPUT_DIR, directory=True)
