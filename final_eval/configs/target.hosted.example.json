@@ -1,0 +1,13 @@
+{
+  "backend": "hosted",
+  "provider": "openai-compatible",
+  "name": "SET_CONFIRMED_MODEL_ID",
+  "base_url": "https://SET_CONFIRMED_HOST/v1",
+  "api_key_env": "EVAL_API_KEY",
+  "max_tokens": 512,
+  "temperature": 0,
+  "sleep_seconds": 2,
+  "max_attempts": 3,
+  "request_budget": 20,
+  "timeout": 90
+}

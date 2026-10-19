@@ -1,0 +1,8 @@
+{
+  "backend": "local",
+  "name": "SET_SELECTED_LOCAL_MODEL_ID_OR_PATH",
+  "revision": "main",
+  "max_tokens": 512,
+  "dtype": "float16",
+  "device_map": "auto"
+}
