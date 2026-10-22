@@ -1,0 +1,22 @@
+{
+  "problems": "7f4cd1fd7c1b3348181c30dbc0958f18221bb714ff9df73475436aa9af6ba250",
+  "split": "f8e89467a30823420014ecd25d046040b5dfbf4f22efe3c564f669d74b6414fc",
+  "seed": 42,
+  "requested_question_cap": 160,
+  "n_questions": 160,
+  "n_base_groups": 125,
+  "datasets": {
+    "gsm_ic": 50,
+    "bbh_date_understanding": 16,
+    "bbh_formal_fallacies": 16,
+    "bbh_logical_deduction_three_objects": 16,
+    "bbh_navigate": 16,
+    "bbh_object_counting": 16,
+    "bbh_tracking_shuffled_objects_three_objects": 15,
+    "gsm8k": 15
+  },
+  "excluded_without_fold": 88,
+  "excluded_pilot_families": 11,
+  "excluded_cohort_hash": "09e3aded09f1ed7fa1fd8ad450157749b76bb11f6d8fdfa801dd718d7d3cc266",
+  "selection": "round-robin dataset strata, complete label-eligible families, no outcome-based selection"
+}

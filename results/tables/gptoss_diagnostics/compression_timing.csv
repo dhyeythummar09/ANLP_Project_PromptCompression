@@ -1,0 +1,15 @@
+method,target_ratio,n,median_ms,p95_ms,scope
+grouped_hybrid,0.5,160,46.30890949999866,72.99526364998314,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+grouped_hybrid,0.75,160,45.42722700000468,70.61795855001378,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+grouped_signal,0.5,160,37.93623000001389,57.84389125001891,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+grouped_signal,0.75,160,37.33420550000233,55.93606605000332,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+llmlingua2_budgeted,0.5,160,118.22923800002627,625.8424992000442,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+llmlingua2_budgeted,0.75,160,119.29496950000384,621.1157378500445,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+llmlingua_budgeted,0.5,160,43.48215799998911,62.19278390001363,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+llmlingua_budgeted,0.75,160,43.50169700001061,63.600117050006524,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+ours,0.5,160,46.251376500009656,72.46457809997933,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+ours,0.75,160,45.63778499999671,70.50376580002079,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+random,0.5,160,2.4008179999839285,6.418796949972715,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+random,0.75,160,1.7874515000073643,4.572986699972148,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+selective_context_budgeted,0.5,160,366.5496484999835,688.5176055000214,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.
+selective_context_budgeted,0.75,160,377.6503545000196,668.0770367499747,Condition timings may include cold baseline initialization; process profiles report total wall time and peak PyTorch memory.

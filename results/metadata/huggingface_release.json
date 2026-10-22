@@ -1,0 +1,28 @@
+{
+  "repo_id": "Pranav-Sriv/reasoning-critical-span-scorer-v2",
+  "url": "https://huggingface.co/Pranav-Sriv/reasoning-critical-span-scorer-v2",
+  "revision": "70cc329f10ef6415e152c0bcdcef8894f8dc0d69",
+  "private": false,
+  "verified_files": 67,
+  "checkpoint_files": [
+    "fold0/scorer.pt",
+    "fold1/scorer.pt",
+    "fold2/scorer.pt",
+    "fold3/scorer.pt",
+    "fold4/scorer.pt"
+  ],
+  "missing_files": [],
+  "mismatches": [],
+  "extra_remote_files": [
+    ".gitattributes"
+  ],
+  "verified_without_downloading_weights": true,
+  "complete": true,
+  "legacy": {
+    "repo_id": "flashstep/reasoning-critical-span-scorer",
+    "url": "https://huggingface.co/flashstep/reasoning-critical-span-scorer",
+    "revision": "c24d8ce9ef2cfbdc7b11185958dee5810327e432",
+    "private": false
+  },
+  "scope": "Remote metadata hashes match the prepared release. Does not execute model inference."
+}

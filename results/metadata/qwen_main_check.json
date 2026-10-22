@@ -1,0 +1,56 @@
+{
+  "passed": false,
+  "expected_conditions": 2400,
+  "recorded_conditions": 2400,
+  "grid_complete": true,
+  "response_statuses": {
+    "ok": 2398,
+    "empty_response": 2
+  },
+  "successful_cached_reuses": 503,
+  "http_attempts": 1899,
+  "http_attempt_limit": 3000,
+  "original_questions": 160,
+  "original_accuracy": 0.9875,
+  "original_parse_statuses": {
+    "ok": 160
+  },
+  "returned_usage_records": 1899,
+  "active_csv_usage_records": 1897,
+  "archived_usage_records": 2,
+  "returned_prompt_tokens": 239335,
+  "returned_completion_tokens": 1155534,
+  "input_inr_per_million": 28.431,
+  "output_inr_per_million": 222.709,
+  "returned_usage_cost_estimate_inr": 264.152354991,
+  "billing_note": "Quoted rates, estimate only. Reconcile provider usage/wallet; missing usage/failed attempts may add costs. Qwen has a separate INR500 conservative token-cost allowance; GPT-OSS has no currency cutoff.",
+  "responses_sha256": "3b17d1c635326d15f8427c32f581764d11471041115d823a96f07be3a99a3769",
+  "compression_sha256": "30bea97d554fcba62ba98b178a5f16dd6c497f66e1ee74825973a4036c7f9311",
+  "pilot_check_sha256": "92c77438befaeb9fd91aad22ad2110c3ba4a414934c778a43a1c692f7b4e9c0f",
+  "scope": "Main qwen answers only; no automatic superiority claim or additional paid calls.",
+  "next_step": "Inspect coverage, grading and billing, then run offline analysis on these saved answers. Preserve failures; do not tune settings against main outcomes.",
+  "token_cost_allowance": {
+    "spec": {
+      "generation": {
+        "backend": "hosted",
+        "provider": "openai-compatible",
+        "name": "qwen-3.8-27b-fp8",
+        "base_url": "https://models.jarvislabs.net/v1",
+        "api_key_env": "JARVISLABS_API_KEY",
+        "max_tokens": 8192,
+        "temperature": 0,
+        "reasoning_effort": "low"
+      },
+      "limit_inr": 500,
+      "input_inr_per_million": 28.431,
+      "output_inr_per_million": 222.709,
+      "input_bound": "UTF-8 prompt bytes plus1024 message/template tokens",
+      "unknown_attempts": "reserve max_tokens at full output rate for every attempted call"
+    },
+    "spec_hash": "0d6d4ecd47f74748ba5c66a2738d62fc8507bc8da74bd7ab095823b7eb195556",
+    "accounted_inr": 264.15235499099964,
+    "completed_generations": 1899,
+    "unknown_attempts": 0,
+    "unsettled_reservations": []
+  }
+}

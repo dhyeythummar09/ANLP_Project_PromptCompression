@@ -1,0 +1,13 @@
+active_usage_records,archived_usage_records,prompt_tokens,completion_tokens,estimated_inr,stage,http_attempts,evidence
+1896.0,1.0,278388.0,921570.0,39.64668,gptoss_main,1897,
+1897.0,2.0,239335.0,1155534.0,264.152354991,qwen_main,1899,
+,,,,0.005658,deepseek_access,2,outputs/final_eval/jarvis/access.deepseek.json.summary.json
+,,,,0.00958,gptoss_access,2,outputs/final_eval/jarvis/access.gptoss.json.summary.json
+,,,,0.033126790999999996,qwen_access,2,outputs/final_eval/jarvis/access.qwen.json.summary.json
+,,,,15.551678,deepseek_pilot_failed,218,outputs/final_eval/target_pilots/deepseek/review_summary.json
+,,,,1.3192039999999998,deepseek_calibration_failed,12,outputs/final_eval/target_calibration/deepseek_v1/summary.json
+,,,,0.12713,gptoss_fallback,6,outputs/final_eval/target_calibration/gptoss_fallback_v1/summary.json
+,,,,4.12846,gptoss_pilot,192,outputs/final_eval/target_pilots/gptoss/review_summary.json
+,,,,31.234540764000002,qwen_4096_pilot_failed,194,outputs/final_eval/target_pilots/qwen/usage_summary.json
+,,,,1.211849728,qwen_cap_check,3,outputs/final_eval/target_calibration/qwen_cap8192_v1/summary.json
+,,,,29.522453467000002,qwen_8192_pilot,192,outputs/final_eval/target_pilots/qwen_8192/usage_summary.json

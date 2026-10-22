@@ -94,8 +94,12 @@ def bundle(run_dir,prepared_dir,model_dir,output):
     selections += [folder/name for name in ["training_metadata.json","scorer_report.json","scorer_oof_predictions.csv","split.json"] if (folder/name).is_file()]
     selections += [p for p in folder.rglob("*.json") if p.is_file()]
     package=root/"final_eval"
-    selections += [p for p in package.rglob("*") if p.is_file() and p.suffix in {".py",".md",".txt"}]
-    selections += [p for p in (root/"PROJECT_COMPLETION_PLAN.md",) if p.exists()]
+    selections += [p for p in package.rglob("*") if p.is_file() and p.suffix in {".py",".md",".txt",".ps1"}]
+    selections += [p for p in (root/"README.md",root/"RESULTS.md") if p.exists()]
+    for directory, extensions in [("results",{".csv",".json",".png",".svg"}),
+                                  ("notebooks",{".ipynb"}),("environments",{".txt"})]:
+        selections += [p for p in (root/directory).rglob("*") if p.is_file() and p.suffix in extensions
+                       and ".ipynb_checkpoints" not in p.parts]
     selected=sorted(set(selections))
     for path in selected:
         path.resolve().relative_to(root)

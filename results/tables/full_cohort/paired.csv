@@ -1,0 +1,25 @@
+eval_model,target_ratio,focus,other,n_paired,n_groups,difference,ci_lo,ci_hi,policy
+gpt-oss-120b,0.5,grouped_hybrid,grouped_signal,160,125,0.05625,-0.0068038859379368185,0.1165644171779141,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.5,grouped_hybrid,llmlingua2_budgeted,160,125,-0.23125,-0.36554597701149427,-0.07967330450233003,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.5,grouped_hybrid,llmlingua_budgeted,160,125,0.25625,0.15128289473684212,0.3678631138975966,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.5,grouped_hybrid,ours,160,125,0.00625,-0.027401983939537078,0.0387223276407337,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.5,grouped_hybrid,random,160,125,0.15625,0.04079591836734694,0.2689149560117301,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.5,grouped_hybrid,selective_context_budgeted,160,125,0.06875,-0.08597163065140088,0.23026415470494419,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.75,grouped_hybrid,grouped_signal,160,125,0.01875,-0.02901388161341016,0.06918693423492202,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.75,grouped_hybrid,llmlingua2_budgeted,160,125,-0.16875,-0.28837928750697156,-0.06490128368741088,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.75,grouped_hybrid,llmlingua_budgeted,160,125,0.46875,0.3567132675438596,0.5805052378873854,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.75,grouped_hybrid,ours,160,125,0.0,-0.0179667772887959,0.018870909959398132,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.75,grouped_hybrid,random,160,125,0.3625,0.2482758620689655,0.47093117029257314,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+gpt-oss-120b,0.75,grouped_hybrid,selective_context_budgeted,160,125,-0.0125,-0.16234172077922077,0.12142277659466581,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,grouped_signal,160,125,0.05625,-0.006901442895573489,0.12080536912751678,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,llmlingua2_budgeted,160,125,-0.23125,-0.35760695187165775,-0.10457516339869281,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,llmlingua_budgeted,160,125,0.3375,0.22067241379310346,0.4662181141815973,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,ours,160,125,0.0,-0.02485253330208211,0.024848602484472043,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,random,160,125,0.2875,0.15624445921985816,0.4181384822804314,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,selective_context_budgeted,160,125,0.15,0.0,0.31901840490797545,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,grouped_signal,160,125,0.00625,-0.02702702702702703,0.03823517247084124,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,llmlingua2_budgeted,160,125,-0.225,-0.33839881869542887,-0.13331125827814572,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,llmlingua_budgeted,160,125,0.375,0.26488191928026994,0.4904654151301821,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,ours,160,125,0.0125,-0.006897749042145593,0.0389646666182979,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,random,160,125,0.30625,0.18486902998889299,0.4217959183673469,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,selective_context_budgeted,160,125,-0.04375,-0.17834963603275705,0.07595121770671405,All planned questions; provider/parse failures count incorrect; unadjusted family-bootstrap interval

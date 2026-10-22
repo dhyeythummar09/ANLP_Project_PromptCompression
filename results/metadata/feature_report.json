@@ -1,0 +1,51 @@
+{
+  "n_feature_oof": 13966,
+  "n_shared_with_neural": 13855,
+  "n_feature_only": 111,
+  "features": [
+    "source_dataset",
+    "span_category",
+    "relative_start",
+    "relative_length",
+    "log_prompt_length",
+    "log_span_length",
+    "contains_digit"
+  ],
+  "definition": "Fixed alpha=1 ridge on soft training targets; outputs clipped to [0,1]. Scorer comparison only, not an extra compressor or a calibrated probability claim.",
+  "shared_metrics": {
+    "feature_ridge": {
+      "n": 13855,
+      "roc_auc": 0.8217106748708686,
+      "pr_auc": 0.5487050662487531,
+      "f1_critical": 0.5422242731887402,
+      "brier_soft": 0.08617464427380661
+    },
+    "neural": {
+      "n": 13855,
+      "roc_auc": 0.9073852458438002,
+      "pr_auc": 0.7133462045726257,
+      "f1_critical": 0.6344040574809806,
+      "brier_soft": 0.06059265619256563
+    },
+    "category_prior": {
+      "n": 13855,
+      "roc_auc": 0.7514971668689492,
+      "pr_auc": 0.35738339346536563,
+      "f1_critical": 0.0,
+      "brier_soft": 0.09975566746349375
+    }
+  },
+  "consensus_sha256": "cd3d43baac30091a82c08ae8d6161cab575571f846576e2ecd7c1531c4a0cee9",
+  "split_sha256": "f8e89467a30823420014ecd25d046040b5dfbf4f22efe3c564f669d74b6414fc",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.16.1",
+    "pandas": "2.3.3",
+    "numpy": "2.1.3",
+    "scikit-learn": "1.6.1",
+    "spacy": "3.8.16",
+    "tiktoken": "0.14.0",
+    "llmlingua": null,
+    "selective-context": null
+  }
+}

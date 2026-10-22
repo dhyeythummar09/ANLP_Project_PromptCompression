@@ -1,0 +1,14 @@
+torch==2.11.0+cu128
+transformers==5.16.1
+numpy==2.1.3
+pandas==2.3.3
+scikit-learn==1.6.1
+spacy==3.8.16
+accelerate==1.14.0
+tiktoken==0.14.0
+nltk==3.9.1
+requests==2.34.2
+python-dotenv==1.2.3
+tqdm==4.67.3
+openai==2.54.0
+click==8.5.0

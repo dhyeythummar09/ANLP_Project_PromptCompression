@@ -36,6 +36,15 @@ def public_config(cfg):
         parsed = urlsplit(cfg["base_url"])
         if parsed.query or parsed.username or parsed.password:
             raise ValueError("base_url must not contain inline credentials or query parameters")
+    if "thinking" in cfg:
+        thinking = cfg["thinking"]
+        if (not isinstance(thinking, dict) or set(thinking) != {"type"}
+                or thinking["type"] not in ("enabled", "disabled")):
+            raise ValueError("thinking accepts only type enabled or disabled")
+    if "reasoning_effort" in cfg and cfg["reasoning_effort"] not in ("low", "high", "max"):
+        raise ValueError("reasoning_effort must be low, high or max")
+    if cfg.get("provider") == "google" and any(k in cfg for k in ("thinking", "reasoning_effort")):
+        raise ValueError("These reasoning controls require the OpenAI-compatible hosted backend")
     return dict(cfg)
 
 
@@ -112,10 +121,17 @@ class HostedClient:
                 else:
                     url = self.url if self.url.endswith("/chat/completions") else self.url + "/chat/completions"
                     headers = {"Authorization": f"Bearer {key}"} if key else {}
-                    response = requests.post(url, headers=headers, json={
+                    payload = {
                         "model": self.name, "messages": [{"role": "user", "content": prompt}],
                         "temperature": self.cfg.get("temperature", 0),
-                        "max_tokens": self.cfg.get("max_tokens", 512)}, timeout=float(self.cfg.get("timeout", 90)))
+                        "max_tokens": self.cfg.get("max_tokens", 512)}
+                    # Explicit controls are part of generation_config and all manifests.
+                    # An accepted request does not prove that a proxy honored them.
+                    for field in ("thinking", "reasoning_effort"):
+                        if field in self.cfg:
+                            payload[field] = self.cfg[field]
+                    response = requests.post(url, headers=headers, json=payload,
+                                             timeout=float(self.cfg.get("timeout", 90)))
                 if response.status_code in (401, 403, 402):
                     self.stopped = "auth_failed" if response.status_code != 402 else "quota_exhausted"
                     result.status, result.error = self.stopped, f"HTTP {response.status_code}"

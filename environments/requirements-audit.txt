@@ -1,0 +1,10 @@
+# Observed local versions used for saved-artifact verification on 22 Oct 2026.
+# Audit/publish only; not the GPU training or full regression-test environment.
+numpy==2.4.6
+pandas==3.0.5
+scikit-learn==1.9.1
+scipy==1.17.1
+matplotlib==3.11.2
+tiktoken==0.14.0
+requests==2.34.2
+python-dotenv==1.2.3

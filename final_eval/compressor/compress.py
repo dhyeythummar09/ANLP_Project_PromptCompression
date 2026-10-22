@@ -155,7 +155,16 @@ class BaselineRunner:
                 from llmlingua import PromptCompressor
                 self.objects[method] = PromptCompressor(model_name=self.models[method],
                     use_llmlingua2=method == "llmlingua2", device_map=self.device)
-            settings={"iterative_size":50} if method=="llmlingua" else {}
+            settings = {}
+            if method == "llmlingua":
+                # A whole-question native window avoids both negative window
+                # offsets on short inputs and legacy KV-cache reuse on TF5.
+                # This policy is limited to questions fitting Phi-2's context.
+                compressor = self.objects[method]
+                length = compressor.get_token_length(text, add_special_tokens=False)
+                if length > compressor.max_position_embeddings:
+                    raise ValueError("LLMLingua whole-question window exceeds the model context; no silent truncation")
+                settings = {"iterative_size": max(1, length)}
             out = self.objects[method].compress_prompt(text, rate=ratio, target_token=budget, **settings)
             return out["compressed_prompt"]
         if method == "selective_context":

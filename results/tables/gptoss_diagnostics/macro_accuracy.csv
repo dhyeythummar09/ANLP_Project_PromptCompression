@@ -1,0 +1,15 @@
+eval_model,target_ratio,method,dataset_macro_accuracy,n_datasets,n_questions
+gpt-oss-120b,0.5,grouped_hybrid,0.35614583333333333,8,160
+gpt-oss-120b,0.5,grouped_signal,0.31083333333333335,8,160
+gpt-oss-120b,0.5,llmlingua2_budgeted,0.585625,8,160
+gpt-oss-120b,0.5,llmlingua_budgeted,0.140625,8,160
+gpt-oss-120b,0.5,ours,0.34833333333333333,8,160
+gpt-oss-120b,0.5,random,0.25177083333333333,8,160
+gpt-oss-120b,0.5,selective_context_budgeted,0.3148958333333333,8,160
+gpt-oss-120b,0.75,grouped_hybrid,0.7082291666666667,8,160
+gpt-oss-120b,0.75,grouped_signal,0.694375,8,160
+gpt-oss-120b,0.75,llmlingua2_budgeted,0.8909374999999999,8,160
+gpt-oss-120b,0.75,llmlingua_budgeted,0.29354166666666665,8,160
+gpt-oss-120b,0.75,ours,0.7082291666666667,8,160
+gpt-oss-120b,0.75,random,0.4034375,8,160
+gpt-oss-120b,0.75,selective_context_budgeted,0.7769791666666667,8,160

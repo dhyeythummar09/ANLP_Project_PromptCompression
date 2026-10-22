@@ -1,0 +1,15 @@
+eval_model,target_ratio,method,n_planned,n_success,n_common,n_failed_or_missing
+qwen-3.8-27b-fp8,0.5,grouped_hybrid,160,160,158,0
+qwen-3.8-27b-fp8,0.5,grouped_signal,160,160,158,0
+qwen-3.8-27b-fp8,0.5,llmlingua2_budgeted,160,160,158,0
+qwen-3.8-27b-fp8,0.5,llmlingua_budgeted,160,158,158,2
+qwen-3.8-27b-fp8,0.5,ours,160,160,158,0
+qwen-3.8-27b-fp8,0.5,random,160,160,158,0
+qwen-3.8-27b-fp8,0.5,selective_context_budgeted,160,160,158,0
+qwen-3.8-27b-fp8,0.75,grouped_hybrid,160,160,160,0
+qwen-3.8-27b-fp8,0.75,grouped_signal,160,160,160,0
+qwen-3.8-27b-fp8,0.75,llmlingua2_budgeted,160,160,160,0
+qwen-3.8-27b-fp8,0.75,llmlingua_budgeted,160,160,160,0
+qwen-3.8-27b-fp8,0.75,ours,160,160,160,0
+qwen-3.8-27b-fp8,0.75,random,160,160,160,0
+qwen-3.8-27b-fp8,0.75,selective_context_budgeted,160,160,160,0

@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "questions": 160,
+  "conditions": 2240,
+  "expected_conditions": 2240,
+  "failed": 0,
+  "over_budget": 0,
+  "target_api_calls": 0,
+  "training_jobs": 0,
+  "compressed_sha256": "30bea97d554fcba62ba98b178a5f16dd6c497f66e1ee74825973a4036c7f9311",
+  "scope": "Main compression only; downstream main inference not run"
+}

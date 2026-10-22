@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "wall_seconds": 339.30135270399995,
+  "target_api_calls": 0,
+  "training_jobs": 0,
+  "stage": "run"
+}

@@ -37,3 +37,10 @@ Thumbs.db
 
 # --- spaCy model downloads (reinstalled via requirements.txt, not committed) ---
 *.whl
+
+# --- Returned experiment archives (the reproducible notebooks are versioned) ---
+/stage_a*_results*.zip
+/stage_b*_results*.zip
+/stage_b*_review_*.zip
+/llmlingua_repair_review_*.zip
+/symbiote_main_review_*.zip

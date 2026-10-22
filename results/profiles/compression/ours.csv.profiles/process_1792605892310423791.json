@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "wall_seconds": 45.747659344,
+  "scope": "One CLI process, including cold model loads. Resumed invocations have separate records; response times can be shared by cached conditions.",
+  "cpu_peak_rss_bytes": 1946624000,
+  "cuda": [
+    {
+      "device": "Tesla T4",
+      "peak_allocated_bytes": 677436416,
+      "peak_reserved_bytes": 866123776
+    }
+  ]
+}

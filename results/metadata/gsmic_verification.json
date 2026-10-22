@@ -1,0 +1,6 @@
+{
+  "verified_gsmic_question_pairs": 200,
+  "exact_prompt_and_clean_text_match": true,
+  "exact_gold_mismatch_ids": [],
+  "download_manifest": "data\\legacy\\team\\gsmic_source_20261021\\download_manifest.json"
+}

@@ -1,0 +1,6 @@
+{
+  "shared_team_export_votes": 38539,
+  "changed_perturbed_outcome_labels": 1125,
+  "old_export_votes_now_ineligible": 624,
+  "scope": "Row counts are model/span votes, not independent questions. Strict parsing failures remain explicit operational failures; these do not by themselves prove semantic reasoning failures."
+}

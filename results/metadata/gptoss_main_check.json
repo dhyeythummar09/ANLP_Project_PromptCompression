@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "expected_conditions": 2400,
+  "recorded_conditions": 2400,
+  "grid_complete": true,
+  "response_statuses": {
+    "ok": 2400
+  },
+  "successful_cached_reuses": 504,
+  "http_attempts": 1897,
+  "http_attempt_limit": 3000,
+  "original_questions": 160,
+  "original_accuracy": 0.99375,
+  "original_parse_statuses": {
+    "ok": 160
+  },
+  "returned_usage_records": 1897,
+  "active_csv_usage_records": 1896,
+  "archived_usage_records": 1,
+  "returned_prompt_tokens": 278388,
+  "returned_completion_tokens": 921570,
+  "returned_usage_cost_estimate_inr": 39.64668,
+  "billing_note": "User-quoted rates, estimate only. Reconcile provider usage/wallet; missing usage/failed attempts may add costs. No monetary cutoff.",
+  "responses_sha256": "bd4262aac67d45c8f2726a5e0b2e3138f546fa4834b829e1cd3cfb3a7f4779b2",
+  "compression_sha256": "30bea97d554fcba62ba98b178a5f16dd6c497f66e1ee74825973a4036c7f9311",
+  "pilot_check_sha256": "abd568a9d7a76ac263314ae56997ef08937358d1d835e8fc306a14109ac89524",
+  "scope": "Main GPT-OSS answers only; no automatic superiority claim, second-reader completion or additional paid calls.",
+  "next_step": "Inspect coverage, grading and billing, then run offline analysis on these saved answers. Preserve failures; do not tune settings against main outcomes."
+}

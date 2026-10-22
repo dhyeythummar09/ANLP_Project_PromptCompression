@@ -62,7 +62,7 @@ def main():
     if failed.any() or over.any():
         print(f"STOP before target calls: {int(failed.sum())} failed and {int(over.sum())} over-budget compression conditions. Return the artifacts; do not truncate a baseline manually.")
         raise SystemExit(2)
-    print("Compression grid complete and budget compliant. Continue with the target evaluation command in RUNBOOK.md.")
+    print("Compression grid complete and budget compliant. See the recorded target workflow in README.md.")
 
 
 if __name__=="__main__":

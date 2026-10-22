@@ -1,0 +1,16 @@
+method,target_ratio,conditions,parse_ok,parse_failures,correct
+grouped_hybrid,0.5,160,137,23,59
+grouped_hybrid,0.75,160,143,17,117
+grouped_signal,0.5,160,130,30,50
+grouped_signal,0.75,160,144,16,114
+llmlingua2_budgeted,0.5,160,135,25,96
+llmlingua2_budgeted,0.75,160,158,2,144
+llmlingua_budgeted,0.5,160,74,86,18
+llmlingua_budgeted,0.75,160,111,49,42
+none,1.0,160,160,0,159
+ours,0.5,160,137,23,58
+ours,0.75,160,143,17,117
+random,0.5,160,109,51,34
+random,0.75,160,133,27,59
+selective_context_budgeted,0.5,160,131,29,48
+selective_context_budgeted,0.75,160,147,13,119

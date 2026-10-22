@@ -1,0 +1,32 @@
+{
+  "protocol": "symbiote-v2",
+  "stage": "evaluation",
+  "input": "30bea97d554fcba62ba98b178a5f16dd6c497f66e1ee74825973a4036c7f9311",
+  "source": "1b089e04b7205aeeaae1be06ebafa4e92dfc300e657803c9b153942cb9339825",
+  "packages": {
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "pandas": "3.0.5",
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1",
+    "spacy": "3.8.16",
+    "tiktoken": null,
+    "llmlingua": null,
+    "selective-context": null
+  },
+  "config": {
+    "backend": "hosted",
+    "provider": "openai-compatible",
+    "name": "gpt-oss-120b",
+    "base_url": "https://models.jarvislabs.net/v1",
+    "api_key_env": "JARVISLABS_API_KEY",
+    "max_tokens": 4096,
+    "temperature": 0
+  },
+  "grader": "unique-final-v2",
+  "wrapper": "Solve this problem. You may reason briefly, but you MUST end your response with a line in exactly this format:\nFinal Answer: <your answer>\n\nProblem: {question}\n",
+  "methods": null,
+  "ratios": null,
+  "limit": null,
+  "pilot_check": "abd568a9d7a76ac263314ae56997ef08937358d1d835e8fc306a14109ac89524"
+}

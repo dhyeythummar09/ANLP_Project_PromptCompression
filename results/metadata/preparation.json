@@ -1,0 +1,36 @@
+{
+  "protocol": "symbiote-v2",
+  "grader": "unique-final-v2",
+  "inputs": {
+    "data\\processed\\team_20261021\\problems_recovered.csv": "15f64eef80cc42bea57a7f7e50f5fc75b19b5e2dabeeaba89d49df0a397936e1",
+    "data\\legacy\\team\\smoke_20261021\\consensus_dataset.csv": "36888db637726f197c86eba4fa9fdee4f6b02db9193fdd1b6fd9dd26024bde12",
+    "data\\per_model_labels.csv": "5794dd2bc5e385ca7aef756903574a566b03d7e8207519ce07fc98f42731ce6e"
+  },
+  "raw_vote_rows": 47728,
+  "unique_model_votes": 38603,
+  "vote_status_counts": {
+    "valid": 37979,
+    "original_wrong": 624
+  },
+  "original_parse_status_counts": {
+    "ok": 37994,
+    "ambiguous_or_invalid_numeric": 502,
+    "empty_or_unresolved_final": 58,
+    "ambiguous_or_invalid_choice": 49
+  },
+  "perturbed_parse_status_counts": {
+    "ok": 33809,
+    "ambiguous_or_invalid_numeric": 2177,
+    "ambiguous_or_invalid_choice": 1176,
+    "empty_or_unresolved_final": 740,
+    "ambiguous_or_invalid_binary": 701
+  },
+  "problem_count": 1000,
+  "base_groups": 848,
+  "labeled_questions": 928,
+  "reliable_questions": 912,
+  "reliable_spans": 13966,
+  "minimum_models": 2,
+  "scope": "Only the explicitly supplied inputs; completeness requires team confirmation",
+  "perturbed_parse_policy": "Nonempty returned but unparseable final answers count as operational failures; parse status is retained"
+}
