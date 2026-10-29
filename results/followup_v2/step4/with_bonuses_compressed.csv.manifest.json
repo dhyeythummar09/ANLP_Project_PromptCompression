@@ -1,0 +1,66 @@
+{
+  "protocol": "symbiote-v2",
+  "stage": "compression",
+  "input": "bcf6367452f26180290c1e44a2aacf35a8b836d2ac0c00cb15f5613bbda00ac7",
+  "source": "494b556d37a33550a0853d1316337ea6c786c109512ae6155d7561ebc20aa177",
+  "packages": {
+    "torch": "2.10.0",
+    "transformers": "5.3.0",
+    "pandas": "2.3.2",
+    "numpy": "2.2.3",
+    "scikit-learn": "1.6.1",
+    "spacy": "3.8.11",
+    "tiktoken": "0.12.0",
+    "llmlingua": null,
+    "selective-context": null
+  },
+  "arguments": {
+    "input_csv": "data/step4_input.csv",
+    "output_csv": "outputs/followup_v3/step4/with_bonuses_compressed.csv",
+    "model_dir": "models/span_scorer_v2_20261021",
+    "labels_file": null,
+    "methods": [
+      "ours_scorer",
+      "ours_signal"
+    ],
+    "ratios": [
+      0.5,
+      0.75
+    ],
+    "tokenizer": "cl100k_base",
+    "alpha": 0.5,
+    "no_bonuses": false,
+    "protect_interface": false,
+    "info_model": "distilgpt2",
+    "llmlingua_model": "microsoft/phi-2",
+    "llmlingua2_model": "microsoft/llmlingua-2-xlm-roberta-large-meetingbank",
+    "allow_legacy_checkpoint": false,
+    "seed": 42,
+    "limit": null,
+    "no_cuda": true
+  },
+  "labels": null,
+  "split": "f8e89467a30823420014ecd25d046040b5dfbf4f22efe3c564f669d74b6414fc",
+  "checkpoints": {
+    "fold2/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold2/scorer.pt": "46b7113c6c6a2381c9bbc7a2c15544aab22c34bd5cc30134a836f040d796ca7e",
+    "fold2/category_prior.json": "1ff8ad0a8331a2b2df3cd9f3669633e7eab4a3cff7495d49f407db0fd011510a",
+    "fold2/selection.json": "af189ae51f0855d690b9d41b18ac624461c808ee924723cbdc4347af1e48ee7f",
+    "fold4/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold4/scorer.pt": "993d15ecdf218cfb658bec8e9600d4fdda4a63298b235876dc5a0ac17013c771",
+    "fold4/category_prior.json": "ec9d6d6c7231b7156d6d5b21c37059f6286254c5560507e9a29d526eddf40c55",
+    "fold4/selection.json": "119292eb5bf6c2dc2e562cd2183b2b686d5215696b03e7a6d29d710beb10a54f",
+    "fold3/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold3/scorer.pt": "85ce04d318dd492c44c76aec2eda69b7fb997d7607f7469d771fa518f171eac2",
+    "fold3/category_prior.json": "0c5e82fabb585d33f614bd592f8adc48bdde6bde3e0d98a7b535d9a3049a938f",
+    "fold3/selection.json": "d9fd004fc2bd21541658e00d47a8fcba74805b3aac1dddc5dacfc6c1d5b1193c",
+    "fold1/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold1/scorer.pt": "700e52c374e96f1df6335a4bcf68c894e54b0bd1b9d2c06c5d22d8fa5279a9c6",
+    "fold1/category_prior.json": "533df750e4207967d72dc5e9163b1150181713612e33b650c833a6698f815946",
+    "fold1/selection.json": "766556b69aaddba66a006359aa3f4c6cab338a8eb471bb6276cd9128919a0bc4",
+    "fold0/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold0/scorer.pt": "0df9476e56a14d2394e1ad49317530958638d6d4e11cbe8f35f1672e2aab944f",
+    "fold0/category_prior.json": "1a8af696bc5387ba6fe84b804a56de8b5b67716dd82685d14313dc138b089684",
+    "fold0/selection.json": "3939c7fb96c1bab19b73bed01d011849b26ca0560195611eac38f3cf903417e8"
+  }
+}

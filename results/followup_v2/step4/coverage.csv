@@ -1,0 +1,5 @@
+eval_model,target_ratio,method,n_planned,n_success,n_common,n_failed_or_missing
+qwen-3.8-27b-fp8,0.5,ours_scorer,160,159,159,1
+qwen-3.8-27b-fp8,0.5,ours_signal,160,160,159,0
+qwen-3.8-27b-fp8,0.75,ours_scorer,160,158,158,2
+qwen-3.8-27b-fp8,0.75,ours_signal,160,160,158,0

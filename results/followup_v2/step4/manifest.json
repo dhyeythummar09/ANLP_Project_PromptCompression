@@ -1,0 +1,8 @@
+{
+  "results_hash": "7781ab3d036263ddef9bf3551444afb13dd35a05ab2df3c94bc6f204d4848e69",
+  "compression_hash": "c735fd0390a020b5814d4e66435722c68166467b3f9a7f31cf24a25159cfce89",
+  "bootstrap": 1000,
+  "cohort": "common complete conditions including original at each target/ratio",
+  "clustering": "base_group_id",
+  "multiple_testing": "unadjusted CIs; exploratory except separately declared primary comparisons"
+}

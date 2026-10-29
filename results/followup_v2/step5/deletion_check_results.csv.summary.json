@@ -1,0 +1,7 @@
+{
+  "n_attempted": 120,
+  "n_eligible_complete": 116,
+  "agreement": 0.9655172413793104,
+  "sampling": "category round-robin, diagnostic not population representative",
+  "scope": "Fresh same-target assay; historical mask outcomes were not reused or certified"
+}

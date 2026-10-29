@@ -1,0 +1,24 @@
+{
+  "config_hash": "ccbcb13c570bb3ab8417c37f3abea8ba3f5eb0d58060fe088775fa689309648e",
+  "attempts": 325,
+  "execution_history": [
+    {
+      "settings": {
+        "request_budget": 400,
+        "max_attempts": 2,
+        "sleep_seconds": 1,
+        "timeout": 90
+      },
+      "timestamp_utc": "2026-10-31T11:18:17.014309+00:00"
+    },
+    {
+      "settings": {
+        "request_budget": 600,
+        "max_attempts": 2,
+        "sleep_seconds": 1,
+        "timeout": 90
+      },
+      "timestamp_utc": "2026-10-31T11:44:20.571200+00:00"
+    }
+  ]
+}
