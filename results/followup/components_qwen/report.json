@@ -1,0 +1,226 @@
+{
+  "comparison": "ours versus scorer-only and signal-only, same reader, single matched run",
+  "reader_requested": "qwen-3.8-27b-fp8",
+  "reader_served_counts": {
+    "qwen-3.8-27b-fp8": 1071
+  },
+  "wrapper": "Solve this problem. You may reason briefly, but you MUST end your response with a line in exactly this format:\nFinal Answer: <your answer>\n\nProblem: {question}\n",
+  "responses_sha256": "6524c090e8b514b82c10091ff23c0c88c86f6c030b63ab3a013bfa184f4e7851",
+  "prepared_sha256": "bf401bfe1713f34a654a8875620b2984238b207103533bda830c3fb7eed4b941",
+  "response_statuses": {
+    "ok": 1120
+  },
+  "bootstrap": 1000,
+  "clustering": "base_group_id",
+  "accuracy": [
+    {
+      "target_ratio": 0.5,
+      "method": "ours",
+      "n": 160,
+      "families": 125,
+      "accuracy": 0.4625,
+      "ci95_low": 0.35462842113589627,
+      "ci95_high": 0.5752073906485671,
+      "original_accuracy": 0.9875,
+      "actual_ratio": 0.49561951989325276
+    },
+    {
+      "target_ratio": 0.5,
+      "method": "ours_scorer",
+      "n": 160,
+      "families": 125,
+      "accuracy": 0.4875,
+      "ci95_low": 0.39052532833020637,
+      "ci95_high": 0.5935626185958254,
+      "original_accuracy": 0.9875,
+      "actual_ratio": 0.49561951989325276
+    },
+    {
+      "target_ratio": 0.5,
+      "method": "ours_signal",
+      "n": 160,
+      "families": 125,
+      "accuracy": 0.45625,
+      "ci95_low": 0.3723801778356105,
+      "ci95_high": 0.5364238410596026,
+      "original_accuracy": 0.9875,
+      "actual_ratio": 0.49561951989325276
+    },
+    {
+      "target_ratio": 0.75,
+      "method": "ours",
+      "n": 160,
+      "families": 125,
+      "accuracy": 0.7125,
+      "ci95_low": 0.6078137254901961,
+      "ci95_high": 0.8057630259428821,
+      "original_accuracy": 0.9875,
+      "actual_ratio": 0.7438962829092389
+    },
+    {
+      "target_ratio": 0.75,
+      "method": "ours_scorer",
+      "n": 160,
+      "families": 125,
+      "accuracy": 0.70625,
+      "ci95_low": 0.622481592694665,
+      "ci95_high": 0.7919528458119062,
+      "original_accuracy": 0.9875,
+      "actual_ratio": 0.7439734434030661
+    },
+    {
+      "target_ratio": 0.75,
+      "method": "ours_signal",
+      "n": 160,
+      "families": 125,
+      "accuracy": 0.74375,
+      "ci95_low": 0.6666666666666666,
+      "ci95_high": 0.8137971130713713,
+      "original_accuracy": 0.9875,
+      "actual_ratio": 0.7439734434030661
+    }
+  ],
+  "contrasts": [
+    {
+      "target_ratio": 0.5,
+      "focus": "ours_scorer",
+      "other": "ours",
+      "n_paired": 160,
+      "families": 125,
+      "focus_accuracy": 0.4875,
+      "other_accuracy": 0.4625,
+      "difference": 0.025,
+      "ci95_low": -0.0637100979625284,
+      "ci95_high": 0.11888111888111888,
+      "ci_excludes_zero": false,
+      "only_focus_correct": 26,
+      "only_other_correct": 22,
+      "identical_text_pairs": 1
+    },
+    {
+      "target_ratio": 0.5,
+      "focus": "ours_signal",
+      "other": "ours",
+      "n_paired": 160,
+      "families": 125,
+      "focus_accuracy": 0.45625,
+      "other_accuracy": 0.4625,
+      "difference": -0.00625,
+      "ci95_low": -0.09555671239588438,
+      "ci95_high": 0.08110083767978503,
+      "ci_excludes_zero": false,
+      "only_focus_correct": 18,
+      "only_other_correct": 19,
+      "identical_text_pairs": 20
+    },
+    {
+      "target_ratio": 0.5,
+      "focus": "ours_scorer",
+      "other": "ours_signal",
+      "n_paired": 160,
+      "families": 125,
+      "focus_accuracy": 0.4875,
+      "other_accuracy": 0.45625,
+      "difference": 0.03125,
+      "ci95_low": -0.062116078588612664,
+      "ci95_high": 0.14125916170407696,
+      "ci_excludes_zero": false,
+      "only_focus_correct": 33,
+      "only_other_correct": 28,
+      "identical_text_pairs": 0
+    },
+    {
+      "target_ratio": 0.75,
+      "focus": "ours_scorer",
+      "other": "ours",
+      "n_paired": 160,
+      "families": 125,
+      "focus_accuracy": 0.70625,
+      "other_accuracy": 0.7125,
+      "difference": -0.00625,
+      "ci95_low": -0.10527863777089783,
+      "ci95_high": 0.0874418475852902,
+      "ci_excludes_zero": false,
+      "only_focus_correct": 24,
+      "only_other_correct": 25,
+      "identical_text_pairs": 0
+    },
+    {
+      "target_ratio": 0.75,
+      "focus": "ours_signal",
+      "other": "ours",
+      "n_paired": 160,
+      "families": 125,
+      "focus_accuracy": 0.74375,
+      "other_accuracy": 0.7125,
+      "difference": 0.03125,
+      "ci95_low": -0.04910276073619632,
+      "ci95_high": 0.11048126614987079,
+      "ci_excludes_zero": false,
+      "only_focus_correct": 17,
+      "only_other_correct": 12,
+      "identical_text_pairs": 26
+    },
+    {
+      "target_ratio": 0.75,
+      "focus": "ours_scorer",
+      "other": "ours_signal",
+      "n_paired": 160,
+      "families": 125,
+      "focus_accuracy": 0.70625,
+      "other_accuracy": 0.74375,
+      "difference": -0.0375,
+      "ci95_low": -0.134254836162653,
+      "ci95_high": 0.06570672402958379,
+      "ci_excludes_zero": false,
+      "only_focus_correct": 27,
+      "only_other_correct": 33,
+      "identical_text_pairs": 0
+    }
+  ],
+  "coverage": [
+    {
+      "target_ratio": 0.5,
+      "method": "ours",
+      "planned": 160,
+      "answered_ok": 160,
+      "in_common_table": 160
+    },
+    {
+      "target_ratio": 0.5,
+      "method": "ours_scorer",
+      "planned": 160,
+      "answered_ok": 160,
+      "in_common_table": 160
+    },
+    {
+      "target_ratio": 0.5,
+      "method": "ours_signal",
+      "planned": 160,
+      "answered_ok": 160,
+      "in_common_table": 160
+    },
+    {
+      "target_ratio": 0.75,
+      "method": "ours",
+      "planned": 160,
+      "answered_ok": 160,
+      "in_common_table": 160
+    },
+    {
+      "target_ratio": 0.75,
+      "method": "ours_scorer",
+      "planned": 160,
+      "answered_ok": 160,
+      "in_common_table": 160
+    },
+    {
+      "target_ratio": 0.75,
+      "method": "ours_signal",
+      "planned": 160,
+      "answered_ok": 160,
+      "in_common_table": 160
+    }
+  ],
+  "note": "Unadjusted 95% family-clustered bootstrap CIs; exploratory component analysis."
+}

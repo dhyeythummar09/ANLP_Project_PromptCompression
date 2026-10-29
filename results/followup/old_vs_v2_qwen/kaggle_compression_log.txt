@@ -1,0 +1,452 @@
+7.2s 1 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+7.2s 2 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+7.2s 3 0.00s - to python to disable frozen modules.
+7.2s 4 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+7.8s 5 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+7.8s 6 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+7.8s 7 0.00s - to python to disable frozen modules.
+7.8s 8 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+91.3s 9 Payload source: /kaggle/input/datasets/dhyeythummar09/symbiote-old-v2-comparison/kaggle_old_v2_payload
+91.3s 10 Working directory: /kaggle/working/symbiote
+91.3s 11 GPU check:
+98.2s 12 True
+98.2s 13 Tesla T4
+98.4s 14 True
+98.4s 15 Tesla T4
+101.0s 16 Created: /kaggle/working/symbiote/requirements.txt
+101.6s 17 Requirement already satisfied: datasets in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 1)) (4.8.5)
+101.6s 18 Requirement already satisfied: huggingface_hub in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 2)) (1.29.0)
+101.6s 19 Requirement already satisfied: pandas in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 3)) (2.3.3)
+101.6s 20 Requirement already satisfied: spacy in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 4)) (3.8.16)
+101.6s 21 Requirement already satisfied: requests in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 5)) (2.34.2)
+101.6s 22 Requirement already satisfied: scikit-learn in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 6)) (1.6.1)
+101.6s 23 Requirement already satisfied: transformers in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 7)) (5.16.1)
+101.6s 24 Requirement already satisfied: torch in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 8)) (2.11.0+cu128)
+101.6s 25 Requirement already satisfied: python-dotenv in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 9)) (1.2.3)
+101.6s 26 Requirement already satisfied: matplotlib in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 10)) (3.10.0)
+101.6s 27 Requirement already satisfied: seaborn in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 11)) (0.13.2)
+101.6s 28 Requirement already satisfied: ipykernel in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 12)) (6.17.1)
+101.8s 29 Collecting sacrebleu (from -r /kaggle/working/symbiote/requirements.txt (line 13))
+101.8s 30 Requirement already satisfied: datasets in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 1)) (4.8.5)
+101.8s 31 Requirement already satisfied: huggingface_hub in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 2)) (1.29.0)
+101.8s 32 Requirement already satisfied: pandas in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 3)) (2.3.3)
+101.8s 33 Requirement already satisfied: spacy in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 4)) (3.8.16)
+101.8s 34 Requirement already satisfied: requests in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 5)) (2.34.2)
+101.8s 35 Requirement already satisfied: scikit-learn in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 6)) (1.6.1)
+101.8s 36 Requirement already satisfied: transformers in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 7)) (5.16.1)
+101.8s 37 Requirement already satisfied: torch in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 8)) (2.11.0+cu128)
+101.8s 38 Requirement already satisfied: python-dotenv in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 9)) (1.2.3)
+101.8s 39 Requirement already satisfied: matplotlib in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 10)) (3.10.0)
+101.8s 40 Requirement already satisfied: seaborn in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 11)) (0.13.2)
+101.8s 41 Requirement already satisfied: ipykernel in /usr/local/lib/python3.13/dist-packages (from -r /kaggle/working/symbiote/requirements.txt (line 12)) (6.17.1)
+101.8s 42 Collecting sacrebleu (from -r /kaggle/working/symbiote/requirements.txt (line 13))
+101.9s 43 Downloading sacrebleu-2.6.0-py3-none-any.whl.metadata (39 kB)
+101.9s 44 Requirement already satisfied: numpy in /usr/local/lib/python3.13/dist-packages (from -r final_eval/requirements.txt (line 2)) (2.1.3)
+101.9s 45 Requirement already satisfied: tiktoken in /usr/local/lib/python3.13/dist-packages (from -r final_eval/requirements.txt (line 3)) (0.14.0)
+101.9s 46 Requirement already satisfied: accelerate in /usr/local/lib/python3.13/dist-packages (from -r final_eval/requirements.txt (line 4)) (1.14.0)
+101.9s 47 Requirement already satisfied: filelock in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (3.32.5)
+101.9s 48 Requirement already satisfied: pyarrow>=21.0.0 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (23.0.1)
+101.9s 49 Requirement already satisfied: dill<0.4.2,>=0.3.0 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.4.1)
+101.9s 50 Requirement already satisfied: httpx<1.0.0 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.28.1)
+101.9s 51 Requirement already satisfied: tqdm>=4.66.3 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (4.67.3)
+101.9s 52 Requirement already satisfied: xxhash in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (4.0.1)
+101.9s 53 Requirement already satisfied: multiprocess<0.70.20 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.70.19)
+101.9s 54 Requirement already satisfied: fsspec<=2026.2.0,>=2023.1.0 in /usr/local/lib/python3.13/dist-packages (from fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (2025.12.0)
+101.9s 55 Requirement already satisfied: packaging in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (26.3)
+101.9s 56 Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (6.0.3)
+101.9s 57 Requirement already satisfied: click<9.0.0,>=8.4.2 in /usr/local/lib/python3.13/dist-packages (from huggingface_hub->-r /kaggle/working/symbiote/requirements.txt (line 2)) (8.5.0)
+101.9s 58 Requirement already satisfied: hf-xet<2.0.0,>=1.5.2 in /usr/local/lib/python3.13/dist-packages (from huggingface_hub->-r /kaggle/working/symbiote/requirements.txt (line 2)) (1.6.0)
+101.9s 59 Requirement already satisfied: typing-extensions>=4.1.0 in /usr/local/lib/python3.13/dist-packages (from huggingface_hub->-r /kaggle/working/symbiote/requirements.txt (line 2)) (4.16.0)
+102.0s 60 Requirement already satisfied: aiohttp!=4.0.0a0,!=4.0.0a1 in /usr/local/lib/python3.13/dist-packages (from fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (3.14.3)
+102.0s 61 Requirement already satisfied: anyio in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (4.14.2)
+102.0s 62 Requirement already satisfied: certifi in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (2026.10.19)
+102.0s 63 Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.0.9)
+102.0s 64 Requirement already satisfied: idna in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (3.19)
+102.0s 65 Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.13/dist-packages (from httpcore==1.*->httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.16.0)
+102.0s 66 Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.13/dist-packages (from pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (2.9.0.post0)
+102.0s 67 Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.13/dist-packages (from pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (2025.2)
+102.0s 68 Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.13/dist-packages (from pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (2026.3)
+102.0s 69 Requirement already satisfied: spacy-legacy<3.1.0,>=3.0.11 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.0.12)
+102.0s 70 Requirement already satisfied: spacy-loggers<2.0.0,>=1.0.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.0.5)
+102.0s 71 Requirement already satisfied: murmurhash<1.1.0,>=0.28.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.0.15)
+102.0s 72 Requirement already satisfied: cymem<2.1.0,>=2.0.2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.0.13)
+102.0s 73 Requirement already satisfied: preshed<3.1.0,>=3.0.2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.0.13)
+102.0s 74 Requirement already satisfied: thinc<8.4.0,>=8.3.12 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (8.3.13)
+102.0s 75 Requirement already satisfied: wasabi<1.2.0,>=0.9.1 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.1.3)
+102.0s 76 Requirement already satisfied: srsly<3.0.0,>=2.5.3 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.5.3)
+102.0s 77 Requirement already satisfied: catalogue<2.1.0,>=2.0.6 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.0.10)
+102.0s 78 Requirement already satisfied: weasel<2.0.0,>=1.0.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.0.0)
+102.0s 79 Requirement already satisfied: confection<2.0.0,>=1.3.2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.3.3)
+102.0s 80 Requirement already satisfied: typer<1.0.0,>=0.3.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.27.2)
+102.0s 81 Requirement already satisfied: pydantic<3.0.0,>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.13.5)
+102.0s 82 Requirement already satisfied: jinja2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.1.6)
+102.0s 83 Requirement already satisfied: setuptools in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (81.0.0)
+102.0s 84 Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.13/dist-packages (from requests->-r /kaggle/working/symbiote/requirements.txt (line 5)) (3.4.9)
+102.0s 85 Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.13/dist-packages (from requests->-r /kaggle/working/symbiote/requirements.txt (line 5)) (2.8.0)
+102.0s 86 Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.13/dist-packages (from pydantic<3.0.0,>=2.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.8.0)
+102.0s 87 Requirement already satisfied: pydantic-core==2.46.5 in /usr/local/lib/python3.13/dist-packages (from pydantic<3.0.0,>=2.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.46.5)
+102.0s 88 Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.13/dist-packages (from pydantic<3.0.0,>=2.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.4.4)
+102.0s 89 Requirement already satisfied: blis<1.4.0,>=1.3.0 in /usr/local/lib/python3.13/dist-packages (from thinc<8.4.0,>=8.3.12->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.3.3)
+102.1s 90 Requirement already satisfied: shellingham>=1.3.0 in /usr/local/lib/python3.13/dist-packages (from typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.5.4)
+102.1s 91 Requirement already satisfied: rich>=13.8.0 in /usr/local/lib/python3.13/dist-packages (from typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (13.9.4)
+102.1s 92 Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.13/dist-packages (from typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.0.5)
+102.1s 93 Requirement already satisfied: cloudpathlib>=0.7.0 in /usr/local/lib/python3.13/dist-packages (from weasel<2.0.0,>=1.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.25.0)
+102.1s 94 Requirement already satisfied: smart-open>=5.2.1 in /usr/local/lib/python3.13/dist-packages (from weasel<2.0.0,>=1.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (8.0.1)
+102.1s 95 Downloading sacrebleu-2.6.0-py3-none-any.whl.metadata (39 kB)
+102.1s 96 Requirement already satisfied: numpy in /usr/local/lib/python3.13/dist-packages (from -r final_eval/requirements.txt (line 2)) (2.1.3)
+102.1s 97 Requirement already satisfied: tiktoken in /usr/local/lib/python3.13/dist-packages (from -r final_eval/requirements.txt (line 3)) (0.14.0)
+102.1s 98 Requirement already satisfied: accelerate in /usr/local/lib/python3.13/dist-packages (from -r final_eval/requirements.txt (line 4)) (1.14.0)
+102.1s 99 Requirement already satisfied: filelock in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (3.32.5)
+102.1s 100 Requirement already satisfied: pyarrow>=21.0.0 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (23.0.1)
+102.1s 101 Requirement already satisfied: dill<0.4.2,>=0.3.0 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.4.1)
+102.1s 102 Requirement already satisfied: httpx<1.0.0 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.28.1)
+102.1s 103 Requirement already satisfied: tqdm>=4.66.3 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (4.67.3)
+102.1s 104 Requirement already satisfied: xxhash in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (4.0.1)
+102.1s 105 Requirement already satisfied: multiprocess<0.70.20 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.70.19)
+102.1s 106 Requirement already satisfied: fsspec<=2026.2.0,>=2023.1.0 in /usr/local/lib/python3.13/dist-packages (from fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (2025.12.0)
+102.1s 107 Requirement already satisfied: packaging in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (26.3)
+102.1s 108 Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.13/dist-packages (from datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (6.0.3)
+102.1s 109 Requirement already satisfied: click<9.0.0,>=8.4.2 in /usr/local/lib/python3.13/dist-packages (from huggingface_hub->-r /kaggle/working/symbiote/requirements.txt (line 2)) (8.5.0)
+102.1s 110 Requirement already satisfied: hf-xet<2.0.0,>=1.5.2 in /usr/local/lib/python3.13/dist-packages (from huggingface_hub->-r /kaggle/working/symbiote/requirements.txt (line 2)) (1.6.0)
+102.1s 111 Requirement already satisfied: typing-extensions>=4.1.0 in /usr/local/lib/python3.13/dist-packages (from huggingface_hub->-r /kaggle/working/symbiote/requirements.txt (line 2)) (4.16.0)
+102.1s 112 Requirement already satisfied: aiohttp!=4.0.0a0,!=4.0.0a1 in /usr/local/lib/python3.13/dist-packages (from fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (3.14.3)
+102.1s 113 Requirement already satisfied: anyio in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (4.14.2)
+102.1s 114 Requirement already satisfied: certifi in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (2026.10.19)
+102.1s 115 Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.0.9)
+102.1s 116 Requirement already satisfied: idna in /usr/local/lib/python3.13/dist-packages (from httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (3.19)
+102.1s 117 Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.13/dist-packages (from httpcore==1.*->httpx<1.0.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.16.0)
+102.1s 118 Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.13/dist-packages (from pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (2.9.0.post0)
+102.1s 119 Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.13/dist-packages (from pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (2025.2)
+102.1s 120 Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.13/dist-packages (from pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (2026.3)
+102.1s 121 Requirement already satisfied: spacy-legacy<3.1.0,>=3.0.11 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.0.12)
+102.1s 122 Requirement already satisfied: spacy-loggers<2.0.0,>=1.0.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.0.5)
+102.1s 123 Requirement already satisfied: murmurhash<1.1.0,>=0.28.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.0.15)
+102.1s 124 Requirement already satisfied: cymem<2.1.0,>=2.0.2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.0.13)
+102.1s 125 Requirement already satisfied: preshed<3.1.0,>=3.0.2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.0.13)
+102.1s 126 Requirement already satisfied: thinc<8.4.0,>=8.3.12 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (8.3.13)
+102.1s 127 Requirement already satisfied: wasabi<1.2.0,>=0.9.1 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.1.3)
+102.1s 128 Requirement already satisfied: srsly<3.0.0,>=2.5.3 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.5.3)
+102.1s 129 Requirement already satisfied: catalogue<2.1.0,>=2.0.6 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.0.10)
+102.1s 130 Requirement already satisfied: weasel<2.0.0,>=1.0.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.0.0)
+102.1s 131 Requirement already satisfied: confection<2.0.0,>=1.3.2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.3.3)
+102.1s 132 Requirement already satisfied: typer<1.0.0,>=0.3.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.27.2)
+102.1s 133 Requirement already satisfied: pydantic<3.0.0,>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.13.5)
+102.1s 134 Requirement already satisfied: jinja2 in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.1.6)
+102.1s 135 Requirement already satisfied: setuptools in /usr/local/lib/python3.13/dist-packages (from spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (81.0.0)
+102.1s 136 Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.13/dist-packages (from requests->-r /kaggle/working/symbiote/requirements.txt (line 5)) (3.4.9)
+102.1s 137 Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.13/dist-packages (from requests->-r /kaggle/working/symbiote/requirements.txt (line 5)) (2.8.0)
+102.1s 138 Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.13/dist-packages (from pydantic<3.0.0,>=2.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.8.0)
+102.1s 139 Requirement already satisfied: pydantic-core==2.46.5 in /usr/local/lib/python3.13/dist-packages (from pydantic<3.0.0,>=2.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (2.46.5)
+102.1s 140 Requirement already satisfied: typing-inspection>=0.4.2 in /usr/local/lib/python3.13/dist-packages (from pydantic<3.0.0,>=2.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.4.4)
+102.1s 141 Requirement already satisfied: blis<1.4.0,>=1.3.0 in /usr/local/lib/python3.13/dist-packages (from thinc<8.4.0,>=8.3.12->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.3.3)
+102.1s 142 Requirement already satisfied: shellingham>=1.3.0 in /usr/local/lib/python3.13/dist-packages (from typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.5.4)
+102.1s 143 Requirement already satisfied: rich>=13.8.0 in /usr/local/lib/python3.13/dist-packages (from typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (13.9.4)
+102.1s 144 Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.13/dist-packages (from typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.0.5)
+102.1s 145 Requirement already satisfied: cloudpathlib>=0.7.0 in /usr/local/lib/python3.13/dist-packages (from weasel<2.0.0,>=1.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.25.0)
+102.1s 146 Requirement already satisfied: smart-open>=5.2.1 in /usr/local/lib/python3.13/dist-packages (from weasel<2.0.0,>=1.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (8.0.1)
+102.1s 147 Requirement already satisfied: scipy>=1.6.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (1.16.3)
+102.1s 148 Requirement already satisfied: joblib>=1.2.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (1.6.0)
+102.1s 149 Requirement already satisfied: threadpoolctl>=3.1.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (3.6.0)
+102.1s 150 Requirement already satisfied: regex>=2025.10.22 in /usr/local/lib/python3.13/dist-packages (from transformers->-r /kaggle/working/symbiote/requirements.txt (line 7)) (2025.11.3)
+102.1s 151 Requirement already satisfied: tokenizers<0.24.0,>=0.23.1 in /usr/local/lib/python3.13/dist-packages (from transformers->-r /kaggle/working/symbiote/requirements.txt (line 7)) (0.23.1)
+102.1s 152 Requirement already satisfied: safetensors>=0.8.0 in /usr/local/lib/python3.13/dist-packages (from transformers->-r /kaggle/working/symbiote/requirements.txt (line 7)) (0.8.0)
+102.1s 153 Requirement already satisfied: sympy>=1.13.3 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.14.0)
+102.1s 154 Requirement already satisfied: networkx>=2.5.1 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (3.6.1)
+102.1s 155 Requirement already satisfied: cuda-toolkit==12.8.1 in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.1)
+102.1s 156 Requirement already satisfied: cuda-bindings<13,>=12.9.4 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.9.7)
+102.1s 157 Requirement already satisfied: nvidia-cudnn-cu12==9.19.0.56 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (9.19.0.56)
+102.1s 158 Requirement already satisfied: nvidia-cusparselt-cu12==0.7.1 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (0.7.1)
+102.1s 159 Requirement already satisfied: nvidia-nccl-cu12==2.28.9 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (2.28.9)
+102.1s 160 Requirement already satisfied: nvidia-nvshmem-cu12==3.4.5 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (3.4.5)
+102.1s 161 Requirement already satisfied: triton==3.6.0 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (3.6.0)
+102.1s 162 Requirement already satisfied: nvidia-cublas-cu12==12.8.4.1.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.4.1)
+102.1s 163 Requirement already satisfied: nvidia-cuda-runtime-cu12==12.8.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.90)
+102.1s 164 Requirement already satisfied: nvidia-cufft-cu12==11.3.3.83.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (11.3.3.83)
+102.1s 165 Requirement already satisfied: nvidia-cufile-cu12==1.13.1.3.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.13.1.3)
+102.1s 166 Requirement already satisfied: nvidia-cuda-cupti-cu12==12.8.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.90)
+102.1s 167 Requirement already satisfied: nvidia-curand-cu12==10.3.9.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (10.3.9.90)
+102.1s 168 Requirement already satisfied: nvidia-cusolver-cu12==11.7.3.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (11.7.3.90)
+102.1s 169 Requirement already satisfied: nvidia-cusparse-cu12==12.5.8.93.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.5.8.93)
+102.1s 170 Requirement already satisfied: nvidia-nvjitlink-cu12==12.8.93.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.93)
+102.1s 171 Requirement already satisfied: nvidia-cuda-nvrtc-cu12==12.8.93.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.93)
+102.1s 172 Requirement already satisfied: nvidia-nvtx-cu12==12.8.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.90)
+102.1s 173 Requirement already satisfied: cuda-pathfinder~=1.1 in /usr/local/lib/python3.13/dist-packages (from cuda-bindings<13,>=12.9.4->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.8.0)
+102.2s 174 Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (1.3.3)
+102.2s 175 Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (0.12.1)
+102.2s 176 Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (4.64.0)
+102.2s 177 Requirement already satisfied: kiwisolver>=1.3.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (1.5.1)
+102.2s 178 Requirement already satisfied: pillow>=8 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (13.0.0)
+102.2s 179 Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (3.3.2)
+102.2s 180 Requirement already satisfied: debugpy>=1.0 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (1.8.15)
+102.2s 181 Requirement already satisfied: ipython>=7.23.1 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (7.34.0)
+102.2s 182 Requirement already satisfied: jupyter-client>=6.1.12 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (7.4.9)
+102.2s 183 Requirement already satisfied: matplotlib-inline>=0.1 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.2.2)
+102.2s 184 Requirement already satisfied: nest-asyncio in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (1.6.0)
+102.2s 185 Requirement already satisfied: psutil in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.9.5)
+102.2s 186 Requirement already satisfied: pyzmq>=17 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (26.2.1)
+102.2s 187 Requirement already satisfied: tornado>=6.1 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (6.5.7)
+102.2s 188 Requirement already satisfied: traitlets>=5.1.0 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.16.1)
+102.2s 189 Collecting portalocker (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13))
+102.2s 190 Downloading portalocker-4.4.1-py3-none-any.whl.metadata (10 kB)
+102.3s 191 Requirement already satisfied: tabulate>=0.8.9 in /usr/local/lib/python3.13/dist-packages (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13)) (0.9.0)
+102.3s 192 Requirement already satisfied: colorama in /usr/local/lib/python3.13/dist-packages (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13)) (0.4.6)
+102.3s 193 Requirement already satisfied: lxml in /usr/local/lib/python3.13/dist-packages (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13)) (6.1.2)
+102.3s 194 Requirement already satisfied: scipy>=1.6.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (1.16.3)
+102.3s 195 Requirement already satisfied: joblib>=1.2.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (1.6.0)
+102.3s 196 Requirement already satisfied: threadpoolctl>=3.1.0 in /usr/local/lib/python3.13/dist-packages (from scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (3.6.0)
+102.3s 197 Requirement already satisfied: regex>=2025.10.22 in /usr/local/lib/python3.13/dist-packages (from transformers->-r /kaggle/working/symbiote/requirements.txt (line 7)) (2025.11.3)
+102.3s 198 Requirement already satisfied: tokenizers<0.24.0,>=0.23.1 in /usr/local/lib/python3.13/dist-packages (from transformers->-r /kaggle/working/symbiote/requirements.txt (line 7)) (0.23.1)
+102.3s 199 Requirement already satisfied: safetensors>=0.8.0 in /usr/local/lib/python3.13/dist-packages (from transformers->-r /kaggle/working/symbiote/requirements.txt (line 7)) (0.8.0)
+102.3s 200 Requirement already satisfied: sympy>=1.13.3 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.14.0)
+102.3s 201 Requirement already satisfied: networkx>=2.5.1 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (3.6.1)
+102.3s 202 Requirement already satisfied: cuda-toolkit==12.8.1 in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.1)
+102.3s 203 Requirement already satisfied: cuda-bindings<13,>=12.9.4 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.9.7)
+102.3s 204 Requirement already satisfied: nvidia-cudnn-cu12==9.19.0.56 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (9.19.0.56)
+102.3s 205 Requirement already satisfied: nvidia-cusparselt-cu12==0.7.1 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (0.7.1)
+102.3s 206 Requirement already satisfied: nvidia-nccl-cu12==2.28.9 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (2.28.9)
+102.3s 207 Requirement already satisfied: nvidia-nvshmem-cu12==3.4.5 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (3.4.5)
+102.3s 208 Requirement already satisfied: triton==3.6.0 in /usr/local/lib/python3.13/dist-packages (from torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (3.6.0)
+102.3s 209 Requirement already satisfied: nvidia-cublas-cu12==12.8.4.1.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.4.1)
+102.3s 210 Requirement already satisfied: nvidia-cuda-runtime-cu12==12.8.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.90)
+102.3s 211 Requirement already satisfied: nvidia-cufft-cu12==11.3.3.83.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (11.3.3.83)
+102.3s 212 Requirement already satisfied: nvidia-cufile-cu12==1.13.1.3.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.13.1.3)
+102.3s 213 Requirement already satisfied: nvidia-cuda-cupti-cu12==12.8.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.90)
+102.3s 214 Requirement already satisfied: nvidia-curand-cu12==10.3.9.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (10.3.9.90)
+102.3s 215 Requirement already satisfied: nvidia-cusolver-cu12==11.7.3.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (11.7.3.90)
+102.3s 216 Requirement already satisfied: nvidia-cusparse-cu12==12.5.8.93.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.5.8.93)
+102.3s 217 Requirement already satisfied: nvidia-nvjitlink-cu12==12.8.93.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.93)
+102.3s 218 Requirement already satisfied: nvidia-cuda-nvrtc-cu12==12.8.93.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.93)
+102.3s 219 Requirement already satisfied: nvidia-nvtx-cu12==12.8.90.* in /usr/local/lib/python3.13/dist-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==12.8.1; platform_system == "Linux"->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (12.8.90)
+102.3s 220 Requirement already satisfied: cuda-pathfinder~=1.1 in /usr/local/lib/python3.13/dist-packages (from cuda-bindings<13,>=12.9.4->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.8.0)
+102.3s 221 Requirement already satisfied: contourpy>=1.0.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (1.3.3)
+102.3s 222 Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (0.12.1)
+102.3s 223 Requirement already satisfied: fonttools>=4.22.0 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (4.64.0)
+102.3s 224 Requirement already satisfied: kiwisolver>=1.3.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (1.5.1)
+102.3s 225 Requirement already satisfied: pillow>=8 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (13.0.0)
+102.3s 226 Requirement already satisfied: pyparsing>=2.3.1 in /usr/local/lib/python3.13/dist-packages (from matplotlib->-r /kaggle/working/symbiote/requirements.txt (line 10)) (3.3.2)
+102.3s 227 Requirement already satisfied: debugpy>=1.0 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (1.8.15)
+102.3s 228 Requirement already satisfied: ipython>=7.23.1 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (7.34.0)
+102.3s 229 Requirement already satisfied: jupyter-client>=6.1.12 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (7.4.9)
+102.3s 230 Requirement already satisfied: matplotlib-inline>=0.1 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.2.2)
+102.3s 231 Requirement already satisfied: nest-asyncio in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (1.6.0)
+102.3s 232 Requirement already satisfied: psutil in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.9.5)
+102.3s 233 Requirement already satisfied: pyzmq>=17 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (26.2.1)
+102.3s 234 Requirement already satisfied: tornado>=6.1 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (6.5.7)
+102.3s 235 Requirement already satisfied: traitlets>=5.1.0 in /usr/local/lib/python3.13/dist-packages (from ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.16.1)
+102.3s 236 Collecting portalocker (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13))
+102.3s 237 Downloading portalocker-4.4.1-py3-none-any.whl.metadata (10 kB)
+102.3s 238 Requirement already satisfied: tabulate>=0.8.9 in /usr/local/lib/python3.13/dist-packages (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13)) (0.9.0)
+102.3s 239 Requirement already satisfied: colorama in /usr/local/lib/python3.13/dist-packages (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13)) (0.4.6)
+102.3s 240 Requirement already satisfied: lxml in /usr/local/lib/python3.13/dist-packages (from sacrebleu->-r /kaggle/working/symbiote/requirements.txt (line 13)) (6.1.2)
+102.3s 241 Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (2.7.1)
+102.3s 242 Requirement already satisfied: aiosignal>=1.4.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.4.0)
+102.3s 243 Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (26.1.0)
+102.3s 244 Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.8.0)
+102.3s 245 Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (6.7.1)
+102.3s 246 Requirement already satisfied: propcache>=0.2.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.5.2)
+102.3s 247 Requirement already satisfied: yarl<2.0,>=1.17.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.24.5)
+102.3s 248 Requirement already satisfied: jedi>=0.16 in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.20.1)
+102.3s 249 Requirement already satisfied: decorator in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.3.1)
+102.3s 250 Requirement already satisfied: pickleshare in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.7.5)
+102.3s 251 Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (3.0.53)
+102.3s 252 Requirement already satisfied: pygments in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (2.21.0)
+102.3s 253 Requirement already satisfied: backcall in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.2.0)
+102.3s 254 Requirement already satisfied: pexpect>4.3 in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (4.9.0)
+102.4s 255 Requirement already satisfied: wcwidth>=0.1.4 in /usr/local/lib/python3.13/dist-packages (from prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0->ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.8.3)
+102.4s 256 Requirement already satisfied: parso<0.9.0,>=0.8.7 in /usr/local/lib/python3.13/dist-packages (from jedi>=0.16->ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.8.7)
+102.4s 257 Requirement already satisfied: cloudpickle>=3.0 in /usr/local/lib/python3.13/dist-packages (from joblib>=1.2.0->scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (3.1.2)
+102.4s 258 Requirement already satisfied: entrypoints in /usr/local/lib/python3.13/dist-packages (from jupyter-client>=6.1.12->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.4)
+102.4s 259 Requirement already satisfied: jupyter-core>=4.9.2 in /usr/local/lib/python3.13/dist-packages (from jupyter-client>=6.1.12->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.9.1)
+102.4s 260 Requirement already satisfied: platformdirs>=2.5 in /usr/local/lib/python3.13/dist-packages (from jupyter-core>=4.9.2->jupyter-client>=6.1.12->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (4.11.7)
+102.4s 261 Requirement already satisfied: ptyprocess>=0.5 in /usr/local/lib/python3.13/dist-packages (from pexpect>4.3->ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.7.0)
+102.4s 262 Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.13/dist-packages (from python-dateutil>=2.8.2->pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (1.17.0)
+102.4s 263 Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.13/dist-packages (from rich>=13.8.0->typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (4.2.0)
+102.4s 264 Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.13/dist-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.1.2)
+102.5s 265 Requirement already satisfied: wrapt in /usr/local/lib/python3.13/dist-packages (from smart-open>=5.2.1->weasel<2.0.0,>=1.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.17.3)
+102.5s 266 Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.13/dist-packages (from sympy>=1.13.3->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.3.0)
+102.5s 267 Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (2.7.1)
+102.5s 268 Requirement already satisfied: aiosignal>=1.4.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.4.0)
+102.5s 269 Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (26.1.0)
+102.5s 270 Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.8.0)
+102.5s 271 Requirement already satisfied: multidict<7.0,>=4.5 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (6.7.1)
+102.5s 272 Requirement already satisfied: propcache>=0.2.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (0.5.2)
+102.5s 273 Requirement already satisfied: yarl<2.0,>=1.17.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.2.0,>=2023.1.0->datasets->-r /kaggle/working/symbiote/requirements.txt (line 1)) (1.24.5)
+102.5s 274 Requirement already satisfied: jedi>=0.16 in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.20.1)
+102.5s 275 Requirement already satisfied: decorator in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.3.1)
+102.5s 276 Requirement already satisfied: pickleshare in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.7.5)
+102.5s 277 Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (3.0.53)
+102.5s 278 Requirement already satisfied: pygments in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (2.21.0)
+102.5s 279 Requirement already satisfied: backcall in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.2.0)
+102.5s 280 Requirement already satisfied: pexpect>4.3 in /usr/local/lib/python3.13/dist-packages (from ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (4.9.0)
+102.5s 281 Requirement already satisfied: wcwidth>=0.1.4 in /usr/local/lib/python3.13/dist-packages (from prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0->ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.8.3)
+102.5s 282 Requirement already satisfied: parso<0.9.0,>=0.8.7 in /usr/local/lib/python3.13/dist-packages (from jedi>=0.16->ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.8.7)
+102.5s 283 Requirement already satisfied: cloudpickle>=3.0 in /usr/local/lib/python3.13/dist-packages (from joblib>=1.2.0->scikit-learn->-r /kaggle/working/symbiote/requirements.txt (line 6)) (3.1.2)
+102.5s 284 Requirement already satisfied: entrypoints in /usr/local/lib/python3.13/dist-packages (from jupyter-client>=6.1.12->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.4)
+102.5s 285 Requirement already satisfied: jupyter-core>=4.9.2 in /usr/local/lib/python3.13/dist-packages (from jupyter-client>=6.1.12->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (5.9.1)
+102.5s 286 Requirement already satisfied: platformdirs>=2.5 in /usr/local/lib/python3.13/dist-packages (from jupyter-core>=4.9.2->jupyter-client>=6.1.12->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (4.11.7)
+102.5s 287 Requirement already satisfied: ptyprocess>=0.5 in /usr/local/lib/python3.13/dist-packages (from pexpect>4.3->ipython>=7.23.1->ipykernel->-r /kaggle/working/symbiote/requirements.txt (line 12)) (0.7.0)
+102.5s 288 Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.13/dist-packages (from python-dateutil>=2.8.2->pandas->-r /kaggle/working/symbiote/requirements.txt (line 3)) (1.17.0)
+102.5s 289 Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.13/dist-packages (from rich>=13.8.0->typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (4.2.0)
+102.5s 290 Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.13/dist-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer<1.0.0,>=0.3.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (0.1.2)
+102.5s 291 Requirement already satisfied: wrapt in /usr/local/lib/python3.13/dist-packages (from smart-open>=5.2.1->weasel<2.0.0,>=1.0.0->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (1.17.3)
+102.5s 292 Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.13/dist-packages (from sympy>=1.13.3->torch->-r /kaggle/working/symbiote/requirements.txt (line 8)) (1.3.0)
+102.5s 293 Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.13/dist-packages (from jinja2->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.0.3)
+102.5s 294 Downloading sacrebleu-2.6.0-py3-none-any.whl (100 kB)
+102.6s 295 Downloading portalocker-4.4.1-py3-none-any.whl (129 kB)
+102.7s 296 Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.13/dist-packages (from jinja2->spacy->-r /kaggle/working/symbiote/requirements.txt (line 4)) (3.0.3)
+102.7s 297 Downloading sacrebleu-2.6.0-py3-none-any.whl (100 kB)
+102.7s 298 Downloading portalocker-4.4.1-py3-none-any.whl (129 kB)
+104.2s 299 Installing collected packages: portalocker, sacrebleu
+104.3s 300 
+104.4s 301 Successfully installed portalocker-4.4.1 sacrebleu-2.6.0
+104.4s 302 Installing collected packages: portalocker, sacrebleu
+104.4s 303 
+104.4s 304 Successfully installed portalocker-4.4.1 sacrebleu-2.6.0
+109.5s 305 Collecting en-core-web-sm==3.8.0
+109.7s 306 Downloading en_core_web_sm-3.8.0-py3-none-any.whl (12.8 MB)
+109.7s 307 Collecting en-core-web-sm==3.8.0
+109.7s 308 Downloading en_core_web_sm-3.8.0-py3-none-any.whl (12.8 MB)
+110.2s 309 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.8/12.8 MB 29.1 MB/s  0:00:00
+110.4s 310 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.8/12.8 MB 29.1 MB/s  0:00:00
+111.8s 311 [38;5;2m✔ Download and installation successful[0m
+111.8s 312 You can now load the package via spacy.load('en_core_web_sm')
+111.8s 313 [38;5;3m⚠ Restart to reload dependencies[0m
+111.8s 314 If you are in a Jupyter or Colab notebook, you may need to restart Python in
+111.8s 315 order to load all the package's dependencies. You can do this by selecting the
+111.8s 316 'Restart kernel' or 'Restart runtime' option.
+112.0s 317 [38;5;2m✔ Download and installation successful[0m
+112.0s 318 You can now load the package via spacy.load('en_core_web_sm')
+112.0s 319 [38;5;3m⚠ Restart to reload dependencies[0m
+112.0s 320 If you are in a Jupyter or Colab notebook, you may need to restart Python in
+112.0s 321 order to load all the package's dependencies. You can do this by selecting the
+112.0s 322 'Restart kernel' or 'Restart runtime' option.
+112.6s 323 Dependencies and spaCy model installed successfully.
+115.1s 324 {'questions': 739, 'families': 736, 'old_split_questions': 924, 'v2_split_questions': 912, 'methods': ['ours', 'grouped_hybrid'], 'ratios': [0.5, 0.75], 'gpu': 'Tesla T4'}
+115.6s 325 No target pilot supplied: compression-only run; reader inference remains gated separately.
+115.6s 326 ["/usr/bin/python3", "-m", "final_eval.compressor.compress", "--input-csv", "outputs/followup/old_v2/common_cohort.csv", "--output-csv", "outputs/followup/old_v2/v2/neural.csv", "--model-dir", "models/span_scorer_v2_20261021", "--labels-file", "data/consensus_dataset.csv", "--methods", "ours", "grouped_hybrid", "--ratios", "0.5", "0.75", "--alpha", "0.5"]
+115.8s 327 No target pilot supplied: compression-only run; reader inference remains gated separately.
+115.8s 328 ["/usr/bin/python3", "-m", "final_eval.compressor.compress", "--input-csv", "outputs/followup/old_v2/common_cohort.csv", "--output-csv", "outputs/followup/old_v2/v2/neural.csv", "--model-dir", "models/span_scorer_v2_20261021", "--labels-file", "data/consensus_dataset.csv", "--methods", "ours", "grouped_hybrid", "--ratios", "0.5", "0.75", "--alpha", "0.5"]
+147.0s 329 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+147.2s 330 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+147.2s 331 
+147.2s 332 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+154.4s 333 {
+154.4s 334 "questions": 739,
+154.4s 335 "base_groups": 736,
+154.4s 336 "tasks": 2956,
+154.4s 337 "methods": [
+154.4s 338 "ours",
+154.4s 339 "grouped_hybrid"
+154.4s 340 ],
+154.4s 341 "ratios": [
+154.4s 342 0.5,
+154.4s 343 0.75
+154.4s 344 ],
+154.4s 345 "dry_run": false
+154.4s 346 }
+154.4s 347 Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 2504.16it/s]
+154.6s 348 {
+154.6s 349 "questions": 739,
+154.6s 350 "base_groups": 736,
+154.6s 351 "tasks": 2956,
+154.6s 352 "methods": [
+154.6s 353 "ours",
+154.6s 354 "grouped_hybrid"
+154.6s 355 ],
+154.6s 356 "ratios": [
+154.6s 357 0.5,
+154.6s 358 0.75
+154.6s 359 ],
+154.6s 360 "dry_run": false
+154.6s 361 }
+154.6s 362 Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 2504.16it/s]
+154.6s 363 
+154.6s 364 Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 2504.16it/s]
+211.8s 365 Saved compression records to outputs/followup/old_v2/v2/neural.csv; failures remain explicit. Use a new run for changed configurations.
+212.0s 366 Saved compression records to outputs/followup/old_v2/v2/neural.csv; failures remain explicit. Use a new run for changed configurations.
+214.2s 367 Merged 2956 conditions; inspect the status counts before evaluation
+214.4s 368 Merged 2956 conditions; inspect the status counts before evaluation
+215.2s 369 Saved diagnostics to outputs/followup/old_v2/v2/intrinsic
+215.3s 370 Compression grid complete and budget compliant. See the recorded target workflow in README.md.
+215.4s 371 Saved diagnostics to outputs/followup/old_v2/v2/intrinsic
+215.4s 372 Compression grid complete and budget compliant. See the recorded target workflow in README.md.
+215.4s 373 v2 compression completed.
+215.4s 374 Output: /kaggle/working/symbiote/outputs/followup/old_v2/v2/compressed.csv
+215.8s 375 No target pilot supplied: compression-only run; reader inference remains gated separately.
+215.8s 376 ["/usr/bin/python3", "-m", "final_eval.compressor.compress", "--input-csv", "outputs/followup/old_v2/common_cohort.csv", "--output-csv", "outputs/followup/old_v2/historical/neural.csv", "--model-dir", "models/span_scorer_historical", "--labels-file", "data/consensus_dataset.csv", "--methods", "ours", "grouped_hybrid", "--ratios", "0.5", "0.75", "--alpha", "0.5", "--allow-legacy-checkpoint"]
+216.0s 377 No target pilot supplied: compression-only run; reader inference remains gated separately.
+216.0s 378 ["/usr/bin/python3", "-m", "final_eval.compressor.compress", "--input-csv", "outputs/followup/old_v2/common_cohort.csv", "--output-csv", "outputs/followup/old_v2/historical/neural.csv", "--model-dir", "models/span_scorer_historical", "--labels-file", "data/consensus_dataset.csv", "--methods", "ours", "grouped_hybrid", "--ratios", "0.5", "0.75", "--alpha", "0.5", "--allow-legacy-checkpoint"]
+230.2s 379 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+230.4s 380 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+230.4s 381 
+230.4s 382 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+231.5s 383 {
+231.5s 384 "questions": 739,
+231.5s 385 "base_groups": 736,
+231.5s 386 "tasks": 2956,
+231.5s 387 "methods": [
+231.5s 388 "ours",
+231.5s 389 "grouped_hybrid"
+231.5s 390 ],
+231.5s 391 "ratios": [
+231.5s 392 0.5,
+231.5s 393 0.75
+231.5s 394 ],
+231.5s 395 "dry_run": false
+231.5s 396 }
+231.5s 397 Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 3086.05it/s]
+231.7s 398 Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 3086.05it/s]
+231.7s 399 
+231.7s 400 Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 3086.05it/s]
+231.7s 401 {
+231.7s 402 "questions": 739,
+231.7s 403 "base_groups": 736,
+231.7s 404 "tasks": 2956,
+231.7s 405 "methods": [
+231.7s 406 "ours",
+231.7s 407 "grouped_hybrid"
+231.7s 408 ],
+231.7s 409 "ratios": [
+231.7s 410 0.5,
+231.7s 411 0.75
+231.7s 412 ],
+231.7s 413 "dry_run": false
+231.7s 414 }
+289.4s 415 Saved compression records to outputs/followup/old_v2/historical/neural.csv; failures remain explicit. Use a new run for changed configurations.
+289.6s 416 Saved compression records to outputs/followup/old_v2/historical/neural.csv; failures remain explicit. Use a new run for changed configurations.
+291.7s 417 Merged 2956 conditions; inspect the status counts before evaluation
+291.9s 418 Merged 2956 conditions; inspect the status counts before evaluation
+292.7s 419 Saved diagnostics to outputs/followup/old_v2/historical/intrinsic
+292.8s 420 Compression grid complete and budget compliant. See the recorded target workflow in README.md.
+292.9s 421 Saved diagnostics to outputs/followup/old_v2/historical/intrinsic
+292.9s 422 Compression grid complete and budget compliant. See the recorded target workflow in README.md.
+292.9s 423 Historical compression completed.
+292.9s 424 Output: /kaggle/working/symbiote/outputs/followup/old_v2/historical/compressed.csv
+293.0s 425 
+293.0s 426 v2
+293.0s 427 rows: 2956
+293.0s 428 questions: 739
+293.0s 429 families: 736
+293.0s 430 methods: ['grouped_hybrid', 'ours']
+293.0s 431 ratios: [np.float64(0.5), np.float64(0.75)]
+293.0s 432 statuses: {'ok': 2956}
+293.0s 433 budget: {True: 2956}
+293.0s 434 
+293.0s 435 historical
+293.0s 436 rows: 2956
+293.0s 437 questions: 739
+293.0s 438 families: 736
+293.0s 439 methods: ['grouped_hybrid', 'ours']
+293.0s 440 ratios: [np.float64(0.5), np.float64(0.75)]
+293.0s 441 statuses: {'ok': 2956}
+293.0s 442 budget: {True: 2956}
+293.5s 443 Download this file:
+293.5s 444 /kaggle/working/old_v2_comparison_results.zip
+296.3s 445 /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+296.3s 446 cells[i][c] = re.sub('\\\\\|', '|', cell)
+296.5s 447 /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+296.5s 448 text = re.sub(r'_', '\_', text) # Escape underscores in display text
+297.2s 449 [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+297.3s 450 [NbConvertApp] Writing 48984 bytes to __notebook__.ipynb
+299.6s 451 [NbConvertApp] Converting notebook __notebook__.ipynb to html
+300.2s 452 [NbConvertApp] Writing 338630 bytes to __results__.html

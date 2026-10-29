@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "problems": [],
+  "models": [
+    {
+      "model": "qwen-3.8-27b-fp8",
+      "n_originals": 16,
+      "full_input_accuracy": 1.0,
+      "per_dataset": {
+        "gsm_ic": {
+          "n": 16,
+          "accuracy": 1.0
+        }
+      }
+    }
+  ],
+  "target_config_hash": "ccbcb13c570bb3ab8417c37f3abea8ba3f5eb0d58060fe088775fa689309648e",
+  "pilot_base_groups": [
+    "0a9ae015af4f313cbb327848",
+    "1719a275c4bf3ffe905b41e2",
+    "236819561cdae0e331610c09",
+    "3a5dba6455c9b0ace81b63da",
+    "3af01e7964ea24908281e41a",
+    "622fb512fffe9542bacc6362",
+    "6b024e45f0e526729a7f93ef",
+    "6c69fea6384439016ebfaf15",
+    "7a1835275839a6545e62fb9e",
+    "a98f1c7426e4c019aec22638",
+    "bbf9f894fbb9bf1ac0aea363",
+    "bf2e147e24e5df4e70687976",
+    "d41ec89d2c8f4dbe1a1bbec3",
+    "d7825d3883dbb994d2221cf5",
+    "de1f0171142d5810aafa3c99",
+    "eabc6a095f542f9eccfa19e6"
+  ],
+  "compression_sha256": "37d9e27592dcc19e0a082db0bc77b3ef5a8ff62b5c5ef33cb98cef84be2540fd",
+  "responses_sha256": "4d3ecb5c85ada5568c393ba5eb6c566d1197206768529c5f888325bbeb2a2522",
+  "n_questions": 16,
+  "compression_statuses": {
+    "ok": 128
+  },
+  "budget_violations": 0,
+  "response_statuses": {
+    "ok": 144
+  },
+  "minimum_original_questions": 12,
+  "minimum_original_accuracy": 0.5,
+  "note": "Operational gate, not a statistical adequacy guarantee. Inspect each dataset's small pilot and failures. Do not change thresholds after seeing main results."
+}

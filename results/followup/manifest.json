@@ -1,0 +1,126 @@
+{
+  "scope": "NEXT_STEPS follow-up, steps 1-3, reader qwen-3.8-27b-fp8 (temperature 0, max_tokens 8192, reasoning_effort low)",
+  "note": "Full response texts and compressed prompts stay in the gitignored outputs/followup/ tree.",
+  "files": {
+    "components_qwen/accuracy.csv": {
+      "source": "outputs/followup/components_v2/reports/qwen/components.accuracy.csv",
+      "sha256": "30538ea280b5b786c4c2b03fd864b3668362304239a495929c3f06a479726a29",
+      "bytes": 656
+    },
+    "components_qwen/cohort_manifest.json": {
+      "source": "outputs/followup/components_v2/cohort.csv.manifest.json",
+      "sha256": "5cd4e04406bc06f6d04334118df2eeab305362bba1d74f1c004c5f2455991eda",
+      "bytes": 435
+    },
+    "components_qwen/contrasts.csv": {
+      "source": "outputs/followup/components_v2/reports/qwen/components.contrasts.csv",
+      "sha256": "d84e72a5dc0d61e86eae53fbbe3defb24964982dd0ab7a8d1917312013a02ead",
+      "bytes": 837
+    },
+    "components_qwen/cost_ledger.json": {
+      "source": "outputs/followup/components_v2/target_qwen/responses.csv.cost.json",
+      "sha256": "ca9662ba35f00a59bf2fb1f9a9eb7bba6313d85f005f82688ef370ebf9283fca",
+      "bytes": 802
+    },
+    "components_qwen/per_dataset.csv": {
+      "source": "outputs/followup/components_v2/reports/qwen/components.per_dataset.csv",
+      "sha256": "e45d9780b088fa6b8ff6a2847fa3a7d859faab8b501384998754f1201b4e9dbf",
+      "bytes": 2516
+    },
+    "components_qwen/per_question.csv": {
+      "source": "outputs/followup/components_v2/target_qwen/responses.csv (selected columns, no response text)",
+      "sha256": "ca0dd65e8a3992b503dd42b0471a3b499fce27f30372575600ccc45b2450ee57",
+      "bytes": 151560
+    },
+    "components_qwen/pilot_check.json": {
+      "source": "outputs/followup/components_v2/target_pilots/qwen/pilot_check.json",
+      "sha256": "9f78671082446e3547e253801bd9222a83d64ab23f6881baba63b054212f6397",
+      "bytes": 2102
+    },
+    "components_qwen/pilot_cohort.csv": {
+      "source": "outputs/followup/components_v2/pilot/cohort.csv",
+      "sha256": "bfe1a18fa3a41926eccfe270398c3939bd4752aa16a3cca807c0b905b90c4859",
+      "bytes": 7035
+    },
+    "components_qwen/pilot_cohort_manifest.json": {
+      "source": "outputs/followup/components_v2/pilot/cohort.csv.cohort.json",
+      "sha256": "3eaf35534dae3d6517dcc027ba0bafd36aae360b6a676904c00122d4c275985f",
+      "bytes": 741
+    },
+    "components_qwen/prepared_input_manifest.json": {
+      "source": "outputs/followup/components_v2/matched/prepared.csv.manifest.json",
+      "sha256": "658b3c3a1b0eadbcc70d07b4e6b87d1a091a64d1846100794cc9ba7527af2c4e",
+      "bytes": 1706
+    },
+    "components_qwen/report.json": {
+      "source": "outputs/followup/components_v2/reports/qwen/components.json",
+      "sha256": "f0fc44ccd8d75df33bc7a44f1098657eef2a49885f0337522e60fa5bede1b1bd",
+      "bytes": 6086
+    },
+    "components_qwen/response_manifest.json": {
+      "source": "outputs/followup/components_v2/target_qwen/responses.csv.manifest.json",
+      "sha256": "d0f32731006d35e4755b8d9c3f11861ab4d52dd87d9e2b65495a210eeab212ba",
+      "bytes": 1099
+    },
+    "old_vs_v2_qwen/common_cohort.csv": {
+      "source": "outputs/followup/old_v2/common_cohort.csv",
+      "sha256": "6bba1ac72394a8326025617fa815b7592f94a8497e9b64bd9f2b68cd658a8598",
+      "bytes": 319633
+    },
+    "old_vs_v2_qwen/common_cohort_manifest.json": {
+      "source": "outputs/followup/old_v2/common_cohort.manifest.json",
+      "sha256": "699c7076538e554a40ef2bfabbc3ab169ebceb87e8e2ea95f6475d85d19e7e62",
+      "bytes": 1181
+    },
+    "old_vs_v2_qwen/compression_intrinsic_historical.csv": {
+      "source": "outputs/followup/old_v2/historical/intrinsic/summary.csv",
+      "sha256": "48bc85036ef720d3606f00559ba5a5a372b5555262b889b2ef45f52be27d6371",
+      "bytes": 6184
+    },
+    "old_vs_v2_qwen/compression_intrinsic_v2.csv": {
+      "source": "outputs/followup/old_v2/v2/intrinsic/summary.csv",
+      "sha256": "b378073e28c8d22459a91cb157998353824e4bab9548b935dff1f7d98ea5acf4",
+      "bytes": 6200
+    },
+    "old_vs_v2_qwen/cost_ledger.json": {
+      "source": "outputs/followup/old_v2/target_qwen/responses.csv.cost.json",
+      "sha256": "7bc9024e2af93923bf624929ea7e44743f89051d5d452f87e93b236fec7b0278",
+      "bytes": 1444
+    },
+    "old_vs_v2_qwen/kaggle_compression_log.txt": {
+      "source": "Kaggle run log of notebooks/04_followup_old_v2_compression_kaggle.ipynb",
+      "sha256": "49df96765f4f1b14d270d0d648a0ca6c3d09bb5426f04c44aa3944a4bef877e4",
+      "bytes": 66682
+    },
+    "old_vs_v2_qwen/paired_input_manifest.json": {
+      "source": "outputs/followup/old_v2/paired/compressed.csv.manifest.json",
+      "sha256": "8d5732ac4c2d228551712f72e28ae86480818adce1d1fb1ce3368c842a7c0c4f",
+      "bytes": 802
+    },
+    "old_vs_v2_qwen/per_question.csv": {
+      "source": "outputs/followup/old_v2/reports/qwen/old_vs_v2.paired.csv",
+      "sha256": "8367ff0cd53def02bcabd7e868cd40c5efbad39dc0246cab7ebddef24c315e51",
+      "bytes": 488317
+    },
+    "old_vs_v2_qwen/pilot_check.json": {
+      "source": "outputs/followup/old_v2/target_pilots/qwen/pilot_check.json",
+      "sha256": "61c0dc5442298cffba6f0a5b3f9188d1780bd9ee16d9b511c367b0188f8c1278",
+      "bytes": 1465
+    },
+    "old_vs_v2_qwen/report.json": {
+      "source": "outputs/followup/old_v2/reports/qwen/old_vs_v2.json",
+      "sha256": "f23cf237caf7cff569aec4419988ac2ce9c3edfdae1b597e36c27e6a5b28e783",
+      "bytes": 4349
+    },
+    "old_vs_v2_qwen/response_manifest.json": {
+      "source": "outputs/followup/old_v2/target_qwen/responses.csv.manifest.json",
+      "sha256": "cc2e39b18866ef1c5b1a846f297a9d431b6eb895193a6d848669055e9e2444d3",
+      "bytes": 1099
+    },
+    "old_vs_v2_qwen/summary.csv": {
+      "source": "outputs/followup/old_v2/reports/qwen/old_vs_v2.summary.csv",
+      "sha256": "cfbb04c6030b587ac6e3796ca34044cd28066040669c44cf9ff6fd0e93cf8ace",
+      "bytes": 1360
+    }
+  }
+}

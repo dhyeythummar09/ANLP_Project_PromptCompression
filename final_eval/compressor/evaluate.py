@@ -15,6 +15,7 @@ from final_eval.utils.answer_matching import grade_answer, GRADER_VERSION
 from final_eval.utils.artifacts import source_fingerprint, package_versions, digest, file_hash, resume_manifest, require_unique, parse_bool, atomic_csv, atomic_json, claim_output
 from final_eval.utils.statistics import cluster_ci
 from final_eval.inference.client import make_client, public_config, generation_config
+from final_eval.jarvis_spend import TokenCostGuard
 
 PROMPT_TEMPLATE = "Solve this problem. You may reason briefly, but you MUST end your response with a line in exactly this format:\nFinal Answer: <your answer>\n\nProblem: {question}\n"
 KEY = ["uid", "eval_model", "method", "target_ratio"]
@@ -93,6 +94,11 @@ def run_eval(args):
         else:
             if client is None:
                 client = make_client(cfg, usage_path=str(args.output_csv) + ".usage.json")
+                # Optional spending cap. The ledger lives next to the responses,
+                # so stopping and resuming the run can never reset the allowance.
+                if getattr(args, "cost_limit_inr", None) is not None:
+                    client = TokenCostGuard(client, cfg, str(args.output_csv) + ".cost.json",
+                                            args.cost_limit_inr, args.input_rate, args.output_rate)
             response = client.generate(query)
             record.update({"generation_" + k: json.dumps(v) if isinstance(v, dict) else v
                            for k, v in response.to_dict().items() if k != "text"})
@@ -210,12 +216,27 @@ def deletion_check(args):
                       "assay": "fresh original/mask/delete on one explicitly configured model"}, indent=2))
     if args.dry_run:
         return
+    # Older callers (and tests) may not pass the cost-guard options at all.
+    cost_limit = getattr(args, "cost_limit_inr", None)
     resume_manifest(args.output_csv, {"stage": "fresh_mask_deletion", "source": source_fingerprint(), "packages": package_versions(),
-        "input": file_hash(args.input_csv), "config": generation_config(cfg), "n": args.n, "seed": args.seed, "grader": GRADER_VERSION})
+        "input": file_hash(args.input_csv), "config": generation_config(cfg), "n": args.n, "seed": args.seed,
+        "grader": GRADER_VERSION, "cost_limit_inr": cost_limit,
+        "input_rate": getattr(args, "input_rate", None), "output_rate": getattr(args, "output_rate", None)})
     records = pd.read_csv(args.output_csv, keep_default_na=False).to_dict("records") if Path(args.output_csv).exists() else []
     done = {(r["uid"], int(r["span_start"]), int(r["span_end"])) for r in records}
     client = make_client(cfg, usage_path=str(args.output_csv) + ".usage.json")
+    # Rebuild the cache from completed records so an interrupted run never
+    # repeats an already successful original/mask/delete request.
     cache = {}
+    for saved in records:
+        for condition in ("original", "mask", "delete"):
+            raw = saved.get(condition + "_response_json", "")
+            query_hash = saved.get(condition + "_query_hash", "")
+            if raw and query_hash and saved.get(condition + "_status") == "ok":
+                cache[query_hash] = json.loads(raw)
+    if cost_limit is not None:
+        client = TokenCostGuard(client, cfg, str(args.output_csv) + ".cost.json",
+                                cost_limit, args.input_rate, args.output_rate)
     for r in sample:
         key = (r["uid"], int(r["span_start"]), int(r["span_end"]))
         if key in done:
@@ -229,14 +250,22 @@ def deletion_check(args):
                   "span_category": r["span_category"], "model": cfg.get("name") or cfg.get("model")}
         for condition, question in interventions.items():
             query = PROMPT_TEMPLATE.format(question=question)
-            h = digest(query)
+            h = digest([generation_config(cfg), query])
             if h not in cache:
-                cache[h] = client.generate(query)
-            response = cache[h]
-            grade = grade_answer(response.text, r["ground_truth_answer"], text)
-            record[condition + "_status"] = response.status
-            record[condition + "_correct"] = grade.correct if response.status == "ok" else ""
-            record[condition + "_response_json"] = json.dumps(response.to_dict())
+                response = client.generate(query)
+                cache[h] = response.to_dict()
+            else:
+                # Cached values are plain dictionaries on disk and live
+                # ModelResponse objects during the current process.
+                response = cache[h]
+            response_text = response["text"] if isinstance(response, dict) else response.text
+            response_status = response["status"] if isinstance(response, dict) else response.status
+            grade = grade_answer(response_text, r["ground_truth_answer"], text)
+            record[condition + "_status"] = response_status
+            record[condition + "_correct"] = grade.correct if response_status == "ok" else ""
+            record[condition + "_query_hash"] = h
+            record[condition + "_response_json"] = json.dumps(
+                response if isinstance(response, dict) else response.to_dict())
         records.append(record)
         atomic_csv(pd.DataFrame(records), args.output_csv)
         if any(v in {"auth_failed", "quota_exhausted", "request_budget_exhausted", "configuration_error", "model_not_found"}
@@ -266,6 +295,12 @@ def main():
     ap.add_argument("--pilot-check",help="Require a passed disjoint pilot with identical target settings before main inference")
     ap.add_argument("--n", type=int, default=30, help="Spans in fresh mask/deletion diagnostic")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--cost-limit-inr", type=float,
+                    help="Optional conservative INR allowance for run / deletion-check.")
+    ap.add_argument("--input-rate", type=float, default=10.0,
+                    help="Quoted INR per million input tokens for the cost guard.")
+    ap.add_argument("--output-rate", type=float, default=40.0,
+                    help="Quoted INR per million output tokens for the cost guard.")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     if args.bootstrap < 100:

@@ -1,0 +1,24 @@
+{
+  "spec": {
+    "generation": {
+      "backend": "hosted",
+      "provider": "openai-compatible",
+      "name": "qwen-3.8-27b-fp8",
+      "base_url": "https://models.jarvislabs.net/v1",
+      "api_key_env": "JARVISLABS_API_KEY",
+      "max_tokens": 8192,
+      "temperature": 0,
+      "reasoning_effort": "low"
+    },
+    "limit_inr": 450.0,
+    "input_inr_per_million": 28.431,
+    "output_inr_per_million": 222.709,
+    "input_bound": "UTF-8 prompt bytes plus1024 message/template tokens",
+    "unknown_attempts": "reserve max_tokens at full output rate for every attempted call"
+  },
+  "spec_hash": "3bf1afc0432ba6e1fce15395992eb7893047c9811491429631628753e63ed3e0",
+  "accounted_inr": 145.79042851999986,
+  "completed_generations": 1073,
+  "unknown_attempts": 2,
+  "unsettled_reservations": []
+}

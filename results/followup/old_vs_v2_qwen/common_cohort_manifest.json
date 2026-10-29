@@ -1,0 +1,25 @@
+{
+  "protocol": "checkpoint-comparison-v1",
+  "historical_repo": "flashstep/reasoning-critical-span-scorer",
+  "historical_revision": "c24d8ce9ef2cfbdc7b11185958dee5810327e432",
+  "problems_sha256": "a4a39fac9efc2ebc42409a90891f149bad007e2d6d500d780713ad012c1ef427",
+  "historical_split_sha256": "17bded91a85a28a99c4baed7a5c23b597839203876a748f4f91c4d4cfbcd63dd",
+  "v2_split_sha256": "f8e89467a30823420014ecd25d046040b5dfbf4f22efe3c564f669d74b6414fc",
+  "common_questions": 739,
+  "common_families": 736,
+  "excluded_questions_without_both_assignments": 88,
+  "excluded_partial_family_questions": 173,
+  "historical_family_safety": "conservative_v2_family_proxy; historical split has no base_groups",
+  "datasets": {
+    "gsm8k": 190,
+    "bbh_logical_deduction_three_objects": 100,
+    "bbh_tracking_shuffled_objects_three_objects": 100,
+    "bbh_navigate": 94,
+    "bbh_formal_fallacies": 87,
+    "bbh_date_understanding": 85,
+    "bbh_object_counting": 74,
+    "gsm_ic": 9
+  },
+  "selection": "intersection of both split maps, complete prepared families only; no outcome-based selection",
+  "cohort_sha256": "6bba1ac72394a8326025617fa815b7592f94a8497e9b64bd9f2b68cd658a8598"
+}

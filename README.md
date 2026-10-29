@@ -261,7 +261,137 @@ under `final_eval/`: `preparation/schema.py`, `scorer/data.py`,
   Redundant facts can each look dispensable alone. This is a plausible explanation
   for the scorer/compression gap; causal validation was not performed.
 
-## 6. Cleanup record and remaining deliverables
+## 6. Follow-up experiment preparation
+
+The follow-up batch runner accepts an explicit checkpoint directory, method
+list, retention ceilings and ranking controls. Use a new `--work-dir` for
+each comparison so old and v2 artifacts cannot be mixed:
+
+```bash
+python -m final_eval.batch \
+  --cohort outputs/final_eval/main_gptoss_v1/cohort.csv \
+  --work-dir outputs/followup/v2_components \
+  --model-dir models/span_scorer_v2_20261021 \
+  --labels-file data/processed/team_v2_20261021/consensus_dataset.csv \
+  --methods ours ours_scorer ours_signal \
+  --ratios .50 .75 \
+  --plan
+```
+
+Add `--allow-legacy-checkpoint` only for the historical checkpoint comparison,
+and keep that run in a separate output directory. `--no-cuda` is appropriate
+for dry runs or own-method CPU checks; the complete baseline grid, especially
+LLMLingua-2, should be run on a GPU machine such as the qualified Kaggle
+environment.
+
+The fresh mask/deletion assay now reconstructs its successful response cache
+from the output CSV after interruption. It can also use a persistent
+conservative allowance, for example `--cost-limit-inr 50`; the allowance is a
+quoted-token guard, not a provider billing statement.
+
+### Historical versus v2 checkpoint comparison
+
+The historical release uses a different split and must not be evaluated by
+guessing folds or by ensembling all checkpoints. First download the pinned
+public artifact into a new directory:
+
+```bash
+python -m final_eval.scorer.hf_artifact \
+  --output-dir models/span_scorer_historical \
+  --download
+```
+
+Then audit the intersection of the historical and v2 assignments. The command
+keeps only complete base families represented in both maps and writes a new
+cohort plus a manifest; it performs no model loading or API calls:
+
+```bash
+python -m final_eval.compare_checkpoints \
+  --problems data/processed/team_v2_20261021/problems_recovered.csv \
+  --old-split models/span_scorer_historical/split.json \
+  --v2-split models/span_scorer_v2_20261021/split.json \
+  --output-cohort outputs/followup/old_v2/common_cohort.csv \
+  --output-manifest outputs/followup/old_v2/common_cohort.manifest.json
+```
+
+Run compression separately into `outputs/followup/old_v2/historical` and
+`outputs/followup/old_v2/v2`, using the same methods, ratios, tokenizer and
+reader settings. Add `--allow-legacy-checkpoint` only to the historical
+compression command. If the artifact does not contain a compatible tokenizer,
+stop and record that limitation rather than silently substituting the v2
+tokenizer.
+
+### Scorer-only and signal-only ablations
+
+Generate ablation compression prompts on the same frozen cohort and settings:
+
+```bash
+python -m final_eval.batch \
+  --cohort outputs/followup/components_v2/cohort.csv \
+  --work-dir outputs/followup/components_v2 \
+  --model-dir models/span_scorer_v2_20261021 \
+  --labels-file data/consensus_dataset.csv \
+  --methods ours_scorer ours_signal \
+  --ratios .50 .75
+```
+
+That compression (640 rows, CPU) is done. GPT-OSS is gone, and the saved Qwen
+`ours` answers are not on this machine, so the comparison is one **fresh matched
+Qwen run** of originals + `ours` + `ours_scorer` + `ours_signal` on the 160
+questions (125 families). The older `assemble` path, which reuses `ours`
+answers from a different run, is kept only for the historical GPT-OSS layout.
+
+```bash
+C=outputs/followup/components_v2
+# 1. Reference `ours` arm with identical compressor settings (CPU). It
+#    reproduces the main study's saved `ours` text in 320/320 conditions.
+python -m final_eval.batch --cohort $C/cohort.csv --work-dir $C/reference_ours \
+  --model-dir models/span_scorer_v2_20261021 --labels-file data/consensus_dataset.csv \
+  --methods ours --ratios 0.5 0.75 --no-cuda
+
+# 2. Disjoint 16-family pilot (2 per dataset). The step-2 pilot shares 5
+#    families with this cohort, so it cannot gate this run.
+python -m final_eval.component_ablations pilot-cohort \
+  --source-cohort outputs/followup/old_v2/common_cohort.csv \
+  --exclude-cohort $C/cohort.csv --output $C/pilot/cohort.csv
+python -m final_eval.batch --cohort $C/pilot/cohort.csv --work-dir $C/pilot/compression \
+  --model-dir models/span_scorer_v2_20261021 --labels-file data/consensus_dataset.csv \
+  --methods ours ours_scorer ours_signal --ratios 0.5 0.75 --no-cuda --pilot
+
+# 3. One reader input per run (checks matching questions and compressor settings).
+python -m final_eval.component_ablations prepare \
+  --reference-input $C/pilot/compression/compressed.csv \
+  --ablation-input $C/pilot/compression/compressed.csv --output $C/pilot/prepared.csv
+python -m final_eval.component_ablations prepare \
+  --reference-input $C/reference_ours/compressed.csv --ablation-input $C/compressed.csv \
+  --saved-reference outputs/final_eval/main_gptoss_v1/compressed.csv \
+  --output $C/matched/prepared.csv
+
+# 4. Qwen pilot (112 conditions) and gate.
+python -m final_eval.component_ablations run --pilot-only --input $C/pilot/prepared.csv \
+  --output $C/target_pilots/qwen/responses.csv \
+  --model-config final_eval/configs/target.qwen_followup.json --cost-limit-inr 60
+python -m final_eval.handoff check --compressed $C/pilot/prepared.csv \
+  --responses $C/target_pilots/qwen/responses.csv \
+  --output $C/target_pilots/qwen/pilot_check.json
+
+# 5. Main matched run: 1,120 logical conditions, 1,071 unique requests.
+python -m final_eval.component_ablations run --input $C/matched/prepared.csv \
+  --output $C/target_qwen/responses.csv \
+  --model-config final_eval/configs/target.qwen_followup.json \
+  --pilot-check $C/target_pilots/qwen/pilot_check.json --cost-limit-inr 450
+
+# 6. Report: accuracy per arm, paired scorer-vs-ours, signal-vs-ours and
+#    scorer-vs-signal deltas (family-clustered 95% CI), per-dataset table.
+python -m final_eval.component_ablations summarize --input $C/matched/prepared.csv \
+  --responses $C/target_qwen/responses.csv --report $C/reports/qwen/components.json
+```
+
+`run` shares its guards with the step-2 runner (`final_eval/followup_reader.py`):
+the expected reader name, a passed disjoint pilot with identical settings,
+no `target_gptoss` paths and a persistent INR cost ledger.
+
+## 7. Cleanup record and remaining deliverables
 
 All old active sources/documents/notebooks and local proposal/mid-report/result
 references were saved before cleanup in
@@ -313,7 +443,7 @@ or against the neural contribution, and a clearer failure explanation. A win
 over LLMLingua-2 remains an unconfirmed hypothesis. Check actual remaining
 credit before setting a bounded request/token allowance for any new calls.
 
-## 7. Hugging Face models: published and verified
+## 8. Hugging Face models: published and verified
 
 **Complete:** the user uploaded the corrected five-fold v2 scorer, and read-only
 Hub metadata verification confirmed all **67 release files**, including all five
@@ -378,3 +508,69 @@ It verifies inputs and copies to a new folder; it never uploads or retrains.
 Portable loading passed a tiny synthetic-checkpoint roundtrip and the actual
 saved tokenizer loaded offline. Publication verification adds no claim of a
 new real-checkpoint forward pass; the original Kaggle experiment remains unchanged.
+### Old-checkpoint versus v2 downstream reader comparison (Qwen)
+
+GPT-OSS was removed from Jarvislabs (the old-v2 GPT-OSS pilot got `HTTP 404`
+on its first request and is preserved, unchanged, in
+`outputs/followup/old_v2/target_pilots/gptoss/`). The follow-up therefore uses
+`qwen-3.8-27b-fp8` with the saved settings: temperature 0, output cap 8,192,
+reasoning effort `low` (`final_eval/configs/target.qwen_followup.json`). These
+answers are a **new Qwen follow-up run**; never pair them with GPT-OSS answers.
+
+Compression was already done on Kaggle for both checkpoints (`ours` and
+`grouped_hybrid`, ratios .50/.75, 739 questions, 736 families). Everything below
+is hosted-reader work run from the laptop; no GPU or Kaggle is needed.
+
+Both checkpoints go through **one** paired run. `prepare` stacks them with
+distinct method IDs (`ours_historical`, `ours_v2`, ...), so each original is
+asked once and prompts that both checkpoints compressed identically
+(roughly 65-82% per cell) are answered once by the query cache:
+
+```bash
+O=outputs/followup/old_v2
+# 1. Paired inputs (pilot and main). No model loading, no API calls.
+python -m final_eval.compare_downstream prepare \
+  --historical-input $O/pilot/historical/compressed.csv \
+  --v2-input $O/target_pilots/gptoss/compression/compressed.csv \
+  --output $O/pilot/paired_compressed.csv
+python -m final_eval.compare_downstream prepare \
+  --historical-input $O/historical/compressed.csv \
+  --v2-input $O/v2/compressed.csv \
+  --output $O/paired/compressed.csv
+
+# 2. Qwen pilot on 16 disjoint GSM-IC families (56 unique requests), then gate.
+python -m final_eval.compare_downstream run --pilot-only \
+  --input $O/pilot/paired_compressed.csv \
+  --output $O/target_pilots/qwen/responses.csv \
+  --model-config final_eval/configs/target.qwen_followup.json --cost-limit-inr 60
+python -m final_eval.handoff check \
+  --compressed $O/pilot/paired_compressed.csv \
+  --responses $O/target_pilots/qwen/responses.csv \
+  --output $O/target_pilots/qwen/pilot_check.json
+
+# 3. Main paired run: 6,651 logical conditions, 2,842 unique requests.
+python -m final_eval.compare_downstream run \
+  --input $O/paired/compressed.csv \
+  --output $O/target_qwen/responses.csv \
+  --model-config final_eval/configs/target.qwen_followup.json \
+  --pilot-check $O/target_pilots/qwen/pilot_check.json --cost-limit-inr 700
+
+# 4. Paired family-clustered report.
+python -m final_eval.compare_downstream summarize \
+  --input $O/paired/compressed.csv \
+  --responses $O/target_qwen/responses.csv \
+  --report $O/reports/qwen/old_vs_v2.json
+```
+
+The pilot's historical compression was produced locally on CPU with
+`final_eval.batch --pilot --no-cuda --allow-legacy-checkpoint` into
+`$O/pilot/historical/`. `run` adds `--dry-run` to print the plan without
+requests. It is resumable (rerun the same command); the `.cost.json` ledger next to
+the responses keeps the ₹ allowance across restarts, using the catalog rates
+$0.30 / $2.35 per million tokens (₹28.431 / ₹222.709). It refuses any
+`target_gptoss` path, a missing or failed pilot, or a config that differs from the pilot's.
+The report gives, per method and ratio: original/historical/v2 accuracy, the
+v2-minus-historical delta with a 95% family-clustered CI, discordant counts,
+and the delta restricted to questions whose compressed text actually differs
+(identical prompts share one answer and can only tie). Never upload
+`jarvis.env` or API keys anywhere.

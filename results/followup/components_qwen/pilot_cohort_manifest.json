@@ -1,0 +1,21 @@
+{
+  "source_cohort": "outputs/followup/old_v2/common_cohort.csv",
+  "source_sha256": "6bba1ac72394a8326025617fa815b7592f94a8497e9b64bd9f2b68cd658a8598",
+  "excluded_cohorts": {
+    "outputs/followup/components_v2/cohort.csv": "9bd06f53a721a4f2a97593f710aec67532ece903872ec69d5165fc7285a97078"
+  },
+  "seed": 20261028,
+  "n_questions": 16,
+  "n_base_groups": 16,
+  "datasets": {
+    "bbh_date_understanding": 2,
+    "bbh_formal_fallacies": 2,
+    "bbh_logical_deduction_three_objects": 2,
+    "bbh_navigate": 2,
+    "bbh_object_counting": 2,
+    "bbh_tracking_shuffled_objects_three_objects": 2,
+    "gsm8k": 2,
+    "gsm_ic": 2
+  },
+  "selection": "one question per family, dataset round-robin, excluded families removed; no outcomes used"
+}

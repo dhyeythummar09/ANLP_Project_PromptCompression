@@ -1,0 +1,40 @@
+{
+  "spec": {
+    "generation": {
+      "backend": "hosted",
+      "provider": "openai-compatible",
+      "name": "qwen-3.8-27b-fp8",
+      "base_url": "https://models.jarvislabs.net/v1",
+      "api_key_env": "JARVISLABS_API_KEY",
+      "max_tokens": 8192,
+      "temperature": 0,
+      "reasoning_effort": "low"
+    },
+    "limit_inr": 850.0,
+    "input_inr_per_million": 28.431,
+    "output_inr_per_million": 222.709,
+    "input_bound": "UTF-8 prompt bytes plus1024 message/template tokens",
+    "unknown_attempts": "reserve max_tokens at full output rate for every attempted call"
+  },
+  "spec_hash": "81ca17e02315e31632a24e01c7fb429b91fe6446f98a692316c6bc05158fe057",
+  "accounted_inr": 725.8730950899986,
+  "completed_generations": 2913,
+  "unknown_attempts": 171,
+  "unsettled_reservations": [
+    {
+      "query_hash": "862803b9aab03baa662c265c0c2a84fd4b51d3e10fbc9759c8b2bc1403199f6a",
+      "reserved_inr": 3.733247464,
+      "http_attempts_before": 1341
+    }
+  ],
+  "limit_history": [
+    {
+      "previous_limit_inr": 700.0,
+      "new_limit_inr": 850.0,
+      "accounted_inr_at_change": 699.0098629580002,
+      "unknown_attempts_at_change": 169,
+      "timestamp_utc": "2026-10-28T10:24:40.962060+00:00",
+      "reason": "Cap reached mostly through worst-case reservations for ~1.3s network failures (local connectivity outage, 08:26 UTC); provider-reported usage was about INR 373. User approved raising to INR 850."
+    }
+  ]
+}

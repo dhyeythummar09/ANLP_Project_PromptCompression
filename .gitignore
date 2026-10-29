@@ -44,3 +44,10 @@ Thumbs.db
 /stage_b*_review_*.zip
 /llmlingua_repair_review_*.zip
 /symbiote_main_review_*.zip
+
+
+# --- Kaggle upload payloads (rebuilt from the repo + local models/data; multi-GB) ---
+/kaggle_old_v2_payload/
+/kaggle_old_v2_payload*.zip
+/kaggle_*_payload/
+/kaggle_*_payload*.zip

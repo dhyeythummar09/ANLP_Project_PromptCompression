@@ -1,0 +1,33 @@
+{
+  "protocol": "symbiote-v2",
+  "stage": "evaluation",
+  "input": "561dc23703ecaba9f2ac89bc3fa8f3648da9ffe13873ba127e67a9b7941d2181",
+  "source": "0d29c1671cde035c20534b5daa3e541c3b4144f6de853b259e30eaa58d3a3e1d",
+  "packages": {
+    "torch": "2.10.0",
+    "transformers": "5.16.1",
+    "pandas": "2.2.3",
+    "numpy": "2.2.3",
+    "scikit-learn": "1.7.2",
+    "spacy": "3.8.16",
+    "tiktoken": "0.12.0",
+    "llmlingua": null,
+    "selective-context": null
+  },
+  "config": {
+    "backend": "hosted",
+    "provider": "openai-compatible",
+    "name": "qwen-3.8-27b-fp8",
+    "base_url": "https://models.jarvislabs.net/v1",
+    "api_key_env": "JARVISLABS_API_KEY",
+    "max_tokens": 8192,
+    "temperature": 0,
+    "reasoning_effort": "low"
+  },
+  "grader": "unique-final-v2",
+  "wrapper": "Solve this problem. You may reason briefly, but you MUST end your response with a line in exactly this format:\nFinal Answer: <your answer>\n\nProblem: {question}\n",
+  "methods": null,
+  "ratios": null,
+  "limit": null,
+  "pilot_check": "61c0dc5442298cffba6f0a5b3f9188d1780bd9ee16d9b511c367b0188f8c1278"
+}

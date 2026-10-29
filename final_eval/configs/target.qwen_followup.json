@@ -1,0 +1,14 @@
+{
+  "backend": "hosted",
+  "provider": "openai-compatible",
+  "name": "qwen-3.8-27b-fp8",
+  "base_url": "https://models.jarvislabs.net/v1",
+  "api_key_env": "JARVISLABS_API_KEY",
+  "max_tokens": 8192,
+  "temperature": 0,
+  "reasoning_effort": "low",
+  "sleep_seconds": 1,
+  "max_attempts": 2,
+  "request_budget": 6000,
+  "timeout": 300
+}

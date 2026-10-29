@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "problems": [],
+  "models": [
+    {
+      "model": "qwen-3.8-27b-fp8",
+      "n_originals": 16,
+      "full_input_accuracy": 1.0,
+      "per_dataset": {
+        "bbh_date_understanding": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "bbh_formal_fallacies": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "bbh_logical_deduction_three_objects": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "bbh_navigate": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "bbh_object_counting": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "bbh_tracking_shuffled_objects_three_objects": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "gsm8k": {
+          "n": 2,
+          "accuracy": 1.0
+        },
+        "gsm_ic": {
+          "n": 2,
+          "accuracy": 1.0
+        }
+      }
+    }
+  ],
+  "target_config_hash": "ccbcb13c570bb3ab8417c37f3abea8ba3f5eb0d58060fe088775fa689309648e",
+  "pilot_base_groups": [
+    "01ab5a2104e5a7af4a7a93f3",
+    "022516793792c41e3a042854",
+    "1e89c0681682651827154dbc",
+    "1f04c5c35581735d68f3a303",
+    "251ddba519563953494400ba",
+    "2bf817262bf9b4dda9282f7e",
+    "30db5344212c14db201dd505",
+    "377320eeea4a4be867c2beb0",
+    "6eb346e0472f2a318780086c",
+    "7f511c10e8ab08b700034f31",
+    "8677e689c2b5357eb9bd3561",
+    "8a5c7980aabf1a58e5f6d42b",
+    "8bc6f37a91cd1794309f340d",
+    "b1c60b647ffa3e70f1afa7e7",
+    "b2f36fa2cfeaf213b4915f89",
+    "b6513120ba224e221b4868ec"
+  ],
+  "compression_sha256": "2dd4536a8e0fdf11af24350ec4ca56824df0d8a393c33cbd5556ae0cbad5f1d1",
+  "responses_sha256": "4cbc4e5692b9b10f3286b88d502ee66b28eebe7b9b6b59e84b29e1c91f61574d",
+  "n_questions": 16,
+  "compression_statuses": {
+    "ok": 96
+  },
+  "budget_violations": 0,
+  "response_statuses": {
+    "ok": 112
+  },
+  "minimum_original_questions": 12,
+  "minimum_original_accuracy": 0.5,
+  "note": "Operational gate, not a statistical adequacy guarantee. Inspect each dataset's small pilot and failures. Do not change thresholds after seeing main results."
+}

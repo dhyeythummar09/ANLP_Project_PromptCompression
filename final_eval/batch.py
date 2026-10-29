@@ -14,26 +14,56 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ("cohort","work-dir","model-dir","labels-file"):
         parser.add_argument("--"+name,required=True)
+    parser.add_argument("--methods", nargs="+", choices=[
+        "ours", "ours_scorer", "ours_signal", "grouped_hybrid",
+        "grouped_signal", "random", "surprisal_word",
+        "llmlingua_budgeted", "llmlingua2_budgeted",
+        "selective_context_budgeted"])
+    parser.add_argument("--ratios", nargs="+", type=float, default=[0.75, 0.5])
+    parser.add_argument("--alpha", type=float, default=0.5)
+    parser.add_argument("--no-bonuses", action="store_true")
+    parser.add_argument("--protect-interface", action="store_true")
+    parser.add_argument("--allow-legacy-checkpoint", action="store_true",
+                        help="Permit a historical checkpoint for descriptive comparison.")
+    parser.add_argument("--no-cuda", action="store_true",
+                        help="Force CPU compression; useful for local dry runs and scorer-only tests.")
     parser.add_argument("--pilot",action="store_true")
     parser.add_argument("--pilot-check")
     parser.add_argument("--plan",action="store_true",help="Print commands, write nothing and execute nothing")
     args=parser.parse_args(); folder=Path(args.work_dir)
+    methods = args.methods or METHODS
+    if len(set(methods)) != len(methods):
+        parser.error("Duplicate methods are not allowed")
+    if any(not 0 < ratio <= 1 for ratio in args.ratios):
+        parser.error("Ratios must be in (0, 1]")
     cohort=pd.read_csv(args.cohort,keep_default_na=False)
     if args.pilot:
         if len(cohort)>16:
             raise ValueError("Pilot cap is 16 questions")
     else:
-        if not args.pilot_check:
-            raise ValueError("Main batch requires --pilot-check")
-        check=json.loads(Path(args.pilot_check).read_text())
-        if not check.get("passed") or set(cohort.base_group_id)&set(check["pilot_base_groups"]):
-            raise ValueError("Need a passed pilot and disjoint main families")
+        if args.pilot_check:
+            check=json.loads(Path(args.pilot_check).read_text())
+            if not check.get("passed") or set(cohort.base_group_id)&set(check["pilot_base_groups"]):
+                raise ValueError("Need a passed pilot and disjoint main families")
+        else:
+            print("No target pilot supplied: compression-only run; reader inference remains gated separately.",
+                  flush=True)
     commands=[]; stages=[]
-    for name,methods in [("ours",METHODS[:4])]+[(m,[m]) for m in METHODS[4:]]:
+    own_methods = [method for method in methods if method in {
+        "ours", "ours_scorer", "ours_signal", "grouped_hybrid", "grouped_signal",
+        "random", "surprisal_word"}]
+    stage_specs = ([("neural", own_methods)] if own_methods else [])
+    stage_specs.extend((method, [method]) for method in methods if method not in own_methods)
+    for name, stage_methods in stage_specs:
         output=folder/f"{name}.csv"; stages.append(output)
         commands.append([sys.executable,"-m","final_eval.compressor.compress","--input-csv",args.cohort,
             "--output-csv",str(output),"--model-dir",args.model_dir,"--labels-file",args.labels_file,
-            "--methods",*methods,"--ratios","0.75","0.5"])
+            "--methods",*stage_methods,"--ratios",*map(str,args.ratios),
+            "--alpha",str(args.alpha)] +
+            (["--allow-legacy-checkpoint"] if args.allow_legacy_checkpoint else []) +
+            (["--no-bonuses"] if args.no_bonuses else []) +
+            (["--protect-interface"] if args.protect_interface else []) +
+            (["--no-cuda"] if args.no_cuda else []))
     merged=folder/"compressed.csv"
     for command in commands:
         print(json.dumps(command),flush=True)
@@ -49,7 +79,7 @@ def main():
             raise ValueError("Existing merge belongs to different stage files; use a new merge/report path")
     else:
         subprocess.run([sys.executable,"-m","final_eval.preparation.merge_compressions","--inputs",*map(str,stages),
-            "--expected-methods",*METHODS,"--output",str(merged)],check=True)
+            "--expected-methods",*methods,"--output",str(merged)],check=True)
     intrinsic=folder/"intrinsic"
     if intrinsic.exists():
         manifest=json.loads((intrinsic/"manifest.json").read_text())

@@ -1,0 +1,26 @@
+{
+  "protocol": "old-v2-paired-v1",
+  "historical_input": "outputs/followup/old_v2/historical/compressed.csv",
+  "historical_sha256": "efa6787a8f51cd5cd7a8b1425a70c6ec98a297b945f332c3935908c3318367c5",
+  "v2_input": "outputs/followup/old_v2/v2/compressed.csv",
+  "v2_sha256": "d7f1508b2ca9dab62c176fef1e96778cfbb82ed4f8d5450dd30b66b81d4367a4",
+  "paired_sha256": "561dc23703ecaba9f2ac89bc3fa8f3648da9ffe13873ba127e67a9b7941d2181",
+  "methods": [
+    "ours",
+    "grouped_hybrid"
+  ],
+  "ratios": [
+    0.5,
+    0.75
+  ],
+  "questions": 739,
+  "families": 736,
+  "logical_conditions_including_originals": 6651,
+  "unique_reader_queries_before_retries": 2842,
+  "identical_compressed_text": {
+    "grouped_hybrid@0.5": 479,
+    "grouped_hybrid@0.75": 608,
+    "ours@0.5": 471,
+    "ours@0.75": 607
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "protocol": "component-ablation-matched-v1",
+  "reference_input": "outputs/followup/components_v2/reference_ours/compressed.csv",
+  "reference_sha256": "5d96b9953ebbb05e154bbca1055871044737424d3f2d9a34d74dbb16df6dd2b6",
+  "ablation_input": "outputs/followup/components_v2/compressed.csv",
+  "ablation_sha256": "f0b28a0e99a985ea4d8fa66336386689950e9c7665771bb432db7a34b7f1c16d",
+  "prepared_sha256": "bf401bfe1713f34a654a8875620b2984238b207103533bda830c3fb7eed4b941",
+  "compression_settings": {
+    "model_dir": "models/span_scorer_v2_20261021",
+    "labels_file": "data/consensus_dataset.csv",
+    "ratios": [
+      0.5,
+      0.75
+    ],
+    "tokenizer": "cl100k_base",
+    "alpha": 0.5,
+    "no_bonuses": false,
+    "protect_interface": false,
+    "info_model": "distilgpt2",
+    "llmlingua_model": "microsoft/phi-2",
+    "llmlingua2_model": "microsoft/llmlingua-2-xlm-roberta-large-meetingbank",
+    "allow_legacy_checkpoint": false,
+    "seed": 42,
+    "no_cuda": true
+  },
+  "methods": [
+    "ours",
+    "ours_scorer",
+    "ours_signal"
+  ],
+  "ratios": [
+    0.5,
+    0.75
+  ],
+  "questions": 160,
+  "families": 125,
+  "logical_conditions_including_originals": 1120,
+  "unique_reader_queries_before_retries": 1071,
+  "identical_compressed_text": {
+    "ours_scorer==ours@0.5": 1,
+    "ours_scorer==ours@0.75": 0,
+    "ours_signal==ours@0.5": 20,
+    "ours_signal==ours@0.75": 26,
+    "ours_scorer==ours_signal@0.5": 0,
+    "ours_scorer==ours_signal@0.75": 0
+  },
+  "saved_reference": {
+    "path": "outputs/final_eval/main_gptoss_v1/compressed.csv",
+    "sha256": "30bea97d554fcba62ba98b178a5f16dd6c497f66e1ee74825973a4036c7f9311",
+    "matched_conditions": 320,
+    "identical_text": 320
+  }
+}

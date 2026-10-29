@@ -1,0 +1,63 @@
+example_id,source_dataset,original_prompt,ground_truth_answer,inserted_context,uid,base_group_id
+bbh_date_understanding_65,bbh_date_understanding,"Jane and John married on Jan 2, 1958. Today is their golden wedding anniversary. What is the date a month ago in MM/DD/YYYY?
+Options:
+(A) 12/02/2007
+(B) 12/03/2007
+(C) 01/02/2007
+(D) 11/18/2007
+(E) 11/04/2007
+(F) 12/02/1928",(A),,bbh_date_understanding|bbh_date_understanding_65,251ddba519563953494400ba
+bbh_date_understanding_95,bbh_date_understanding,"In the UK, people usually put the day before the month when formatting the date. Therefore, today is 02/01/1987 to them. What is the date tomorrow in MM/DD/YYYY?
+Options:
+(A) 12/06/1986
+(B) 01/03/1987
+(C) 01/04/1987
+(D) 01/09/1987
+(E) 01/03/2035
+(F) 02/03/1986",(B),,bbh_date_understanding|bbh_date_understanding_95,2bf817262bf9b4dda9282f7e
+bbh_formal_fallacies_43,bbh_formal_fallacies,"""It is not always easy to see which chemicals are contained in our consumer products. The following argument pertains to this question: Being an ingredient of Peach Paint is sufficient for being an ingredient of AUTOGRAPH EYELINER. Every ingredient of AUTOGRAPH EYELINER is an ingredient of Brow Filler Blonde or an ingredient of Calming Shampoo. From this follows: Every ingredient of Peach Paint is an ingredient of Calming Shampoo or an ingredient of Brow Filler Blonde.""
+Is the argument, given the explicitly stated premises, deductively valid or invalid?
+Options:
+- valid 
+- invalid",valid,,bbh_formal_fallacies|bbh_formal_fallacies_43,022516793792c41e3a042854
+bbh_formal_fallacies_59,bbh_formal_fallacies,"""Consumer research aims at understanding whether users of some products also tend to consume other ones, or not. The following argument seeks to clarify some such relations: To start with, being a regular consumer of Lever soap is necessary for being a frequent consumer of Nubian Heritage soap. Now, every regular consumer of Lever soap is not a regular user of Biolage shampoo or not a loyal buyer of Lush soap. We may conclude: Everyone who is a frequent consumer of Nubian Heritage soap is also a loyal buyer of Lush soap and a regular user of Biolage shampoo.""
+Is the argument, given the explicitly stated premises, deductively valid or invalid?
+Options:
+- valid 
+- invalid",invalid,,bbh_formal_fallacies|bbh_formal_fallacies_59,b1c60b647ffa3e70f1afa7e7
+bbh_logical_deduction_three_objects_35,bbh_logical_deduction_three_objects,"The following paragraphs each describe a set of three objects arranged in a fixed order. The statements are logically consistent within each paragraph. On a branch, there are three birds: an owl, a crow, and a cardinal. The crow is to the left of the owl. The owl is the second from the left.
+Options:
+(A) The owl is the rightmost
+(B) The crow is the rightmost
+(C) The cardinal is the rightmost",(C),,bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_35,1f04c5c35581735d68f3a303
+bbh_logical_deduction_three_objects_9,bbh_logical_deduction_three_objects,"The following paragraphs each describe a set of three objects arranged in a fixed order. The statements are logically consistent within each paragraph. In a golf tournament, there were three golfers: Dan, Mel, and Amy. Dan finished above Amy. Amy finished above Mel.
+Options:
+(A) Dan finished second
+(B) Mel finished second
+(C) Amy finished second",(C),,bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_9,8677e689c2b5357eb9bd3561
+bbh_navigate_40,bbh_navigate,"If you follow these instructions, do you return to the starting point? Take 6 steps. Take 2 steps. Take 2 steps. Turn left. Take 5 steps. Take 8 steps. Turn around.
+Options:
+- Yes
+- No",No,,bbh_navigate|bbh_navigate_40,8a5c7980aabf1a58e5f6d42b
+bbh_navigate_70,bbh_navigate,"If you follow these instructions, do you return to the starting point? Take 9 steps. Take 6 steps. Take 9 steps. Take 6 steps. Take 2 steps. Turn left. Take 6 steps. Turn around. Take 8 steps.
+Options:
+- Yes
+- No",No,,bbh_navigate|bbh_navigate_70,b6513120ba224e221b4868ec
+bbh_object_counting_16,bbh_object_counting,"I have a lamp, two couches, two fridges, two ovens, and a bed. How many objects do I have?",8,,bbh_object_counting|bbh_object_counting_16,b2f36fa2cfeaf213b4915f89
+bbh_object_counting_29,bbh_object_counting,"I have a head of broccoli, a carrot, a potato, a yam, and a cauliflower. How many vegetables do I have?",5,,bbh_object_counting|bbh_object_counting_29,6eb346e0472f2a318780086c
+bbh_tracking_shuffled_objects_three_objects_12,bbh_tracking_shuffled_objects_three_objects,"Alice, Bob, and Claire are dancers at a square dance. At the start of a song, they each have a partner: Alice is dancing with Izzi, Bob is dancing with Patrick, and Claire is dancing with Ophelia.
+Throughout the song, the dancers often trade partners. First, Bob and Alice switch partners. Then, Claire and Bob switch partners. Finally, Claire and Alice switch partners. At the end of the dance, Bob is dancing with
+Options:
+(A) Izzi
+(B) Patrick
+(C) Ophelia",(C),,bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_12,7f511c10e8ab08b700034f31
+bbh_tracking_shuffled_objects_three_objects_5,bbh_tracking_shuffled_objects_three_objects,"Alice, Bob, and Claire are dancers at a square dance. At the start of a song, they each have a partner: Alice is dancing with Ophelia, Bob is dancing with Jamie, and Claire is dancing with Melissa.
+Throughout the song, the dancers often trade partners. First, Alice and Claire switch partners. Then, Bob and Alice switch partners. Finally, Claire and Bob switch partners. At the end of the dance, Claire is dancing with
+Options:
+(A) Ophelia
+(B) Jamie
+(C) Melissa",(C),,bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_5,377320eeea4a4be867c2beb0
+gsm8k_103,gsm8k,"Mary is making ice cubes with fruit frozen in them for a cocktail party. She makes some strawberry cubes, and a number of blueberry cubes equal to 5 times the number of strawberry cubes minus 4. If she makes 116 ice cubes total, how many blueberry cubes does she make?",96,,gsm8k|gsm8k_103,01ab5a2104e5a7af4a7a93f3
+gsm8k_180,gsm8k,"John buys milk for 2 dollars, eggs for 3 dollars, light bulbs for 3 dollars, cups for 3 dollars, and roach traps for 4 dollars.  If there is a 10% tax on all nonfood items how much did everything cost.",16,,gsm8k|gsm8k_180,8bc6f37a91cd1794309f340d
+gsmic_124,gsm_ic,"Emily has 7 times as many oranges as Sandra. Sandra has 3 times as many oranges as Betty. The height of Emily's neighbor is 100000 feet. If Betty has 12 oranges, how many oranges does Emily have?",252,The height of Emily's neighbor is 100000 feet,gsm_ic|gsmic_124,30db5344212c14db201dd505
+gsmic_52,gsm_ic,"Michael was watching a TV show, which was aired for 1.5 hours. During this time, there were 3 commercials, which lasted 10 minutes each. Ada is 2000 years old. How long (in hours) was the TV show itself, not counting commercials?",1,Ada is 2000 years old,gsm_ic|gsmic_52,1e89c0681682651827154dbc
