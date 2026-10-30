@@ -1,0 +1,18 @@
+run,method,target_ratio,rows,status_ok,status_truncated,status_request_budget_exhausted,status_network_error
+bonus_on (step 3),none,1.0,160,160,0.0,0.0,0.0
+bonus_on (step 3),ours,0.5,160,160,0.0,0.0,0.0
+bonus_on (step 3),ours,0.75,160,160,0.0,0.0,0.0
+bonus_on (step 3),ours_scorer,0.5,160,160,0.0,0.0,0.0
+bonus_on (step 3),ours_scorer,0.75,160,160,0.0,0.0,0.0
+bonus_on (step 3),ours_signal,0.5,160,160,0.0,0.0,0.0
+bonus_on (step 3),ours_signal,0.75,160,160,0.0,0.0,0.0
+bonus_off,none,1.0,160,160,0.0,0.0,0.0
+bonus_off,ours_scorer,0.5,160,159,1.0,0.0,0.0
+bonus_off,ours_scorer,0.75,160,158,1.0,1.0,0.0
+bonus_off,ours_signal,0.5,160,160,0.0,0.0,0.0
+bonus_off,ours_signal,0.75,160,160,0.0,0.0,0.0
+bonus_on rerun,none,1.0,160,160,0.0,0.0,0.0
+bonus_on rerun,ours_scorer,0.5,160,143,0.0,0.0,17.0
+bonus_on rerun,ours_scorer,0.75,160,143,0.0,0.0,17.0
+bonus_on rerun,ours_signal,0.5,160,142,1.0,0.0,17.0
+bonus_on rerun,ours_signal,0.75,160,143,0.0,0.0,17.0

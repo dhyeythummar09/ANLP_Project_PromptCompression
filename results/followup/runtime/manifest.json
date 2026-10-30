@@ -1,0 +1,47 @@
+{
+  "purpose": "controlled single-process CPU benchmark of ours / ours_scorer / ours_signal",
+  "machine": {
+    "platform": "macOS-26.2-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "cpu_count": 8,
+    "python": "3.10.13"
+  },
+  "device": "cpu",
+  "torch_threads": 4,
+  "packages": {
+    "torch": "2.10.0",
+    "transformers": "5.16.1",
+    "pandas": "2.2.3",
+    "numpy": "2.2.3",
+    "scikit-learn": "1.7.2",
+    "spacy": "3.8.16",
+    "tiktoken": "0.12.0",
+    "llmlingua": null,
+    "selective-context": null
+  },
+  "cohort": {
+    "path": "outputs/followup/components_v2/cohort.csv",
+    "sha256": "9bd06f53a721a4f2a97593f710aec67532ece903872ec69d5165fc7285a97078",
+    "questions": 160
+  },
+  "model_dir": "models/span_scorer_v2_20261021",
+  "ratios": [
+    0.5,
+    0.75
+  ],
+  "repeats": 3,
+  "warmup_questions": 5,
+  "timed_wall_seconds": 127.07104591599636,
+  "peak_rss_mb": 1163.875,
+  "final_rss_mb": 782.3125,
+  "output_identity_vs_step3": {
+    "compared": 960,
+    "identical": 960
+  },
+  "notes": [
+    "stage timings are isolated calls; prepare_* is the real preparation cost",
+    "end_to_end = preparation + selection for one condition; variants sharing a question share one preparation in the batch pipeline",
+    "no GPU; LLMLingua baselines are not installed locally and are not timed here"
+  ]
+}

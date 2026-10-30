@@ -1,0 +1,9 @@
+comparison,method,rows_matched,identical_prompts_both_ok,correctness_agreement,identical_response_text
+step-3 run vs Abhinav with-bonuses rerun (identical prompts),all,800,731,0.9931600547195623,0.9302325581395349
+step-3 run vs Abhinav with-bonuses rerun (identical prompts),none,160,160,1.0,0.99375
+step-3 run vs Abhinav with-bonuses rerun (identical prompts),ours_scorer,320,286,0.9895104895104895,0.8986013986013986
+step-3 run vs Abhinav with-bonuses rerun (identical prompts),ours_signal,320,285,0.9929824561403509,0.9263157894736842
+step-3 run vs Abhinav no-bonuses run (prompts unchanged by bonuses),all,800,392,0.9948979591836735,0.7806122448979592
+step-3 run vs Abhinav no-bonuses run (prompts unchanged by bonuses),none,160,160,1.0,0.625
+step-3 run vs Abhinav no-bonuses run (prompts unchanged by bonuses),ours_scorer,320,174,1.0,0.8735632183908046
+step-3 run vs Abhinav no-bonuses run (prompts unchanged by bonuses),ours_signal,320,58,0.9655172413793104,0.9310344827586207

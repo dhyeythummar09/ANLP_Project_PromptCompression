@@ -73,6 +73,12 @@ Tracked copies of the step-2 results and provenance: `results/followup/old_vs_v2
 
   Actual retained ratios match (.4956 / ~.744). Per-dataset patterns are large but rest on 15–16 questions each (exploratory only): scorer-only scores 0/16 on `bbh_object_counting` at both ratios (signal-only 3/16 and 14/16), but 16/16 on logical deduction and 15/15 on tracking at .75. `ours_signal` equals `ours` text in 20 (.50) / 26 (.75) conditions. Reports: `outputs/followup/components_v2/reports/qwen/`; tracked copies in `results/followup/components_qwen/`. Step 3 is done; next is Step 4 (bonuses on/off on development families).
 
+## Steps 4–6 status (30 October)
+
+- **Step 4 (Abhinav):** bonuses off run on the frozen 160 for `ours_scorer`/`ours_signal` (not development families, no pilot). Paired against our step-3 run (bonuses on): signal-only at .50 drops **−14.4 pp [−24.0, −4.7]**; the other three cells include zero (scorer .50 −5.7 pp [−12.5, +0.7]). Bonuses mainly protect numbers: signal-only .50 keeps 93% of number words with bonuses versus 78% without.
+- **Step 5 (Abhinav):** 120 spans, masking and deletion agree in 112/116 eligible spans (96.6%); the 4 disagreements are 3 negation spans and 1 entity span.
+- **Step 6 done:** `final_eval/followup_summary.py` (paired results, failures) and `final_eval/benchmark_runtime.py` (CPU runtime/memory). End to end `ours` takes a median of 90 ms per condition on an M2 CPU (surprisal 44 ms, scorer 20 ms, two spaCy passes 24 ms, selection under 2 ms), with a peak RSS of 1.16 GB. Tables are in `results/followup/README.md`.
+
 ## Do these in this order
 
 GPU work here means compression/scoring. Use one already-qualified reader first.

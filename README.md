@@ -508,6 +508,22 @@ It verifies inputs and copies to a new folder; it never uploads or retrains.
 Portable loading passed a tiny synthetic-checkpoint roundtrip and the actual
 saved tokenizer loaded offline. Publication verification adds no claim of a
 new real-checkpoint forward pass; the original Kaggle experiment remains unchanged.
+### Step 6: follow-up summary and runtime benchmark
+
+Both commands are free (no API calls) and read finished artifacts only:
+
+```bash
+# Paired results for steps 2-5, bonus on/off contrast, mask-vs-delete by category, failures
+python -m final_eval.followup_summary --output-dir results/followup/summary
+
+# Controlled single-process CPU benchmark (parser, models, budget selection, memory)
+python -m final_eval.benchmark_runtime --threads 4 --repeats 3 --output-dir results/followup/runtime
+```
+
+The bonus contrast pairs our step-3 run (bonuses on) with Abhinav's no-bonuses run, after
+checking that his with-bonuses rerun reproduces our step-3 prompts exactly. Results and caveats
+are in `results/followup/README.md`.
+
 ### Old-checkpoint versus v2 downstream reader comparison (Qwen)
 
 GPT-OSS was removed from Jarvislabs (the old-v2 GPT-OSS pilot got `HTTP 404`

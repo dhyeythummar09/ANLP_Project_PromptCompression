@@ -1,0 +1,60 @@
+{
+  "reader": "qwen-3.8-27b-fp8 (temperature 0, max_tokens 8192, reasoning low)",
+  "inputs": {
+    "step2_summary": {
+      "path": "results/followup/old_vs_v2_qwen/summary.csv",
+      "sha256": "cfbb04c6030b587ac6e3796ca34044cd28066040669c44cf9ff6fd0e93cf8ace"
+    },
+    "step2_per_question": {
+      "path": "results/followup/old_vs_v2_qwen/per_question.csv",
+      "sha256": "8367ff0cd53def02bcabd7e868cd40c5efbad39dc0246cab7ebddef24c315e51"
+    },
+    "step3_contrasts": {
+      "path": "results/followup/components_qwen/contrasts.csv",
+      "sha256": "d84e72a5dc0d61e86eae53fbbe3defb24964982dd0ab7a8d1917312013a02ead"
+    },
+    "step3_per_question": {
+      "path": "results/followup/components_qwen/per_question.csv",
+      "sha256": "ca0dd65e8a3992b503dd42b0471a3b499fce27f30372575600ccc45b2450ee57"
+    },
+    "bonus_on_responses": {
+      "path": "outputs/followup/components_v2/target_qwen/responses.csv",
+      "sha256": "6524c090e8b514b82c10091ff23c0c88c86f6c030b63ab3a013bfa184f4e7851"
+    },
+    "bonus_on_compressed": {
+      "path": "outputs/followup/components_v2/matched/prepared.csv",
+      "sha256": "bf401bfe1713f34a654a8875620b2984238b207103533bda830c3fb7eed4b941"
+    },
+    "bonus_on_rerun_responses": {
+      "path": "results/followup_v2/step4/with_bonuses_responses.csv",
+      "sha256": "cb9921ad16ba8bfe894b07959e9b3b9c7c1c2a3dfb9e9497589bb4e0ee4caf60"
+    },
+    "bonus_off_responses": {
+      "path": "results/followup_v2/step4/no_bonuses_responses.csv",
+      "sha256": "7781ab3d036263ddef9bf3551444afb13dd35a05ab2df3c94bc6f204d4848e69"
+    },
+    "bonus_off_compressed": {
+      "path": "results/followup_v2/step4/no_bonuses_compressed.csv",
+      "sha256": "c735fd0390a020b5814d4e66435722c68166467b3f9a7f31cf24a25159cfce89"
+    },
+    "mask_deletion": {
+      "path": "results/followup_v2/step5/deletion_check_results.csv",
+      "sha256": "a833732748b124e1caf03873c8e1a8c36092b35e8230c1e545ed5c50c964ce75"
+    }
+  },
+  "bootstrap": 1000,
+  "clustering": "base_group_id (step 5: uid)",
+  "multiple_testing": "unadjusted 95% CIs; exploratory",
+  "step4_design": "bonus on = our step-3 run; bonus off = Abhinav's no-bonuses run; paired by question across two runs of the same reader; see reader_repeatability.csv",
+  "step4_caveats": [
+    "no pilot gate for the step-4 runs",
+    "frozen 160-question cohort instead of separate development families",
+    "bonuses off was run for ours_scorer and ours_signal only, not the alpha=.5 mixture"
+  ],
+  "failures": {
+    "request_status_rows": 25,
+    "compression_breaks": 664,
+    "compressed_correct_when_original_wrong": 9
+  },
+  "paired_rows": 20
+}

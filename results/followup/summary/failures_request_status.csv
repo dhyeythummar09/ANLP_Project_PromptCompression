@@ -1,0 +1,26 @@
+run,method,target_ratio,rows,ok,truncated,request_budget_exhausted,network_error
+step2 old vs v2,grouped_hybrid (historical),0.5,738,738,0.0,0.0,0.0
+step2 old vs v2,grouped_hybrid (historical),0.75,739,739,0.0,0.0,0.0
+step2 old vs v2,ours (historical),0.5,739,739,0.0,0.0,0.0
+step2 old vs v2,ours (historical),0.75,739,739,0.0,0.0,0.0
+step2 old vs v2,grouped_hybrid (v2),0.5,738,738,0.0,0.0,0.0
+step2 old vs v2,grouped_hybrid (v2),0.75,739,739,0.0,0.0,0.0
+step2 old vs v2,ours (v2),0.5,739,739,0.0,0.0,0.0
+step2 old vs v2,ours (v2),0.75,739,739,0.0,0.0,0.0
+step3 components,none,1.0,160,160,0.0,0.0,0.0
+step3 components,ours,0.5,160,160,0.0,0.0,0.0
+step3 components,ours,0.75,160,160,0.0,0.0,0.0
+step3 components,ours_scorer,0.5,160,160,0.0,0.0,0.0
+step3 components,ours_scorer,0.75,160,160,0.0,0.0,0.0
+step3 components,ours_signal,0.5,160,160,0.0,0.0,0.0
+step3 components,ours_signal,0.75,160,160,0.0,0.0,0.0
+step4 bonuses off,none,1.0,160,160,0.0,0.0,0.0
+step4 bonuses off,ours_scorer,0.5,160,159,1.0,0.0,0.0
+step4 bonuses off,ours_scorer,0.75,160,158,1.0,1.0,0.0
+step4 bonuses off,ours_signal,0.5,160,160,0.0,0.0,0.0
+step4 bonuses off,ours_signal,0.75,160,160,0.0,0.0,0.0
+step4 bonuses on rerun,none,1.0,160,160,0.0,0.0,0.0
+step4 bonuses on rerun,ours_scorer,0.5,160,143,0.0,0.0,17.0
+step4 bonuses on rerun,ours_scorer,0.75,160,143,0.0,0.0,17.0
+step4 bonuses on rerun,ours_signal,0.5,160,142,1.0,0.0,17.0
+step4 bonuses on rerun,ours_signal,0.75,160,143,0.0,0.0,17.0
