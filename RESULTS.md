@@ -2,9 +2,7 @@
 
 **Experimental status: complete. Final research model: combined v3. Added criticality benefit and overall baseline superiority: not established.**
 
-**Experimental status: complete. Final research model: combined v3. Added criticality benefit and overall baseline superiority: not established.**
 
-**Experimental status: complete. Final research model: combined v3. Added criticality benefit and overall baseline superiority: not established.**
 
 The current guide is [README.md](README.md). All v3 values below are from the
 completed, independently audited 30 October run; no new reader calls were made
@@ -364,9 +362,9 @@ causal sufficiency, SOTA or accuracy guarantee is established.
 | Cross-labeler agreement, scorer ablations, mask/delete check, runtime | Completed within the recorded scopes; no joint-sufficiency guarantee |
 | Final criticality-supervised dense student and matched control | Trained and tested; added criticality benefit not established |
 | Broader logical taxonomy, full sentence pruning, language/domain expansion, learned pair policy or RL | Partial/deferred stretch work; do not claim completed |
-| Final report and slides | Evidence and figure addresses ready in this file; documents still to write |
+| Final report and slides | ACL-format report source/PDF prepared under `report/`; slides remain |
 | Actual grant billing justification | Estimates/ledgers ready; provider invoice reconciliation still needed |
-| One final v3 HF release | Combined checkpoint local; packaging/upload still pending |
+| One final v3 HF release | [Published combined student](https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor/tree/6cd33f01c38910bbd1688a07f958d8bb801a3029); all 18 files hash-verified |
 
 Use combined v3 as the final research artifact; preserve teacher-only as its
 experimental control and v1/v2 as historical comparisons. No new labels,
@@ -386,3 +384,5 @@ Machine-readable handoff: [all panels with source/cohort tags](results/project_s
 [source hashes and paired checks](results/project_summary/conclusion_evidence.json),
 [artifact/reproduction index](results/reproducibility.json), and
 [cleanup verification](results/repository_cleanup.json).
+
+Final model: [Symbiote v3](https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor), revision `6cd33f01c38910bbd1688a07f958d8bb801a3029`. SafeTensors parameters are tensorwise identical to the frozen checkpoint; the standalone CPU runtime reproduced 192/192 saved compressions.

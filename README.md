@@ -1,7 +1,8 @@
 # Symbiote: reasoning-critical prompt compression
 
 **Final research model: combined v3 (`teacher_cf`). Experimental work is complete.**
-Report/slides, actual billing reconciliation and v3 release packaging remain.
+The final ACL-format report is prepared separately under `report/`. Slides and
+actual billing reconciliation remain; the combined v3 HF release is published.
 
 We study whether masking a reasoning span changes a reader's correct answer,
 combine eligible labeler votes, and learn those soft sensitivity scores. The
@@ -198,10 +199,14 @@ independent evaluation cohort, not relabeling these families fresh.
 
 Earlier public models: [original/mid-eval](https://huggingface.co/flashstep/reasoning-critical-span-scorer/tree/c24d8ce9ef2cfbdc7b11185958dee5810327e432)
 and [corrected v2](https://huggingface.co/Pranav-Sriv/reasoning-critical-span-scorer-v2/tree/70cc329f10ef6415e152c0bcdcef8894f8dc0d69).
-**V3 is not yet uploaded to HF.** Package its correct two-head loader, tokenizer,
-config, weights, hashes and model card; the old v2 release loader is incompatible.
-Keep one combined final release, with the teacher-only control in the experiment
-archive. Actual Jarvis billing remains to reconcile; estimates are not invoices.
+**V3 is published:** [Symbiote v3 combined student](https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor)
+([immutable release](https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor/tree/6cd33f01c38910bbd1688a07f958d8bb801a3029)). All 18 files were verified against
+remote hashes; SafeTensors parameters are identical to the trained checkpoint,
+and its standalone loader reproduces all 192 saved final-policy compressions.
+Only the combined model is released; teacher-only stays in the experiment archive.
+The model card includes standalone download/inference instructions.
+[Publication receipt](results/v3/20261030/huggingface_release.json) records the
+exact revision and hashes. Actual Jarvis billing remains to reconcile.
 
 ## What to push
 

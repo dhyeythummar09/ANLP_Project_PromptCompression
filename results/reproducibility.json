@@ -54,7 +54,12 @@
     "path": "outputs/imports/v3_20261030_completed/run/models/teacher_cf/best.pt",
     "sha256": "8238ed17c58a4c117092e8e0c2185d14454611f1f91df7d0b29d0a64cf3aef37",
     "loader": "python -m final_eval.v3 infer --run-dir outputs/imports/v3_20261030_completed/run --ratio .75 --text <question>",
-    "hf_published": false
+    "hf_published": true,
+    "hf_repo_id": "Pranav-Sriv/symbiote-v3-prompt-compressor",
+    "hf_revision": "6cd33f01c38910bbd1688a07f958d8bb801a3029",
+    "hf_url": "https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor",
+    "pinned_url": "https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor/tree/6cd33f01c38910bbd1688a07f958d8bb801a3029",
+    "weights_safetensors_sha256": "0dea066c0c379986c1868a55d20c942859af54b80d72070043d5acecfed36ddb"
   },
   "historical_public_models": {
     "repo_id": "Pranav-Sriv/reasoning-critical-span-scorer-v2",
@@ -101,5 +106,5 @@
     "followups": "notebook 04; final_eval.compare_downstream, component_ablations, followup_reader, followup_summary, benchmark_runtime, prepare_step5_spans",
     "exploratory": "Retained evidence archive includes exact executed prototype source, inputs, cache, ledger, REPRODUCE.txt"
   },
-  "private_transfer_note": "Keep listed archives, data/, models/ and original raw outputs when moving machines; these are intentionally excluded from Git. HF v1/v2 are recorded references, not a download source for the new v3 architecture."
+  "private_transfer_note": "Keep listed archives, data/, models/ and original raw outputs when moving machines; these are intentionally excluded from Git. HF v1/v2 remain historical references; the final model is available at the separately pinned v3 release."
 }
