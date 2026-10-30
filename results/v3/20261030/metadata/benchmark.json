@@ -1,0 +1,544 @@
+{
+  "results": [
+    {
+      "method": "student_teacher_only",
+      "model_loading_seconds": 1.1330143190002673,
+      "median_milliseconds": 11.935743499861928,
+      "mean_milliseconds": 14.011582874985606,
+      "peak_cuda_allocated_bytes": 2526585856,
+      "samples": [
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 0,
+          "milliseconds": 12.542232999749103,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 0,
+          "milliseconds": 22.121592000075907,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 0,
+          "milliseconds": 16.42066900012651,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 0,
+          "milliseconds": 9.69377399997029,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 0,
+          "milliseconds": 9.074060000330064,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 0,
+          "milliseconds": 22.6113640001131,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 0,
+          "milliseconds": 11.3027620000139,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 0,
+          "milliseconds": 10.025931999734894,
+          "output_tokens": 23
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 1,
+          "milliseconds": 12.358115999631991,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 1,
+          "milliseconds": 20.708002999981545,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 1,
+          "milliseconds": 15.472032000161562,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 1,
+          "milliseconds": 9.357407000152307,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 1,
+          "milliseconds": 8.787036000285298,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 1,
+          "milliseconds": 22.216829999706533,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 1,
+          "milliseconds": 11.513371000091865,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 1,
+          "milliseconds": 9.980144999644835,
+          "output_tokens": 23
+        }
+      ]
+    },
+    {
+      "method": "student_teacher_cf",
+      "model_loading_seconds": 1.1962146279997796,
+      "median_milliseconds": 11.327024499905747,
+      "mean_milliseconds": 13.363469249981108,
+      "peak_cuda_allocated_bytes": 2526931968,
+      "samples": [
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 0,
+          "milliseconds": 11.534110999946279,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 0,
+          "milliseconds": 19.811703999948804,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 0,
+          "milliseconds": 15.537133000179892,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 0,
+          "milliseconds": 9.808896999857097,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 0,
+          "milliseconds": 8.445103999747516,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 0,
+          "milliseconds": 21.45397500044055,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 0,
+          "milliseconds": 11.119937999865215,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 0,
+          "milliseconds": 9.72345399986807,
+          "output_tokens": 23
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 1,
+          "milliseconds": 11.644831000012346,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 1,
+          "milliseconds": 19.796519999999873,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 1,
+          "milliseconds": 15.41638199978479,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 1,
+          "milliseconds": 8.973375000095984,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 1,
+          "milliseconds": 8.902137999939441,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 1,
+          "milliseconds": 21.176866000132577,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 1,
+          "milliseconds": 10.81035700008215,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 1,
+          "milliseconds": 9.660722999797144,
+          "output_tokens": 23
+        }
+      ]
+    },
+    {
+      "method": "v2_grouped_hybrid",
+      "model_loading_seconds": 1.5898864569999205,
+      "median_milliseconds": 47.89977849986826,
+      "mean_milliseconds": 53.00243399997839,
+      "peak_cuda_allocated_bytes": 2900039680,
+      "samples": [
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 0,
+          "milliseconds": 48.33505399983551,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 0,
+          "milliseconds": 76.35793100007504,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 0,
+          "milliseconds": 68.50196699997468,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 0,
+          "milliseconds": 43.510230999800115,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 0,
+          "milliseconds": 40.623111000059,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 0,
+          "milliseconds": 78.48645400008536,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 0,
+          "milliseconds": 48.95529599980364,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 0,
+          "milliseconds": 42.72525299984409,
+          "output_tokens": 23
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 1,
+          "milliseconds": 47.464502999901015,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 1,
+          "milliseconds": 67.93364699979065,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 1,
+          "milliseconds": 56.03490800012878,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 1,
+          "milliseconds": 39.44807400011996,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 1,
+          "milliseconds": 36.84314900010577,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 1,
+          "milliseconds": 71.01066600034756,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 1,
+          "milliseconds": 42.7212760000657,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 1,
+          "milliseconds": 39.08742399971743,
+          "output_tokens": 23
+        }
+      ]
+    },
+    {
+      "method": "v2_grouped_signal",
+      "model_loading_seconds": 0.4086220730000605,
+      "median_milliseconds": 37.49615750007251,
+      "mean_milliseconds": 42.48432887501963,
+      "peak_cuda_allocated_bytes": 2633972224,
+      "samples": [
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 0,
+          "milliseconds": 40.357159999985015,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 0,
+          "milliseconds": 59.15734100017289,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 0,
+          "milliseconds": 48.582955000256334,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 0,
+          "milliseconds": 31.393373000355496,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 0,
+          "milliseconds": 29.884388000027684,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 0,
+          "milliseconds": 61.22762799986958,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 0,
+          "milliseconds": 35.68641800029582,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 0,
+          "milliseconds": 32.21679399985078,
+          "output_tokens": 23
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 1,
+          "milliseconds": 39.30589699984921,
+          "output_tokens": 44
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 1,
+          "milliseconds": 58.2822930000475,
+          "output_tokens": 55
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 1,
+          "milliseconds": 48.219371999948635,
+          "output_tokens": 42
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 1,
+          "milliseconds": 31.777153999883012,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 1,
+          "milliseconds": 31.055949999881705,
+          "output_tokens": 21
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 1,
+          "milliseconds": 62.78282799985391,
+          "output_tokens": 59
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 1,
+          "milliseconds": 35.31511399978626,
+          "output_tokens": 28
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 1,
+          "milliseconds": 34.504597000250214,
+          "output_tokens": 23
+        }
+      ]
+    },
+    {
+      "method": "llmlingua2_budgeted",
+      "model_loading_seconds": 2.875493694999932,
+      "median_milliseconds": 109.98726050002006,
+      "mean_milliseconds": 176.7749668750298,
+      "peak_cuda_allocated_bytes": 4513660416,
+      "samples": [
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 0,
+          "milliseconds": 648.1931119997171,
+          "output_tokens": 38
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 0,
+          "milliseconds": 111.42192099987369,
+          "output_tokens": 52
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 0,
+          "milliseconds": 110.41034000027139,
+          "output_tokens": 41
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 0,
+          "milliseconds": 107.46597399975144,
+          "output_tokens": 19
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 0,
+          "milliseconds": 110.23886500015578,
+          "output_tokens": 18
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 0,
+          "milliseconds": 107.07742100021278,
+          "output_tokens": 50
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 0,
+          "milliseconds": 105.3679500000726,
+          "output_tokens": 26
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 0,
+          "milliseconds": 110.60168699987116,
+          "output_tokens": 22
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_97",
+          "repeat": 1,
+          "milliseconds": 652.93637700006,
+          "output_tokens": 38
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_54",
+          "repeat": 1,
+          "milliseconds": 109.73565599988433,
+          "output_tokens": 52
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+          "repeat": 1,
+          "milliseconds": 110.33598699987124,
+          "output_tokens": 41
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_11",
+          "repeat": 1,
+          "milliseconds": 106.7354950000663,
+          "output_tokens": 19
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_71",
+          "repeat": 1,
+          "milliseconds": 108.28440500017678,
+          "output_tokens": 18
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+          "repeat": 1,
+          "milliseconds": 111.36793800005762,
+          "output_tokens": 50
+        },
+        {
+          "uid": "gsm8k|gsm8k_165",
+          "repeat": 1,
+          "milliseconds": 109.27740600027391,
+          "output_tokens": 26
+        },
+        {
+          "uid": "gsm_ic|gsmic_147",
+          "repeat": 1,
+          "milliseconds": 108.94893600016076,
+          "output_tokens": 22
+        }
+      ]
+    }
+  ],
+  "device": "cuda",
+  "question_uids": [
+    "bbh_date_understanding|bbh_date_understanding_97",
+    "bbh_formal_fallacies|bbh_formal_fallacies_54",
+    "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_20",
+    "bbh_navigate|bbh_navigate_11",
+    "bbh_object_counting|bbh_object_counting_71",
+    "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_1",
+    "gsm8k|gsm8k_165",
+    "gsm_ic|gsmic_147"
+  ],
+  "ratio": 0.5,
+  "scope": "Warm full compressor: tokenization, parsing where used, all model forwards and exact selection. Excludes loading (reported separately), reader/API time and network downloads. No automatic speedup claim.",
+  "memory_scope": "Peak CUDA allocated memory, not system RAM or total device memory",
+  "baseline_fold": 0
+}

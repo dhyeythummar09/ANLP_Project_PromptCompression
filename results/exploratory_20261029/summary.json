@@ -1,0 +1,1712 @@
+{
+  "study": "29 October exploratory diagnostics; not the neural v3 training run",
+  "archive": "outputs/imports/exploratory_20261029/symbiote_v3_evidence_20261029.zip",
+  "sha256": "9b971151112fe6aede79b6d589b52bc6faca9c518c65fdab4dde7527c0b0f731",
+  "archive_member_count": 614,
+  "reader": "qwen-3.8-27b-fp8",
+  "temperature": 0,
+  "reasoning_effort": "low",
+  "max_tokens": 8192,
+  "development_families": 16,
+  "fresh_test_families": 24,
+  "counterfactual_dataset_recollected": false,
+  "summary": {
+    "joint_summary": [
+      {
+        "kind": "structured",
+        "planned": 16,
+        "complete": 16,
+        "eligible": 16,
+        "both_single_safe": 14,
+        "joint_fail_after_safe_singles": 1,
+        "fraction_among_safe": 0.07142857142857142,
+        "joint_failure_ids": [
+          "bbh_navigate|bbh_navigate_54|structured"
+        ]
+      },
+      {
+        "kind": "matched_random",
+        "planned": 16,
+        "complete": 16,
+        "eligible": 16,
+        "both_single_safe": 15,
+        "joint_fail_after_safe_singles": 0,
+        "fraction_among_safe": 0.0,
+        "joint_failure_ids": []
+      }
+    ],
+    "dev_summary": [
+      {
+        "variant": "cost_aware",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 5,
+        "accuracy": 0.3125,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "cost_aware",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 9,
+        "accuracy": 0.5625,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      },
+      {
+        "variant": "llmlingua2_saved",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 12,
+        "accuracy": 0.75,
+        "failed": 0,
+        "mean_actual_ratio": 0.4711017068874098
+      },
+      {
+        "variant": "llmlingua2_saved",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 16,
+        "accuracy": 1.0,
+        "failed": 0,
+        "mean_actual_ratio": 0.7362093243329728
+      },
+      {
+        "variant": "structured",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 5,
+        "accuracy": 0.3125,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "structured",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 12,
+        "accuracy": 0.75,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      },
+      {
+        "variant": "structured_no_bonus",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 5,
+        "accuracy": 0.3125,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "structured_no_bonus",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 11,
+        "accuracy": 0.6875,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      },
+      {
+        "variant": "v2_cpu",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 8,
+        "accuracy": 0.5,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "v2_cpu",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 12,
+        "accuracy": 0.75,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      }
+    ],
+    "dev_round2_summary": [
+      {
+        "variant": "feasible_interface",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 8,
+        "accuracy": 0.5,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "feasible_interface",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 12,
+        "accuracy": 0.75,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      }
+    ],
+    "dense_training_summary": {
+      "training_questions": 160,
+      "training_words": 8528,
+      "positive_fraction": 0.46634615384615385,
+      "fits": [
+        {
+          "variant": "dense_teacher",
+          "fit_seconds": 1.6133642000495456,
+          "training_words": 8528,
+          "features": 60
+        },
+        {
+          "variant": "dense_teacher_cf_feature",
+          "fit_seconds": 1.3791441000066698,
+          "training_words": 8528,
+          "features": 61
+        }
+      ],
+      "total_seconds": 145.19621870003175,
+      "records": [
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_87",
+          "family": "9522406ab283330268fb91b9",
+          "labelled_words": 33,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_99",
+          "family": "fee08d4a56a62036a0d9ccfc",
+          "labelled_words": 99,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_62",
+          "family": "1cf371bb0c38c2b86eb86de8",
+          "labelled_words": 71,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_71",
+          "family": "f47949697304f31e229897a2",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_77",
+          "family": "18795d260d830c8c3a6e26d9",
+          "labelled_words": 21,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_42",
+          "family": "3db434faec1b2450914e8fe9",
+          "labelled_words": 80,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_197",
+          "family": "b6f89f61f3119104e95e13f8",
+          "labelled_words": 20,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_76",
+          "family": "dda6a470fffdc549144ea2bc",
+          "labelled_words": 30,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_2",
+          "family": "d893cf74a4fe05c0ad02e43e",
+          "labelled_words": 24,
+          "partial_words_ignored": 2
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_26",
+          "family": "5b076c28155e2d2b4f8a0e84",
+          "labelled_words": 99,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_13",
+          "family": "e5c98253e20a0c9b0426d447",
+          "labelled_words": 72,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_16",
+          "family": "a8a581069dda0711da433295",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_65",
+          "family": "58ad41a84fb0b82e8a009099",
+          "labelled_words": 18,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_78",
+          "family": "750026e3c8d484d0b618d5ee",
+          "labelled_words": 82,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_39",
+          "family": "66595b13b22b048c48131438",
+          "labelled_words": 39,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_61",
+          "family": "105ba8eeb8fb1e4bfe81ca9c",
+          "labelled_words": 33,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_1",
+          "family": "19be1bab9982d606bf621990",
+          "labelled_words": 32,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_68",
+          "family": "c8ded9f94a5bff1f5c541c5d",
+          "labelled_words": 91,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_77",
+          "family": "00933732c0c37f2b760bac37",
+          "labelled_words": 73,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_28",
+          "family": "2dfcfa669d9c4083b612e8e0",
+          "labelled_words": 40,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_90",
+          "family": "bee4e66558e2f10245e774c9",
+          "labelled_words": 26,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_19",
+          "family": "f89ca27ab12a0fe86b7c9459",
+          "labelled_words": 80,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_196",
+          "family": "c647c3dd4a0de6705591a0ff",
+          "labelled_words": 46,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_180",
+          "family": "6d893ffa1f906e54d1b639c9",
+          "labelled_words": 37,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_50",
+          "family": "4f5776d66fdfccc8aa3c0349",
+          "labelled_words": 41,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_48",
+          "family": "d72b22bff6d59eb4adff1919",
+          "labelled_words": 81,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_92",
+          "family": "7914767bfb32b86932cb05ec",
+          "labelled_words": 56,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_7",
+          "family": "aae8c44cde8e01981f776301",
+          "labelled_words": 32,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_16",
+          "family": "b2f36fa2cfeaf213b4915f89",
+          "labelled_words": 19,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_48",
+          "family": "d4efe2c387d8bd7110e00057",
+          "labelled_words": 87,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_73",
+          "family": "1fd2d3f4c297e4c9280f825f",
+          "labelled_words": 39,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_22",
+          "family": "b98387df5fc47babbe4d0dd1",
+          "labelled_words": 32,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_9",
+          "family": "73bf009c466aa31e90b5304e",
+          "labelled_words": 35,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_80",
+          "family": "bf04b9081ea40da0a4d4a7d7",
+          "labelled_words": 71,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_5",
+          "family": "d1dd996ededcd2550b776a2c",
+          "labelled_words": 71,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_77",
+          "family": "9da40487e4ed971ccd9c786c",
+          "labelled_words": 28,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_72",
+          "family": "516e09f8d5b68bf0e7637bbc",
+          "labelled_words": 26,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_90",
+          "family": "3279c2e93651ff11e7cac188",
+          "labelled_words": 92,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_8",
+          "family": "bb5e5cc0a68970108ebc9956",
+          "labelled_words": 26,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_35",
+          "family": "0a9ae015af4f313cbb327848",
+          "labelled_words": 57,
+          "partial_words_ignored": 2
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_40",
+          "family": "d189059bd6ac3dcfea6eb9ae",
+          "labelled_words": 33,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_86",
+          "family": "5f6cbbcdeb177f546a98dd3e",
+          "labelled_words": 74,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_29",
+          "family": "8e9b0755e98518211196afe1",
+          "labelled_words": 93,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_2",
+          "family": "a3d3f94648359e13478f5c1e",
+          "labelled_words": 29,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_0",
+          "family": "116ad45bdb1f031c8e79df78",
+          "labelled_words": 29,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_92",
+          "family": "2ada1155cc9acebadfa02709",
+          "labelled_words": 85,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_64",
+          "family": "40b50672460aaec728562382",
+          "labelled_words": 37,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_1",
+          "family": "8a607e80220e880e890a375f",
+          "labelled_words": 29,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_78",
+          "family": "9310890ec7f2d756aec454d8",
+          "labelled_words": 34,
+          "partial_words_ignored": 2
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_27",
+          "family": "7f00f710b8bcb20436cc8fdb",
+          "labelled_words": 106,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_73",
+          "family": "5d87f2462602637f126dac8b",
+          "labelled_words": 55,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_90",
+          "family": "b412a897c249df82aeef1749",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_73",
+          "family": "4f393f37dd2f740205e71b25",
+          "labelled_words": 20,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_20",
+          "family": "d3cc3eb7c1054cb05adf9dc0",
+          "labelled_words": 92,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_31",
+          "family": "abeafddc7a3dc7231ee9b519",
+          "labelled_words": 41,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "gsm_ic|gsmic_123",
+          "family": "07dfae1fe0ea1209e08b322e",
+          "labelled_words": 57,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_61",
+          "family": "ff4fb7ed7bb7cd9deb6bc676",
+          "labelled_words": 36,
+          "partial_words_ignored": 2
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_19",
+          "family": "fb0d2667467391baf0534d55",
+          "labelled_words": 60,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_94",
+          "family": "7f8b103ad3d78f97bb755862",
+          "labelled_words": 83,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_48",
+          "family": "2bb8fa1829a8af2183efb5ff",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_57",
+          "family": "a222049e19fca15f9fe868e8",
+          "labelled_words": 18,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_47",
+          "family": "a47a0fef71eee209cf97f7d9",
+          "labelled_words": 80,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_116",
+          "family": "3a6d9d56ee6eb107b6d2fe09",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_68",
+          "family": "b402d1c12cb15d2eba0828e0",
+          "labelled_words": 38,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_32",
+          "family": "9168a68668c30bfc9992aee1",
+          "labelled_words": 28,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_67",
+          "family": "2a4d99d4ed4cc43c3ff06dee",
+          "labelled_words": 85,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_25",
+          "family": "16d6df50a6f97588cc062d20",
+          "labelled_words": 82,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_56",
+          "family": "5447515f6d417265f70d015e",
+          "labelled_words": 32,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_97",
+          "family": "a802747e1496c4ac95dc797a",
+          "labelled_words": 23,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_5",
+          "family": "377320eeea4a4be867c2beb0",
+          "labelled_words": 80,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_60",
+          "family": "7176605e1e6c9e4b1f9af642",
+          "labelled_words": 26,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_58",
+          "family": "9628073c18694ce38bfae5f0",
+          "labelled_words": 73,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_98",
+          "family": "0da5a2fcabba0898dd7a89c1",
+          "labelled_words": 38,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_4",
+          "family": "864d8bba544275cfb74071ba",
+          "labelled_words": 71,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_49",
+          "family": "016ab4fc0f6837d3d5957e29",
+          "labelled_words": 70,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_74",
+          "family": "2a5ab303addbc4e35da7327e",
+          "labelled_words": 56,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_14",
+          "family": "1f5cf1dfcad8c16f66e34d29",
+          "labelled_words": 29,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_57",
+          "family": "c5a66e3fa4faae41c02719cf",
+          "labelled_words": 92,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_77",
+          "family": "3c4ff8c5a074ce87b53cec0f",
+          "labelled_words": 52,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_12",
+          "family": "de1f0171142d5810aafa3c99",
+          "labelled_words": 53,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_62",
+          "family": "b7fe93aa0d07d6e3956a1803",
+          "labelled_words": 36,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_64",
+          "family": "6c87681e93b0fdf26bf1d4b4",
+          "labelled_words": 74,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_6",
+          "family": "17221dc8a2515cf297ba65f9",
+          "labelled_words": 93,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_75",
+          "family": "f81ae0fac8a4747315ddf776",
+          "labelled_words": 30,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_10",
+          "family": "21d76fbc8c85febba1a42b30",
+          "labelled_words": 27,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_15",
+          "family": "06373643032c27954023d258",
+          "labelled_words": 89,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_139",
+          "family": "c35389b01a4243dded176947",
+          "labelled_words": 60,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_0",
+          "family": "939cb499643887097d30d8d2",
+          "labelled_words": 20,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_65",
+          "family": "251ddba519563953494400ba",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_60",
+          "family": "30d65c3bd3d56a4d0ef39f32",
+          "labelled_words": 88,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_89",
+          "family": "1083a274250063a13d4c62da",
+          "labelled_words": 79,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_82",
+          "family": "67d52f177d0d459a72d909af",
+          "labelled_words": 28,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_40",
+          "family": "aa9ab847a793e840324194c9",
+          "labelled_words": 34,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_33",
+          "family": "286581d26ba896028b837fda",
+          "labelled_words": 85,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_114",
+          "family": "162ae4253956c46ae641f634",
+          "labelled_words": 90,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_3",
+          "family": "7a1835275839a6545e62fb9e",
+          "labelled_words": 46,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_11",
+          "family": "01bc0fa1dc47d862c7b3341d",
+          "labelled_words": 39,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_33",
+          "family": "c60721ae8ede954a6cf4c444",
+          "labelled_words": 111,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_15",
+          "family": "1cf15a75d6abb2c2c5ccffff",
+          "labelled_words": 84,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_29",
+          "family": "566928ba1b9757a5f49bce26",
+          "labelled_words": 32,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_85",
+          "family": "5ae3de4d76fac428085e76f8",
+          "labelled_words": 13,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_2",
+          "family": "404cf6d6281b67dfe27c73c8",
+          "labelled_words": 80,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_182",
+          "family": "d47a821d8db7340a00a48d5e",
+          "labelled_words": 71,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_144",
+          "family": "ec51b20216ad4fd09e99970a",
+          "labelled_words": 24,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_71",
+          "family": "717e2a2d0d97248f78403076",
+          "labelled_words": 27,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_95",
+          "family": "b361ce54301d983d31a99a9e",
+          "labelled_words": 127,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_83",
+          "family": "5035e6a17e50b99e611320bf",
+          "labelled_words": 68,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_51",
+          "family": "414a8500b958f96eea87ab73",
+          "labelled_words": 52,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_9",
+          "family": "71747947bbdbf042891ff738",
+          "labelled_words": 19,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_54",
+          "family": "04332007c00777e0461a5b96",
+          "labelled_words": 80,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_113",
+          "family": "fedc28045de2042ceb8282bf",
+          "labelled_words": 79,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_185",
+          "family": "6c69fea6384439016ebfaf15",
+          "labelled_words": 28,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_44",
+          "family": "b901ef98bb43ee3501c4b6fd",
+          "labelled_words": 34,
+          "partial_words_ignored": 2
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_13",
+          "family": "410129aa7a6131901a872033",
+          "labelled_words": 97,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_10",
+          "family": "e0507e3510e39095fe2ebe91",
+          "labelled_words": 56,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_9",
+          "family": "b0aa56a1618481eb55cda91e",
+          "labelled_words": 31,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_20",
+          "family": "f0b5c848693069bd514e0c2a",
+          "labelled_words": 27,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_25",
+          "family": "56aa17ffe61d60c27aff4506",
+          "labelled_words": 89,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_37",
+          "family": "fd0ab1cd5554866bf744e91c",
+          "labelled_words": 72,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_2",
+          "family": "9efd2fcd2d2a67c883ca637f",
+          "labelled_words": 47,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_86",
+          "family": "b5f052d4863757f71bb8a470",
+          "labelled_words": 34,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_79",
+          "family": "5ed8f90dbb5aedc895b97713",
+          "labelled_words": 102,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_79",
+          "family": "208f7fcb4bab176200e1e065",
+          "labelled_words": 79,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_5",
+          "family": "9cda88bbd2f6362a5a827d09",
+          "labelled_words": 32,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_12",
+          "family": "2df77bd7d517796310ecd870",
+          "labelled_words": 29,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_34",
+          "family": "8ed3acaeaab6c5766c7adfbb",
+          "labelled_words": 83,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_193",
+          "family": "5821f5761c6b2c44d672dda1",
+          "labelled_words": 18,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_108",
+          "family": "e64101348be256eac4bbba63",
+          "labelled_words": 43,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_29",
+          "family": "59b37c319b297de55ca24589",
+          "labelled_words": 48,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_74",
+          "family": "43d38dfbd94f1b4da7f5e1f5",
+          "labelled_words": 96,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_81",
+          "family": "e5583c1ae31e915f3824c4d8",
+          "labelled_words": 56,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_15",
+          "family": "865b3a26effb7a54445777a0",
+          "labelled_words": 44,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_25",
+          "family": "7fde5487feec6c86c3825e57",
+          "labelled_words": 19,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_10",
+          "family": "de1261c01f994e5480282085",
+          "labelled_words": 85,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_185",
+          "family": "7d4c471c2f29b45ded910d45",
+          "labelled_words": 49,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_138",
+          "family": "d41ec89d2c8f4dbe1a1bbec3",
+          "labelled_words": 43,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_81",
+          "family": "3d4dffa24938dcf964d4c70c",
+          "labelled_words": 31,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_3",
+          "family": "2e97b3d0c3bff3f0d3b4a068",
+          "labelled_words": 79,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_88",
+          "family": "271e014dcf23108ec29c51f9",
+          "labelled_words": 56,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_4",
+          "family": "3897b30567d014401b93a1d7",
+          "labelled_words": 27,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_32",
+          "family": "85cf93514ed7e09b306d66a1",
+          "labelled_words": 13,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_53",
+          "family": "5b9ee00d321f9aa9761efa69",
+          "labelled_words": 92,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_25",
+          "family": "8c69ec028ab7e7b700d895e5",
+          "labelled_words": 51,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_17",
+          "family": "7feb63a4fa0fd0a5c6d29310",
+          "labelled_words": 36,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_67",
+          "family": "f5901fb5efa67cc2ecf84b36",
+          "labelled_words": 32,
+          "partial_words_ignored": 2
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_75",
+          "family": "bb2504931379b01f08a0dd25",
+          "labelled_words": 90,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_86",
+          "family": "a198f4b4f7c2bcfdcd149c5d",
+          "labelled_words": 74,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_31",
+          "family": "7e97ddd59af9f6533521b74c",
+          "labelled_words": 32,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_42",
+          "family": "31ae8ac43657bee4f60b4633",
+          "labelled_words": 22,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_74",
+          "family": "43732f5ed3ba3853dbcc48db",
+          "labelled_words": 82,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_35",
+          "family": "36ca5fe19db111eb639e9f44",
+          "labelled_words": 51,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_4",
+          "family": "2bf1b1ecb8d3c3900461e8d2",
+          "labelled_words": 39,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_date_understanding|bbh_date_understanding_84",
+          "family": "817bc9fb11ab73c97a4d2603",
+          "labelled_words": 39,
+          "partial_words_ignored": 1
+        },
+        {
+          "uid": "bbh_formal_fallacies|bbh_formal_fallacies_97",
+          "family": "2965a6ba90cca853e0c427fe",
+          "labelled_words": 94,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_logical_deduction_three_objects|bbh_logical_deduction_three_objects_8",
+          "family": "88ac32d27b9cfff3bdc1fd5c",
+          "labelled_words": 84,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_navigate|bbh_navigate_64",
+          "family": "145c823c42ed635c4ce7b6a3",
+          "labelled_words": 41,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_object_counting|bbh_object_counting_50",
+          "family": "e31430cc577f0a41bda39780",
+          "labelled_words": 19,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "bbh_tracking_shuffled_objects_three_objects|bbh_tracking_shuffled_objects_three_objects_59",
+          "family": "dd85bc946a9d4d3e8aaf9c30",
+          "labelled_words": 82,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm8k|gsm8k_153",
+          "family": "291f161af025f75edb795997",
+          "labelled_words": 31,
+          "partial_words_ignored": 0
+        },
+        {
+          "uid": "gsm_ic|gsmic_118",
+          "family": "622fb512fffe9542bacc6362",
+          "labelled_words": 31,
+          "partial_words_ignored": 0
+        }
+      ]
+    },
+    "dev_dense_summary": [
+      {
+        "variant": "dense_teacher",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 7,
+        "accuracy": 0.4375,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "dense_teacher",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 15,
+        "accuracy": 0.9375,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      },
+      {
+        "variant": "dense_teacher_cf_feature",
+        "ratio": 0.5,
+        "n": 16,
+        "correct": 5,
+        "accuracy": 0.3125,
+        "failed": 0,
+        "mean_actual_ratio": 0.4965889536440527
+      },
+      {
+        "variant": "dense_teacher_cf_feature",
+        "ratio": 0.75,
+        "n": 16,
+        "correct": 15,
+        "accuracy": 0.9375,
+        "failed": 0,
+        "mean_actual_ratio": 0.745304458823119
+      }
+    ],
+    "test_dense_summary": [
+      {
+        "variant": "dense_teacher",
+        "ratio": 0.5,
+        "n": 24,
+        "correct": 6,
+        "accuracy": 0.25,
+        "failed": 0,
+        "mean_actual_ratio": 0.49535803060741895
+      },
+      {
+        "variant": "dense_teacher",
+        "ratio": 0.75,
+        "n": 24,
+        "correct": 18,
+        "accuracy": 0.75,
+        "failed": 0,
+        "mean_actual_ratio": 0.7430250810463831
+      },
+      {
+        "variant": "grouped_signal_prior",
+        "ratio": 0.5,
+        "n": 24,
+        "correct": 6,
+        "accuracy": 0.25,
+        "failed": 0,
+        "mean_actual_ratio": 0.49535803060741895
+      },
+      {
+        "variant": "grouped_signal_prior",
+        "ratio": 0.75,
+        "n": 24,
+        "correct": 17,
+        "accuracy": 0.7083333333333334,
+        "failed": 0,
+        "mean_actual_ratio": 0.7430250810463831
+      },
+      {
+        "variant": "v2_cpu",
+        "ratio": 0.5,
+        "n": 24,
+        "correct": 6,
+        "accuracy": 0.25,
+        "failed": 0,
+        "mean_actual_ratio": 0.49535803060741895
+      },
+      {
+        "variant": "v2_cpu",
+        "ratio": 0.75,
+        "n": 24,
+        "correct": 17,
+        "accuracy": 0.7083333333333334,
+        "failed": 0,
+        "mean_actual_ratio": 0.7430250810463831
+      }
+    ],
+    "reader_metadata_summary": {
+      "served_models": {
+        "qwen-3.8-27b-fp8": 472
+      },
+      "response_status": {
+        "ok": 472
+      },
+      "prompt_tokens": 64965,
+      "completion_tokens": 276196
+    },
+    "evidence_review": {
+      "source_unchanged": true,
+      "source_fingerprint": "1b089e04b7205aeeaae1be06ebafa4e92dfc300e657803c9b153942cb9339825",
+      "split_checks_passed": true,
+      "dev_questions": 16,
+      "sealed_test_questions": 24,
+      "sealed_test_used": true,
+      "remaining_known_fresh_pool": {
+        "questions": 152,
+        "families": 73,
+        "note": "Known main/pilot/Part2 and this fresh24 test excluded. Additional teammate experiments may have exposed more; merge their manifests before freezing the final v3 test."
+      },
+      "budget_checks": [
+        {
+          "file": "dev_evaluated.json",
+          "conditions": 160,
+          "violations": 0,
+          "technical_failures": 0
+        },
+        {
+          "file": "dev_round2_evaluated.json",
+          "conditions": 32,
+          "violations": 0,
+          "technical_failures": 0
+        },
+        {
+          "file": "dev_dense_evaluated.json",
+          "conditions": 64,
+          "violations": 0,
+          "technical_failures": 0
+        },
+        {
+          "file": "test_dense_evaluated.json",
+          "conditions": 144,
+          "violations": 0,
+          "technical_failures": 0
+        }
+      ],
+      "development_comparisons": [
+        {
+          "variant": "cost_aware",
+          "ratio": 0.5,
+          "correct": 5,
+          "n": 16,
+          "gain_correct": -3,
+          "delta_pp": -18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -56.25,
+            18.75
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "cost_aware",
+          "ratio": 0.75,
+          "correct": 9,
+          "n": 16,
+          "gain_correct": -3,
+          "delta_pp": -18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -43.75,
+            6.25
+          ],
+          "mean_retention": 0.745304458823119
+        },
+        {
+          "variant": "llmlingua2_saved",
+          "ratio": 0.5,
+          "correct": 12,
+          "n": 16,
+          "gain_correct": 4,
+          "delta_pp": 25.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            50.0
+          ],
+          "mean_retention": 0.4711017068874098
+        },
+        {
+          "variant": "llmlingua2_saved",
+          "ratio": 0.75,
+          "correct": 16,
+          "n": 16,
+          "gain_correct": 4,
+          "delta_pp": 25.0,
+          "paired_family_bootstrap_ci_pp": [
+            6.25,
+            43.75
+          ],
+          "mean_retention": 0.7362093243329727
+        },
+        {
+          "variant": "structured",
+          "ratio": 0.5,
+          "correct": 5,
+          "n": 16,
+          "gain_correct": -3,
+          "delta_pp": -18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -37.5,
+            0.0
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "structured",
+          "ratio": 0.75,
+          "correct": 12,
+          "n": 16,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            -18.75,
+            18.75
+          ],
+          "mean_retention": 0.745304458823119
+        },
+        {
+          "variant": "structured_no_bonus",
+          "ratio": 0.5,
+          "correct": 5,
+          "n": 16,
+          "gain_correct": -3,
+          "delta_pp": -18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -43.75,
+            6.25
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "structured_no_bonus",
+          "ratio": 0.75,
+          "correct": 11,
+          "n": 16,
+          "gain_correct": -1,
+          "delta_pp": -6.25,
+          "paired_family_bootstrap_ci_pp": [
+            -31.25,
+            18.75
+          ],
+          "mean_retention": 0.745304458823119
+        },
+        {
+          "variant": "v2_cpu",
+          "ratio": 0.5,
+          "correct": 8,
+          "n": 16,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            0.0
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "v2_cpu",
+          "ratio": 0.75,
+          "correct": 12,
+          "n": 16,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            0.0
+          ],
+          "mean_retention": 0.745304458823119
+        },
+        {
+          "variant": "feasible_interface",
+          "ratio": 0.5,
+          "correct": 8,
+          "n": 16,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            -25.0,
+            25.0
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "feasible_interface",
+          "ratio": 0.75,
+          "correct": 12,
+          "n": 16,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            -25.0,
+            25.0
+          ],
+          "mean_retention": 0.745304458823119
+        },
+        {
+          "variant": "dense_teacher",
+          "ratio": 0.5,
+          "correct": 7,
+          "n": 16,
+          "gain_correct": -1,
+          "delta_pp": -6.25,
+          "paired_family_bootstrap_ci_pp": [
+            -31.25,
+            18.75
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "dense_teacher",
+          "ratio": 0.75,
+          "correct": 15,
+          "n": 16,
+          "gain_correct": 3,
+          "delta_pp": 18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -6.25,
+            43.75
+          ],
+          "mean_retention": 0.745304458823119
+        },
+        {
+          "variant": "dense_teacher_cf_feature",
+          "ratio": 0.5,
+          "correct": 5,
+          "n": 16,
+          "gain_correct": -3,
+          "delta_pp": -18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -43.75,
+            6.25
+          ],
+          "mean_retention": 0.4965889536440527
+        },
+        {
+          "variant": "dense_teacher_cf_feature",
+          "ratio": 0.75,
+          "correct": 15,
+          "n": 16,
+          "gain_correct": 3,
+          "delta_pp": 18.75,
+          "paired_family_bootstrap_ci_pp": [
+            -6.25,
+            43.75
+          ],
+          "mean_retention": 0.745304458823119
+        }
+      ],
+      "fresh_test_comparisons": [
+        {
+          "variant": "dense_teacher",
+          "ratio": 0.5,
+          "correct": 6,
+          "n": 24,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            -20.833333333333336,
+            25.0
+          ],
+          "mean_retention": 0.49535803060741895
+        },
+        {
+          "variant": "dense_teacher",
+          "ratio": 0.75,
+          "correct": 18,
+          "n": 24,
+          "gain_correct": 1,
+          "delta_pp": 4.166666666666666,
+          "paired_family_bootstrap_ci_pp": [
+            -16.666666666666664,
+            25.0
+          ],
+          "mean_retention": 0.7430250810463831
+        },
+        {
+          "variant": "grouped_signal_prior",
+          "ratio": 0.5,
+          "correct": 6,
+          "n": 24,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            0.0
+          ],
+          "mean_retention": 0.49535803060741895
+        },
+        {
+          "variant": "grouped_signal_prior",
+          "ratio": 0.75,
+          "correct": 17,
+          "n": 24,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            0.0
+          ],
+          "mean_retention": 0.7430250810463831
+        },
+        {
+          "variant": "v2_cpu",
+          "ratio": 0.5,
+          "correct": 6,
+          "n": 24,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            0.0
+          ],
+          "mean_retention": 0.49535803060741895
+        },
+        {
+          "variant": "v2_cpu",
+          "ratio": 0.75,
+          "correct": 17,
+          "n": 24,
+          "gain_correct": 0,
+          "delta_pp": 0.0,
+          "paired_family_bootstrap_ci_pp": [
+            0.0,
+            0.0
+          ],
+          "mean_retention": 0.7430250810463831
+        }
+      ],
+      "within_question_ranking": {
+        "questions_with_both_labels": 721,
+        "excluded_single_class_questions": 169,
+        "neural_macro_within_question_auc": 0.910248064379154,
+        "prior_macro_within_question_auc": 0.7880961302895355,
+        "note": "Exploratory retrospective OOF diagnostic excluding the sealed test. Not downstream accuracy; single-class questions cannot define AUC."
+      },
+      "packages": {
+        "torch": "2.14.0",
+        "transformers": "5.17.0",
+        "pandas": "3.0.5",
+        "numpy": "2.4.6",
+        "scikit-learn": "1.9.1",
+        "spacy": "3.8.16",
+        "tiktoken": "0.14.0",
+        "llmlingua": null,
+        "selective-context": null
+      },
+      "input_hashes": [
+        {
+          "path": "data/processed/team_v2_20261021/problems.csv",
+          "bytes": 533143,
+          "sha256": "7f4cd1fd7c1b3348181c30dbc0958f18221bb714ff9df73475436aa9af6ba250"
+        },
+        {
+          "path": "data/processed/team_v2_20261021/consensus_dataset.csv",
+          "bytes": 79555466,
+          "sha256": "cd3d43baac30091a82c08ae8d6161cab575571f846576e2ecd7c1531c4a0cee9"
+        },
+        {
+          "path": "data/compressed_prompts.csv",
+          "bytes": 2525645,
+          "sha256": "b50889d9d52636ca1a3a6d8afc8e5133ff27b8eea148a78c111e9ac230d8a02a"
+        },
+        {
+          "path": "models/span_scorer_v2_20261021/split.json",
+          "bytes": 346950,
+          "sha256": "f8e89467a30823420014ecd25d046040b5dfbf4f22efe3c564f669d74b6414fc"
+        },
+        {
+          "path": "models/span_scorer_v2_20261021/fold0/scorer.pt",
+          "bytes": 265495435,
+          "sha256": "0df9476e56a14d2394e1ad49317530958638d6d4e11cbe8f35f1672e2aab944f"
+        },
+        {
+          "path": "models/span_scorer_v2_20261021/fold0/config.json",
+          "bytes": 579,
+          "sha256": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd"
+        },
+        {
+          "path": "models/span_scorer_v2_20261021/fold0/category_prior.json",
+          "bytes": 275,
+          "sha256": "1a8af696bc5387ba6fe84b804a56de8b5b67716dd82685d14313dc138b089684"
+        },
+        {
+          "path": "models/span_scorer_v2_20261021/tokenizer/tokenizer.json",
+          "bytes": 711396,
+          "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+        },
+        {
+          "path": "outputs/final_eval/main_gptoss_v1/compressed.csv",
+          "bytes": 4319213,
+          "sha256": "30bea97d554fcba62ba98b178a5f16dd6c497f66e1ee74825973a4036c7f9311"
+        }
+      ],
+      "api_attempts": 472,
+      "raw_cache_files": 472,
+      "unknown_usage_attempts": 0,
+      "estimated_cost_inr": 63.35856611000006,
+      "conservative_cost_inr": 99.91685000000005,
+      "hard_cap_inr": 500,
+      "reader_config": {
+        "model": "qwen-3.8-27b-fp8",
+        "temperature": 0,
+        "max_tokens": 8192,
+        "reasoning_effort": "low"
+      },
+      "note": "Provider-token estimate at catalog input/output rates, not reconciled invoice. Raw usage and every attempt retained."
+    },
+    "joint_case_repeats": [
+      {
+        "replicate": 1,
+        "arm": "original",
+        "status": "ok",
+        "correct": true,
+        "parse_status": "ok",
+        "query_hash": "3de266de42160343e85bca7908cf21e7a09a2d7df9ad338bfedc839da95ee37d"
+      },
+      {
+        "replicate": 1,
+        "arm": "delete_a",
+        "status": "ok",
+        "correct": true,
+        "parse_status": "ok",
+        "query_hash": "969a05fafec427f655c7c7c136692ae4b399209c6100d29c645321a6315fe2ca"
+      },
+      {
+        "replicate": 1,
+        "arm": "delete_b",
+        "status": "ok",
+        "correct": true,
+        "parse_status": "ok",
+        "query_hash": "cd390a819bcabe552224dd36477545a9f11d5077b09947511eda74147f1869ba"
+      },
+      {
+        "replicate": 1,
+        "arm": "delete_ab",
+        "status": "ok",
+        "correct": false,
+        "parse_status": "ok",
+        "query_hash": "62e866c012c720a2cf5daadd90421596ad882c17769292ff172a376cdfc4fc06"
+      },
+      {
+        "replicate": 2,
+        "arm": "original",
+        "status": "ok",
+        "correct": true,
+        "parse_status": "ok",
+        "query_hash": "5bf259f0d0fa37763e269d751f778ed499c2afbba408f4c49f0be5e0875185e6"
+      },
+      {
+        "replicate": 2,
+        "arm": "delete_a",
+        "status": "ok",
+        "correct": true,
+        "parse_status": "ok",
+        "query_hash": "3c15225fd7b09fb8a778f95b51ceff9833f79b2d06c0f0458d875dd4e6683c59"
+      },
+      {
+        "replicate": 2,
+        "arm": "delete_b",
+        "status": "ok",
+        "correct": true,
+        "parse_status": "ok",
+        "query_hash": "5f6cf8500f0dbae276b457588d91f93af2f1291837a4166cb644d999166baef7"
+      },
+      {
+        "replicate": 2,
+        "arm": "delete_ab",
+        "status": "ok",
+        "correct": false,
+        "parse_status": "ok",
+        "query_hash": "c1c97d7e1f14ca0546ea4810e7add89ff6fecde026e4d88a6e4597861c3596c8"
+      }
+    ]
+  },
+  "scope": "Development selector probes, four-arm joint deletions, and feature student; no established downstream gain. A sparse positive interaction is diagnostic, not a trained pair model. These families are exposed.",
+  "reproduction": "Archive includes exact prototype source, input snapshot, frozen compressions, all reader caches, usage ledger and REPRODUCE.txt. Restore all experiment files together; update the prototype ROOT to the checkout path on a different machine. Match versions/hashes in evidence_review.json and download the pinned v2 fold-0 reference. Paid replay must use the saved cache and ledger. Do not run a new live evaluation to reproduce saved scores."
+}

@@ -1,0 +1,15 @@
+method,ratio,n_planned,response_failures,parse_failures,budget_violations
+llmlingua2_budgeted,0.5,32,1,4,0
+llmlingua2_budgeted,0.75,32,0,0,0
+student_teacher_cf_atomic,0.5,32,1,6,0
+student_teacher_cf_atomic,0.75,32,0,0,0
+student_teacher_cf_word,0.5,32,0,6,0
+student_teacher_cf_word,0.75,32,0,0,0
+student_teacher_only_atomic,0.5,32,1,6,0
+student_teacher_only_atomic,0.75,32,0,0,0
+student_teacher_only_word,0.5,32,0,6,0
+student_teacher_only_word,0.75,32,0,0,0
+v2_grouped_hybrid,0.5,32,0,0,0
+v2_grouped_hybrid,0.75,32,0,1,0
+v2_grouped_signal,0.5,32,0,0,0
+v2_grouped_signal,0.75,32,0,1,0

@@ -1,0 +1,28 @@
+{
+  "policy": "word",
+  "scores": [
+    {
+      "policy": "atomic",
+      "correct": 42,
+      "conditions": 64
+    },
+    {
+      "policy": "word",
+      "correct": 44,
+      "conditions": 64
+    }
+  ],
+  "rule": "Choose shared policy by teacher-only full-cohort correct counts summed across declared ceilings; ties use config policy order. Apply the SAME policy to both arms.",
+  "checkpoints": {
+    "teacher_only": "ce04c3e2faed8297999af7c4d3471ab005f3c5486cb95d49d2ed883b5ee868e3",
+    "teacher_cf": "8238ed17c58a4c117092e8e0c2185d14454611f1f91df7d0b29d0a64cf3aef37"
+  },
+  "reader": "ccbcb13c570bb3ab8417c37f3abea8ba3f5eb0d58060fe088775fa689309648e",
+  "development_responses": "c6d27ec15b55e97bcc035d6af9d0b19a7d701c68387c7b780ffce8c4af35a00d",
+  "ratios": [
+    0.5,
+    0.75
+  ],
+  "decision_grader": "unique-final-v2",
+  "test_uids_hash": "99ef0ae95204927fb53b83f8e7d90fad1e98da073812c218821388f1eb23665e"
+}

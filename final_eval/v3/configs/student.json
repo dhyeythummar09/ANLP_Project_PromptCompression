@@ -1,0 +1,94 @@
+{
+  "project_root": ".",
+  "problems": "data/processed/team_v2_20261021/problems.csv",
+  "span_labels": "data/processed/team_v2_20261021/consensus_dataset.csv",
+  "teacher_cache": "data/compressed_prompts.csv",
+  "v2_model_dir": "models/span_scorer_v2_20261021",
+  "output_dir": "outputs/v3/student_01",
+  "exposure_files": [
+    "final_eval/v3/configs/prior_exposure_20261030.json"
+  ],
+  "tokenizer": "cl100k_base",
+  "spacy_model": "en_core_web_sm",
+  "ratios": [
+    0.5,
+    0.75
+  ],
+  "primary_ratio": 0.5,
+  "policies": [
+    "atomic",
+    "word"
+  ],
+  "bootstrap": 2000,
+  "split": {
+    "seed": 430,
+    "test_families": 64,
+    "dev_families": 32,
+    "validation_fraction": 0.15
+  },
+  "teacher": {
+    "mode": "cached",
+    "cache_method": "llmlingua2",
+    "ratio": 0.5,
+    "model": "microsoft/llmlingua-2-xlm-roberta-large-meetingbank",
+    "revision": "main"
+  },
+  "training": {
+    "encoder": "distilbert/distilbert-base-uncased",
+    "revision": "main",
+    "seed": 42,
+    "epochs": 4,
+    "batch_size": 8,
+    "learning_rate": 3e-05,
+    "weight_decay": 0.01,
+    "warmup_fraction": 0.1,
+    "aux_weight": 0.2,
+    "ranking_weight": 0.0,
+    "dropout": 0.1,
+    "max_length": 512,
+    "stride": 64,
+    "save_every_steps": 20,
+    "task_balanced": false,
+    "amp": true,
+    "device": "auto",
+    "require_cuda": true,
+    "cpu_threads": 2
+  },
+  "references": {
+    "llmlingua2": true,
+    "info_model": "distilgpt2",
+    "info_revision": "main"
+  },
+  "reader": {
+    "enabled": true,
+    "model": {
+      "backend": "hosted",
+      "provider": "openai-compatible",
+      "name": "qwen-3.8-27b-fp8",
+      "base_url": "https://models.jarvislabs.net/v1",
+      "api_key_env": "JARVISLABS_API_KEY",
+      "temperature": 0,
+      "reasoning_effort": "low",
+      "max_tokens": 8192,
+      "max_attempts": 2,
+      "sleep_seconds": 0.1,
+      "timeout": 120
+    },
+    "allowed_served_models": [
+      "qwen-3.8-27b-fp8"
+    ],
+    "key_file": "final_eval/jarvis.env",
+    "pilot_questions": 4,
+    "pilot_min_accuracy": 0.5,
+    "limit_inr": 500,
+    "guard_input_inr_per_million": 50,
+    "guard_output_inr_per_million": 350,
+    "quote_input_inr_per_million": 28.431,
+    "quote_output_inr_per_million": 222.709
+  },
+  "benchmark": {
+    "enabled": true,
+    "questions": 8,
+    "repeats": 2
+  }
+}

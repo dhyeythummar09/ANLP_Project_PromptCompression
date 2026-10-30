@@ -1,0 +1,8 @@
+{
+  "name": "microsoft/llmlingua-2-xlm-roberta-large-meetingbank",
+  "revision": "ebaba9b0e874dadd3003ffcff828e4397e568089",
+  "requested_teacher": {
+    "model": "microsoft/llmlingua-2-xlm-roberta-large-meetingbank",
+    "revision": "main"
+  }
+}

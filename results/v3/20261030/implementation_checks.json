@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-30",
+  "passed": true,
+  "source_after_bookkeeping": "ccfccd6cad64c398de812cc4d67866abb20a20e21c41ad5e002f0942cacdc4f0",
+  "unit_tests": {
+    "passed": 73,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "V3 neural fixtures, real tiny LLMLingua-2, return integrity, published exposure guard, shared spend/component/pipeline and Step6 regressions",
+    "log": "outputs/v3_checks/completed_return_tests_20261030.log",
+    "command": "python -B -m unittest final_eval.v3.tests.test_v3 final_eval.v3.tests.test_kaggle final_eval.v3.tests.test_return_audit final_eval.tests.test_jarvis_spend final_eval.tests.test_component_ablations final_eval.tests.test_research_pipeline final_eval.tests.test_followup_summary -q",
+    "environment_note": "Local ML environment plus isolated optional LLMLingua/Accelerate dependencies; all tests ran, none skipped. Full Kaggle environment is recorded separately."
+  },
+  "active_document_links_passed": true,
+  "python_syntax_passed": true,
+  "legacy_pipeline_files_unchanged": true,
+  "cli_inference": {
+    "passed": true,
+    "original_tokens": 16,
+    "compressed_tokens": 12,
+    "retention": 0.75,
+    "reader_calls": 0,
+    "checkpoint": "teacher_cf"
+  },
+  "future_exposure_guard": {
+    "passed": true,
+    "remaining_unexposed_families_in_current_problem_table": 9
+  },
+  "new_training": false,
+  "new_paid_calls": 0,
+  "committed": false,
+  "pushed": false,
+  "shareable_text_credential_scan_passed": true
+}

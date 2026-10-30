@@ -1,0 +1,146 @@
+{
+  "status": "completed empirical study; superiority objective not established",
+  "final_research_model": "teacher_cf/best.pt; preserve teacher_only as an experimental control",
+  "supplemental_checks": [
+    {
+      "ratio": 0.5,
+      "families": 64,
+      "cf_only_correct": 7,
+      "control_only_correct": 4,
+      "delta": 0.046875,
+      "ci_low": -0.046875,
+      "ci_high": 0.15625,
+      "supplemental_two_sided_exact_mcnemar_p": 0.548828125
+    },
+    {
+      "ratio": 0.75,
+      "families": 64,
+      "cf_only_correct": 2,
+      "control_only_correct": 0,
+      "delta": 0.03125,
+      "ci_low": 0.0,
+      "ci_high": 0.078125,
+      "supplemental_two_sided_exact_mcnemar_p": 0.5
+    }
+  ],
+  "supplemental_inference_scope": "Post-hoc diagnostic only; does not replace the frozen primary paired bootstrap interval. One family per observation; one training seed and one hosted reader.",
+  "historical_slides": {
+    "source": "outputs/planning_audit/Symbiote_MidEval.txt",
+    "pages": [
+      13,
+      14
+    ],
+    "status": "reported_only_not_reaudited",
+    "rows": [
+      [
+        "GSM8K",
+        "Full prompt",
+        98.4,
+        96.0
+      ],
+      [
+        "GSM8K",
+        "Hybrid",
+        37.5,
+        40.6
+      ],
+      [
+        "GSM8K",
+        "Scorer",
+        27.5,
+        33.3
+      ],
+      [
+        "GSM8K",
+        "Signal",
+        43.5,
+        43.3
+      ],
+      [
+        "GSM8K",
+        "Random",
+        2.8,
+        4.6
+      ],
+      [
+        "GSM-IC",
+        "Full prompt",
+        98.4,
+        98.4
+      ],
+      [
+        "GSM-IC",
+        "Hybrid",
+        31.5,
+        35.9
+      ],
+      [
+        "GSM-IC",
+        "Scorer",
+        16.8,
+        23.4
+      ],
+      [
+        "GSM-IC",
+        "Signal",
+        25.6,
+        35.9
+      ],
+      [
+        "GSM-IC",
+        "Random",
+        3.8,
+        3.1
+      ],
+      [
+        "BBH aggregate",
+        "Full prompt",
+        98.8,
+        97.8
+      ],
+      [
+        "BBH aggregate",
+        "Hybrid",
+        41.0,
+        19.9
+      ],
+      [
+        "BBH aggregate",
+        "Scorer",
+        33.5,
+        19.0
+      ],
+      [
+        "BBH aggregate",
+        "Signal",
+        43.0,
+        19.0
+      ],
+      [
+        "BBH aggregate",
+        "Random",
+        35.2,
+        15.2
+      ]
+    ]
+  },
+  "source_sha256": {
+    "outputs/planning_audit/Symbiote_MidEval.txt": "b7b3b5cdca396ad1d672824d58a0294695d1a48a160eaedeebbb0b49a864bbdd",
+    "results/followup/components_qwen/accuracy.csv": "9e4e720f0604691380155c098b16d0bf5c35170ecf771b4d9580eaf9909c5c9c",
+    "results/followup/old_vs_v2_qwen/summary.csv": "a7d3f32f41f32d1d79075919970374014a5137899fcf4550f1ae6bccc7d4e666",
+    "results/followup/summary/bonuses_contrasts.csv": "e2794a427617fef5fdc04c0949720d7a720a3cde318743c527d2692ccb19cbcd",
+    "results/followup/summary/mask_deletion_by_category.csv": "0796eb79393c0ea0629d9a084c0edf132799f17e5beaf7fb27dbf1b83c2ce3ee",
+    "results/followup/summary/reader_repeatability.csv": "cab5d5b9eba998d7b0e30f6c566aba50a5d71dddeb117abef3cacc0d8dbdd1d7",
+    "results/metadata/feature_report.json": "81eecbae0f18265f0303377aa0060508cc3120f143c4ece2649b740b51e0cb14",
+    "results/metadata/regrading.json": "a44baed4bccefdd87dedf3225deb3b3dc6ab5459388ac34fa676226b01fd189a",
+    "results/metadata/training.json": "b43f6a8d9ed5dd44c41064d3c879db3a67f13e2385fdf3108ca5eb731678fac0",
+    "results/tables/full_cohort/accuracy.csv": "fa2e90111cba5a2af51a09fd080d66083dcd6f430ac28451f84fd41824058ab4",
+    "results/tables/label_agreement/pairwise.csv": "a6bdd4b63e501e7ff53591318b780be7cb6c5d3741031c3e63e0c6e06b44e1d8",
+    "results/v3/20261030/metadata/models/teacher_cf/metadata.json": "395a2fb9084999051fd1f405cbfceb88505f5eb05d79792869d18727a71c6514",
+    "results/v3/20261030/metadata/models/teacher_only/metadata.json": "75a8cc8f8b42c2bdb48d16b7d4499ef82b3b1fe11723a78df513ec2c047ad00b",
+    "results/v3/20261030/per_question.csv": "36e2f19d25a8b8c8148a215c252f58a6f322fcc57f298ef521a7d9788ba54345",
+    "results/v3/20261030/test/accuracy.csv": "c37e0281add3d554c10282e237a1f98da621558651bdeaa3cde1f30e90b46317",
+    "results/v3/20261030/test/paired.csv": "34cf755e7df8d64c901eed47c3e1587c8a82d5118845bc6ee45a6c30127be63a"
+  },
+  "no_new_training_or_reader_calls": true
+}

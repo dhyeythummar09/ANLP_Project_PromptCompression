@@ -7,7 +7,7 @@ and writes a spans CSV that deletion-check can consume.
 
 Usage:
     cd /path/to/ANLP_Project_PromptCompression
-    python prepare_step5_spans.py \
+    python -m final_eval.prepare_step5_spans \
         --compressed compressed.csv \
         --output results/followup_v2/step5/spans_input.csv \
         [--dry-run]
@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 def main():

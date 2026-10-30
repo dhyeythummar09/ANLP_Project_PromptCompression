@@ -1,0 +1,11 @@
+claim,allowed_statement,qualification
+V3 improves over v2 on the paired cohort,27 vs17 correct at50%;55 vs49 at75%,"64 families, one Qwen reader, one seed; secondary comparisons exploratory"
+Criticality labels add value beyond teacher imitation,"Positive point estimate, benefit not established","Primary delta4.6875pp;95%CI[-4.6875,15.625]"
+V3 beats LLMLingua-2,"55 vs53 at75%,27 vs31 at50%",No overall superiority; different actual retention inside the same ceilings
+Retains90% accuracy,At75% retention preserved55/59 originally correct cases in this cohort,Overall accuracy55/64; no per-prompt or90% guarantee
+Faster compressor,T4 warm medians11.33ms versus47.90ms v2 and109.99ms budgetedLLMLingua-2,"8validation questions,2repeats; excludes model load/API; not universal throughput"
+Lower memory,Report observed allocation with process scope,GPU peaks include resident allocations; no isolated footprint claim
+Lower inference bill,Question token reduction and reported usage are measured,Completion tokens can offset prompt savings; no universal cost reduction or reconciled invoice
+No LLM calls for compression,Saved combined student compresses new prompts without counterfactual/reader calls,Model/tokenizer must be available; downstream evaluation still uses the reader
+Masking validates true necessity,112/116 operational mask/delete agreement in eligible Step5 cases,"Not proof of label correctness, joint sufficiency or model-independent necessity"
+New distillation algorithm,Criticality-supervised student is a controlled project extension,Generic distillation/token classification is existing work; no first-ever novelty claim

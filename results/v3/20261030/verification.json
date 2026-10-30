@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "manifest_files": 929,
+  "completed_stages": 12,
+  "source_at_execution": "aeafbad1589473a14bd8fa06b2b0554ce5bb777584eb69a291ebfc197d43a654",
+  "family_leakage": false,
+  "same_initialization": true,
+  "token_ceilings_verified": true,
+  "grades_recomputed": true,
+  "primary_ci_recomputed": true,
+  "logical_conditions": 1184,
+  "cache_entries": 865,
+  "tokens_with_reported_usage": {
+    "prompt_tokens": 109269,
+    "completion_tokens": 553050
+  },
+  "guard_accounted_inr": 201.9649499999999,
+  "known_usage_estimate_inr": 126.275839389,
+  "unknown_attempts": 1,
+  "actual_invoice_reconciled": false,
+  "new_api_calls": 0,
+  "new_training": false,
+  "resume_files_omitted": [
+    {
+      "path": "initialization/common_initial.pt",
+      "bytes": 265498619,
+      "sha256": "803d602fc526eb457293509d7ffa8820aa0b11f84265ab24c699fdf2ee384793"
+    },
+    {
+      "path": "models/teacher_cf/last.pt",
+      "bytes": 796516153,
+      "sha256": "f9abe8f41727d62bc84acde27f8441380a3c7adc60879398d35d1fca57701fa4"
+    },
+    {
+      "path": "models/teacher_only/last.pt",
+      "bytes": 796516153,
+      "sha256": "13273925d4a0f02bf43ea59083ec8a87730579a4294489016c28c06d34c1dead"
+    }
+  ],
+  "caution": "Absolute GPU peaks include any resident process allocations; do not interpret as isolated model footprints.",
+  "archive_sha256": "a4e17689f093190c3905b30346bc48d408e7596eef7aa697248b6fad929c611f"
+}

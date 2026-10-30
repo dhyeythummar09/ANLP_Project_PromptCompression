@@ -1,0 +1,105 @@
+{
+  "scope": "Saved-artifact replay is reproducible without new paid calls. Public Git tree contains code/compact evidence, not private inputs/weights/raw caches.",
+  "artifacts": {
+    "frozen_v3_input": {
+      "path": "outputs/handoffs/v3_20261030/symbiote_v3_kaggle.zip",
+      "bytes": 11805853,
+      "sha256": "b251304e9bcea66e023a6f2f35febe07252afbda936e68897b08eec40e9a68b5",
+      "git_ignored": true
+    },
+    "matching_frozen_notebook": {
+      "path": "outputs/handoffs/v3_20261030/Symbiote_V3_Run_All.ipynb",
+      "bytes": 6770,
+      "sha256": "a713ce10747f74e16d366bde87a6e04bee5a7def9564fbb835ef9f82e62595c7",
+      "git_ignored": true
+    },
+    "final_v3_return": {
+      "path": "outputs/imports/v3_20261030_completed/symbiote_v3_results.zip",
+      "bytes": 494360836,
+      "sha256": "a4e17689f093190c3905b30346bc48d408e7596eef7aa697248b6fad929c611f",
+      "git_ignored": true
+    },
+    "final_v3_status": {
+      "path": "outputs/imports/v3_20261030_completed/v3_status.json",
+      "bytes": 213,
+      "sha256": "85e55242d8e2a8b2c9317576f1799cd481c1e2789eed83d90fbd8723a228cda0",
+      "git_ignored": true
+    },
+    "exploratory_evidence": {
+      "path": "outputs/imports/exploratory_20261029/symbiote_v3_evidence_20261029.zip",
+      "bytes": 14265613,
+      "sha256": "9b971151112fe6aede79b6d589b52bc6faca9c518c65fdab4dde7527c0b0f731",
+      "git_ignored": true
+    },
+    "corrected_problems": {
+      "path": "data/processed/team_v2_20261021/problems.csv",
+      "bytes": 533143,
+      "sha256": "7f4cd1fd7c1b3348181c30dbc0958f18221bb714ff9df73475436aa9af6ba250",
+      "git_ignored": true
+    },
+    "corrected_spans": {
+      "path": "data/processed/team_v2_20261021/consensus_dataset.csv",
+      "bytes": 79555466,
+      "sha256": "cd3d43baac30091a82c08ae8d6161cab575571f846576e2ecd7c1531c4a0cee9",
+      "git_ignored": true
+    },
+    "cached_teacher_outputs": {
+      "path": "data/compressed_prompts.csv",
+      "bytes": 2525645,
+      "sha256": "b50889d9d52636ca1a3a6d8afc8e5133ff27b8eea148a78c111e9ac230d8a02a",
+      "git_ignored": true
+    }
+  },
+  "final_model": {
+    "path": "outputs/imports/v3_20261030_completed/run/models/teacher_cf/best.pt",
+    "sha256": "8238ed17c58a4c117092e8e0c2185d14454611f1f91df7d0b29d0a64cf3aef37",
+    "loader": "python -m final_eval.v3 infer --run-dir outputs/imports/v3_20261030_completed/run --ratio .75 --text <question>",
+    "hf_published": false
+  },
+  "historical_public_models": {
+    "repo_id": "Pranav-Sriv/reasoning-critical-span-scorer-v2",
+    "url": "https://huggingface.co/Pranav-Sriv/reasoning-critical-span-scorer-v2",
+    "revision": "70cc329f10ef6415e152c0bcdcef8894f8dc0d69",
+    "private": false,
+    "verified_files": 67,
+    "checkpoint_files": [
+      "fold0/scorer.pt",
+      "fold1/scorer.pt",
+      "fold2/scorer.pt",
+      "fold3/scorer.pt",
+      "fold4/scorer.pt"
+    ],
+    "missing_files": [],
+    "mismatches": [],
+    "extra_remote_files": [
+      ".gitattributes"
+    ],
+    "verified_without_downloading_weights": true,
+    "complete": true,
+    "legacy": {
+      "repo_id": "flashstep/reasoning-critical-span-scorer",
+      "url": "https://huggingface.co/flashstep/reasoning-critical-span-scorer",
+      "revision": "c24d8ce9ef2cfbdc7b11185958dee5810327e432",
+      "private": false
+    },
+    "scope": "Remote metadata hashes match the prepared release. Does not execute model inference."
+  },
+  "training_replay": {
+    "input": "frozen_v3_input",
+    "notebook": "matching_frozen_notebook",
+    "source": "exact source inside frozen input and returned implementation/; use this snapshot for the executed protocol",
+    "environment_metadata": "results/v3/20261030/metadata/runtime/environment.json",
+    "gpu": "one Kaggle T4",
+    "api": "Original live downstream replay needs the configured Jarvis reader and secret; hosted answers/prices/availability can change. Use saved raw answers for exact reported scores.",
+    "optimizer_resume": "Full Kaggle output last.pt files required; not included in downloadable return",
+    "current_source_note": "CLI/packaging cleanup removes unexecuted pair assay and redundant docs; six model-producing v3 modules and executed shared/v2 implementation unchanged. Current exposure guard prevents rebranding an exposed cohort as fresh."
+  },
+  "audit_command": "python -B -m final_eval.v3.audit_return --archive outputs/imports/v3_20261030_completed/symbiote_v3_results.zip --status outputs/imports/v3_20261030_completed/v3_status.json",
+  "historical_methods": {
+    "original": "src/ and unchanged config.py; historical public release/source",
+    "corrected_v2": "final_eval/scorer, preparation, compressor, analysis; notebooks 02-03; data/processed/team_v2_20261021 and models/span_scorer_v2_20261021",
+    "followups": "notebook 04; final_eval.compare_downstream, component_ablations, followup_reader, followup_summary, benchmark_runtime, prepare_step5_spans",
+    "exploratory": "Retained evidence archive includes exact executed prototype source, inputs, cache, ledger, REPRODUCE.txt"
+  },
+  "private_transfer_note": "Keep listed archives, data/, models/ and original raw outputs when moving machines; these are intentionally excluded from Git. HF v1/v2 are recorded references, not a download source for the new v3 architecture."
+}

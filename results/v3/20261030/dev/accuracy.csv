@@ -1,0 +1,15 @@
+method,ratio,n,families,correct,accuracy,ci_low,ci_high,actual_ratio,conditional_preservation,original_correct_n,cohort
+llmlingua2_budgeted,0.5,32,32,18,0.5625,0.375,0.71875,0.45938423767682796,0.5625,32,all planned questions; technical/missing/parse failures wrong
+llmlingua2_budgeted,0.75,32,32,26,0.8125,0.68671875,0.9375,0.7314708408782755,0.8125,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_cf_atomic,0.5,32,32,13,0.40625,0.25,0.5625,0.49584357062185624,0.40625,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_cf_atomic,0.75,32,32,29,0.90625,0.78125,1.0,0.7446545034634081,0.90625,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_cf_word,0.5,32,32,14,0.4375,0.28125,0.59375,0.49584357062185624,0.4375,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_cf_word,0.75,32,32,29,0.90625,0.78125,1.0,0.7446545034634081,0.90625,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_only_atomic,0.5,32,32,13,0.40625,0.25,0.59375,0.49584357062185624,0.40625,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_only_atomic,0.75,32,32,29,0.90625,0.78125,1.0,0.7446545034634081,0.90625,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_only_word,0.5,32,32,15,0.46875,0.3125,0.625,0.49584357062185624,0.46875,32,all planned questions; technical/missing/parse failures wrong
+student_teacher_only_word,0.75,32,32,29,0.90625,0.78125,1.0,0.7446545034634081,0.90625,32,all planned questions; technical/missing/parse failures wrong
+v2_grouped_hybrid,0.5,32,32,13,0.40625,0.25,0.5625,0.49584357062185624,0.40625,32,all planned questions; technical/missing/parse failures wrong
+v2_grouped_hybrid,0.75,32,32,18,0.5625,0.375,0.71875,0.7446545034634082,0.5625,32,all planned questions; technical/missing/parse failures wrong
+v2_grouped_signal,0.5,32,32,12,0.375,0.21875,0.53125,0.49584357062185624,0.375,32,all planned questions; technical/missing/parse failures wrong
+v2_grouped_signal,0.75,32,32,18,0.5625,0.40625,0.71875,0.7446545034634082,0.5625,32,all planned questions; technical/missing/parse failures wrong

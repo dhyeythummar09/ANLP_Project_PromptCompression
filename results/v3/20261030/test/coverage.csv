@@ -1,0 +1,11 @@
+method,ratio,n_planned,response_failures,parse_failures,budget_violations
+llmlingua2_budgeted,0.5,64,1,7,0
+llmlingua2_budgeted,0.75,64,0,1,0
+student_teacher_cf_word,0.5,64,0,8,0
+student_teacher_cf_word,0.75,64,0,0,0
+student_teacher_only_word,0.5,64,0,9,0
+student_teacher_only_word,0.75,64,0,0,0
+v2_grouped_hybrid,0.5,64,0,2,0
+v2_grouped_hybrid,0.75,64,0,0,0
+v2_grouped_signal,0.5,64,0,3,0
+v2_grouped_signal,0.75,64,0,0,0

@@ -1,0 +1,31 @@
+{
+  "info": {
+    "name": "distilgpt2",
+    "revision": "2290a62682d06624634c1f46a6ad5be0f47f38aa"
+  },
+  "v2_files": {
+    "split.json": "f8e89467a30823420014ecd25d046040b5dfbf4f22efe3c564f669d74b6414fc",
+    "tokenizer/tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+    "tokenizer/tokenizer_config.json": "e731cd915bceb73664cccc7245eca2d99bae2ba1ed539f07fce6fba9fe450968",
+    "fold0/scorer.pt": "0df9476e56a14d2394e1ad49317530958638d6d4e11cbe8f35f1672e2aab944f",
+    "fold0/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold0/category_prior.json": "1a8af696bc5387ba6fe84b804a56de8b5b67716dd82685d14313dc138b089684",
+    "fold1/scorer.pt": "700e52c374e96f1df6335a4bcf68c894e54b0bd1b9d2c06c5d22d8fa5279a9c6",
+    "fold1/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold1/category_prior.json": "533df750e4207967d72dc5e9163b1150181713612e33b650c833a6698f815946",
+    "fold2/scorer.pt": "46b7113c6c6a2381c9bbc7a2c15544aab22c34bd5cc30134a836f040d796ca7e",
+    "fold2/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold2/category_prior.json": "1ff8ad0a8331a2b2df3cd9f3669633e7eab4a3cff7495d49f407db0fd011510a",
+    "fold3/scorer.pt": "85ce04d318dd492c44c76aec2eda69b7fb997d7607f7469d771fa518f171eac2",
+    "fold3/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold3/category_prior.json": "0c5e82fabb585d33f614bd592f8adc48bdde6bde3e0d98a7b535d9a3049a938f",
+    "fold4/scorer.pt": "993d15ecdf218cfb658bec8e9600d4fdda4a63298b235876dc5a0ac17013c771",
+    "fold4/config.json": "21ac0588d3990c70617bb4758cf758a2a9a21ceda52994a698aa2e6a80efe2bd",
+    "fold4/category_prior.json": "ec9d6d6c7231b7156d6d5b21c37059f6286254c5560507e9a29d526eddf40c55"
+  },
+  "requested_info": {
+    "llmlingua2": true,
+    "info_model": "distilgpt2",
+    "info_revision": "main"
+  }
+}

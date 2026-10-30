@@ -1,0 +1,8 @@
+{
+  "name": "distilbert/distilbert-base-uncased",
+  "revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+  "seed": 42,
+  "weights_sha256": "803d602fc526eb457293509d7ffa8820aa0b11f84265ab24c699fdf2ee384793",
+  "parameters": 66364418,
+  "note": "Both arms start from these identical encoder AND keep-head weights; no v2 warm start."
+}

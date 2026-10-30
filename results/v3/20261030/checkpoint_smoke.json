@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "arm": "teacher_only",
+      "parameters": 66364418,
+      "finite_parameters": true,
+      "finite_predictions": true,
+      "cpu_compression_matches_saved_gpu_output": true,
+      "checked_uid": "bbh_date_understanding|bbh_date_understanding_44"
+    },
+    {
+      "arm": "teacher_cf",
+      "parameters": 66364418,
+      "finite_parameters": true,
+      "finite_predictions": true,
+      "cpu_compression_matches_saved_gpu_output": true,
+      "checked_uid": "bbh_date_understanding|bbh_date_understanding_44"
+    }
+  ],
+  "scope": "Two real trained checkpoints loaded offline on CPU; one development prompt each. No retraining or new API calls; not a full independent GPU rerun."
+}

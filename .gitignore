@@ -44,6 +44,8 @@ Thumbs.db
 /stage_b*_review_*.zip
 /llmlingua_repair_review_*.zip
 /symbiote_main_review_*.zip
+/symbiote_v3_results*.zip
+/v3_status*.json
 
 
 # --- Kaggle upload payloads (rebuilt from the repo + local models/data; multi-GB) ---

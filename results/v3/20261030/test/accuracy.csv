@@ -1,0 +1,11 @@
+method,ratio,n,families,correct,accuracy,ci_low,ci_high,actual_ratio,conditional_preservation,original_correct_n,cohort
+llmlingua2_budgeted,0.5,64,64,31,0.484375,0.375,0.609375,0.4670734809870977,0.5254237288135594,59,all planned questions; technical/missing/parse failures wrong
+llmlingua2_budgeted,0.75,64,64,53,0.828125,0.734375,0.921875,0.7268539650133479,0.8983050847457628,59,all planned questions; technical/missing/parse failures wrong
+student_teacher_cf_word,0.5,64,64,27,0.421875,0.296875,0.5625,0.49436680519254717,0.4576271186440678,59,all planned questions; technical/missing/parse failures wrong
+student_teacher_cf_word,0.75,64,64,55,0.859375,0.765625,0.9375,0.742539735533425,0.9322033898305084,59,all planned questions; technical/missing/parse failures wrong
+student_teacher_only_word,0.5,64,64,24,0.375,0.25,0.5,0.49436680519254717,0.4067796610169492,59,all planned questions; technical/missing/parse failures wrong
+student_teacher_only_word,0.75,64,64,53,0.828125,0.734375,0.921875,0.742539735533425,0.8983050847457628,59,all planned questions; technical/missing/parse failures wrong
+v2_grouped_hybrid,0.5,64,64,17,0.265625,0.15625,0.375,0.49436680519254717,0.288135593220339,59,all planned questions; technical/missing/parse failures wrong
+v2_grouped_hybrid,0.75,64,64,49,0.765625,0.65625,0.859375,0.7425397355334249,0.7966101694915254,59,all planned questions; technical/missing/parse failures wrong
+v2_grouped_signal,0.5,64,64,15,0.234375,0.125,0.34375,0.49436680519254717,0.2542372881355932,59,all planned questions; technical/missing/parse failures wrong
+v2_grouped_signal,0.75,64,64,49,0.765625,0.65625,0.859375,0.7425397355334249,0.7966101694915254,59,all planned questions; technical/missing/parse failures wrong

@@ -1,0 +1,127 @@
+file,role,purpose
+config.py,Historical original/mid-evaluation,Central config for the whole dataset-creation pipeline.
+final_eval/Start-JarvisCalibration.ps1,Historical V2/follow-up workflow,Windows orchestration helper
+final_eval/Start-JarvisCheck.ps1,Historical V2/follow-up workflow,Windows orchestration helper
+final_eval/Start-JarvisMain.ps1,Historical V2/follow-up workflow,Windows orchestration helper
+final_eval/Start-JarvisPilot.ps1,Historical V2/follow-up workflow,Windows orchestration helper
+final_eval/Start-JarvisReaderCheck.ps1,Historical V2/follow-up workflow,Windows orchestration helper
+final_eval/Start-QwenCapCheck.ps1,Historical V2/follow-up workflow,Windows orchestration helper
+final_eval/__init__.py,Historical V2/follow-up workflow,Separate final-evaluation work; submitted src/ code is preserved.
+final_eval/analysis/__init__.py,Historical V2/follow-up workflow,Offline analyses of saved experiment artifacts; no model/API generation.
+final_eval/analysis/agreement.py,Historical V2/follow-up workflow,"Pairwise agreement on common valid model/span occurrences, without new calls."
+final_eval/analysis/audit.py,Historical V2/follow-up workflow,"Verify the recorded final study and regenerate tables offline, without models/APIs."
+final_eval/analysis/feature_baseline.py,Historical V2/follow-up workflow,CPU-only soft-target ridge baseline on the scorer's exact saved partitions.
+final_eval/analysis/publish.py,Historical V2/follow-up workflow,"Copy verified, small report exhibits into a new shareable results directory."
+final_eval/analysis/results.py,Historical V2/follow-up workflow,"Generate offline figures, retention prediction checks, and a claims ledger."
+final_eval/analysis/strict_results.py,Historical V2/follow-up workflow,Full-cohort end-to-end accuracy: retain provider failures as incorrect.
+final_eval/batch.py,Historical V2/follow-up workflow,"Run compression methods in separate processes, then merge and audit outputs."
+final_eval/benchmark_runtime.py,Historical V2/follow-up workflow,Controlled runtime/memory benchmark for our compressor (NEXT_STEPS step 6).
+final_eval/build_kaggle_main.py,Historical V2/follow-up workflow,Build the credential-free main transfer and fresh-kernel notebook locally.
+final_eval/compare_checkpoints.py,Historical V2/follow-up workflow,Prepare a controlled historical-checkpoint versus v2 comparison.
+final_eval/compare_downstream.py,Historical V2/follow-up workflow,Paired historical-checkpoint versus v2 downstream comparison (NEXT_STEPS step 2).
+final_eval/component_ablations.py,Historical V2/follow-up workflow,Scorer-only and signal-only component ablations (NEXT_STEPS step 3).
+final_eval/compressor/__init__.py,Shared V2 implementation / V3 helpers,Separate final-evaluation work; submitted src/ code is preserved.
+final_eval/compressor/budget.py,Shared V2 implementation / V3 helpers,Source-preserving selection with exact FINAL-string budget checks.
+final_eval/compressor/compress.py,Shared V2 implementation / V3 helpers,Versioned whole-question compression; no model/API execution during dry runs.
+final_eval/compressor/evaluate.py,Shared V2 implementation / V3 helpers,"Resumable target evaluation and paired, family-clustered reporting."
+final_eval/compressor/metrics.py,Shared V2 implementation / V3 helpers,No-new-answer-call diagnostics with occurrence-aware retention bounds.
+final_eval/compressor/retention.py,Shared V2 implementation / V3 helpers,Occurrence-aware retention; uncertain black-box alignments expose bounds.
+final_eval/followup_reader.py,Historical V2/follow-up workflow,Shared plumbing for the follow-up hosted-reader runs (NEXT_STEPS steps 2-9).
+final_eval/followup_summary.py,Historical V2/follow-up workflow,Step 6 of NEXT_STEPS: paired summary of the Qwen follow-up runs (steps 2-5).
+final_eval/handoff.py,Historical V2/follow-up workflow,"Environment inventory, pilot checks, and a local results ZIP (never uploads)."
+final_eval/inference/__init__.py,Shared V2 implementation / V3 helpers,Lazy local and hosted generation backends.
+final_eval/inference/client.py,Shared V2 implementation / V3 helpers,Provider-configured generation. No hidden model aliases or credential fallback.
+final_eval/jarvis_api.py,Historical V2/follow-up workflow,"Small hosted-API access checks. No torch, model weights or GPU required."
+final_eval/jarvis_calibrate.py,Historical V2/follow-up workflow,"Bounded, user-run DeepSeek settings calibration using saved pilot cases."
+final_eval/jarvis_main.py,Historical V2/follow-up workflow,User-run hosted main evaluation of the verified main compression return.
+final_eval/jarvis_pilot.py,Historical V2/follow-up workflow,"User-run target pilot: saved prompts and hosted API only, no GPU imports."
+final_eval/jarvis_qwen_cap.py,Historical V2/follow-up workflow,User-run three-case Qwen output-cap check; no automatic pilot/main launch.
+final_eval/jarvis_reader_check.py,Historical V2/follow-up workflow,"User-run, six-case GPT-OSS fallback check; no full pilot or GPU work."
+final_eval/jarvis_spend.py,Shared V2 implementation / V3 helpers,"Conservative, persistent token-cost allowance for a user-run hosted stage."
+final_eval/kaggle_main.py,Historical V2/follow-up workflow,Fresh-process Kaggle main compression setup/run/export. No target API calls.
+final_eval/kaggle_stage_c_bootstrap.py,Historical V2/follow-up workflow,"Install a verified Stage C transfer from a Kaggle dataset, using only stdlib."
+final_eval/model_release.py,Historical V2/follow-up workflow,Prepare a verified local Hugging Face release; never authenticates or uploads.
+final_eval/preparation/__init__.py,Shared V2 implementation / V3 helpers,"Validated data preparation, separate from model/GPU dependencies."
+final_eval/preparation/cohort.py,Shared V2 implementation / V3 helpers,"Freeze a dataset-balanced scorer-compatible cohort, keeping families intact."
+final_eval/preparation/merge_compressions.py,Shared V2 implementation / V3 helpers,Merge explicit method-stage outputs after running GPU-heavy baselines separately.
+final_eval/preparation/prepare.py,Shared V2 implementation / V3 helpers,"Explicit, non-destructive team-shard import and response regrading."
+final_eval/preparation/recover_gsmic.py,Shared V2 implementation / V3 helpers,"Recover clean GSM-IC questions from the exact source JSON, without API calls."
+final_eval/preparation/regrade_evaluation.py,Shared V2 implementation / V3 helpers,Regrade legacy raw evaluation responses without new model calls.
+final_eval/preparation/schema.py,Shared V2 implementation / V3 helpers,Normalize legacy tables without guessing missing model or family identities.
+final_eval/prepare_step5_spans.py,Historical V2/follow-up workflow,Prepare the input CSV for Step 5 (mask vs deletion assay).
+final_eval/repair_llmlingua.py,Historical V2/follow-up workflow,"One Kaggle repair run: native whole-question LLMLingua, validate, merge, export."
+final_eval/scorer/__init__.py,Shared V2 implementation / V3 helpers,Separate final-evaluation work; submitted src/ code is preserved.
+final_eval/scorer/data.py,Shared V2 implementation / V3 helpers,Scorer target construction without importing PyTorch or loading weights.
+final_eval/scorer/hf_artifact.py,Shared V2 implementation / V3 helpers,Inspect or explicitly download the public legacy custom checkpoint bundle.
+final_eval/scorer/train_scorer.py,Shared V2 implementation / V3 helpers,Train DistilBERT span sensitivity scores with base-family-safe folds.
+final_eval/settings.py,Shared V2 implementation / V3 helpers,"Defaults for optional final evaluation, independent of legacy config.py."
+final_eval/spans/__init__.py,Shared V2 implementation / V3 helpers,Shared span definitions for training-data extraction and deployment.
+final_eval/spans/extract.py,Shared V2 implementation / V3 helpers,"Shared versioned extraction, with lazy spaCy loading and deterministic controls."
+final_eval/tests/fixtures/llmlingua_022_window.py,Offline tests,llmlingua 022 window
+final_eval/tests/test_cli_pipeline.py,Offline tests,A complete small pipeline with mocked generation and a fixture tokenizer.
+final_eval/tests/test_compare_checkpoints.py,Offline tests,test compare checkpoints
+final_eval/tests/test_compare_downstream.py,Offline tests,test compare downstream
+final_eval/tests/test_component_ablations.py,Offline tests,test component ablations
+final_eval/tests/test_followup_summary.py,Offline tests,test followup summary
+final_eval/tests/test_handoff_analysis.py,Offline tests,Offline analysis and execution gates; all inputs and generations are fabricated.
+final_eval/tests/test_jarvis_api.py,Offline tests,Offline checks for the bounded hosted-access helper; no real credentials.
+final_eval/tests/test_jarvis_calibrate.py,Offline tests,"Offline HTTP integration tests. No keys, model weights or network access."
+final_eval/tests/test_jarvis_main.py,Offline tests,"Offline main-stage wiring, cohort guard and cumulative request limit."
+final_eval/tests/test_jarvis_pilot.py,Offline tests,"Offline integration checks for hosted pilot, caching and its safety boundary."
+final_eval/tests/test_jarvis_qwen_cap.py,Offline tests,Offline Qwen cap check with synthetic pilot files and mocked HTTP.
+final_eval/tests/test_jarvis_qwen_main.py,Offline tests,"Qwen main wiring, frozen pilot guard and accounting; no network/real keys."
+final_eval/tests/test_jarvis_reader_check.py,Offline tests,Bounded fallback check integration; synthetic data and mocked HTTP only.
+final_eval/tests/test_jarvis_spend.py,Offline tests,"Cost allowance, uncertain retry charges and interruption persistence."
+final_eval/tests/test_kaggle_main.py,Offline tests,Fresh-kernel transfer and main orchestration tests; no GPU/model/API calls.
+final_eval/tests/test_llmlingua_repair.py,Offline tests,Offline orchestration checks; no model/provider execution.
+final_eval/tests/test_llmlingua_window.py,Offline tests,"Regress real upstream window/cache bugs with synthetic losses, no weights."
+final_eval/tests/test_model_release.py,Offline tests,"Portable release loader matches the trained architecture, using tiny fake weights."
+final_eval/tests/test_qwen_pilot8192.py,Offline tests,"Uniform8192 pilot guard, isolation and resume with synthetic/mock data."
+final_eval/tests/test_research_pipeline.py,Offline tests,Regression checks use fabricated data; never download weights or call APIs.
+final_eval/tests/test_saved_artifact_audit.py,Offline tests,"Detect corrupt evidence without models, providers or real study artifacts."
+final_eval/tests/test_strict_results.py,Offline tests,Provider failures must stay in the denominator without becoming successes.
+final_eval/utils/__init__.py,Shared V2 implementation / V3 helpers,Separate final-evaluation work; submitted src/ code is preserved.
+final_eval/utils/answer_matching.py,Shared V2 implementation / V3 helpers,"Conservative, task-specific grading of a unique final answer."
+final_eval/utils/artifacts.py,Shared V2 implementation / V3 helpers,Dependency-free helpers for reproducible experiment artifacts.
+final_eval/utils/profiling.py,Shared V2 implementation / V3 helpers,"CLI process measurements, including cold loads; no synthetic latency claims."
+final_eval/utils/statistics.py,Shared V2 implementation / V3 helpers,Paired inference with base-question cluster resampling.
+final_eval/v3/__init__.py,V3 experiment or infrastructure,Versioned v3 student experiments. Historical collection/evaluation is unchanged.
+final_eval/v3/__main__.py,Active V3 model,python -m final_eval.v3 --help
+final_eval/v3/artifacts.py,V3 experiment or infrastructure,"Small, explicit artifacts and process locks for independently resumable stages."
+final_eval/v3/audit_return.py,V3 experiment or infrastructure,Verify a returned Kaggle run and publish small exhibits; no training/API calls.
+final_eval/v3/benchmark.py,V3 experiment or infrastructure,"Controlled warm-compressor timing, separate from API/network latency."
+final_eval/v3/build_kaggle.py,V3 experiment or infrastructure,"Build one small, credential-free Kaggle input and its matching Run All notebook."
+final_eval/v3/compression.py,Active V3 model,"Dense selection and matched historical/external references, with exact budgets."
+final_eval/v3/data.py,Active V3 model,"Family partitions, strict source validation, and auditable single-budget labels."
+final_eval/v3/kaggle_bootstrap.py,V3 experiment or infrastructure,Verified Kaggle transfer installation. Uses only the Python standard library.
+final_eval/v3/kaggle_runner.py,V3 experiment or infrastructure,Kaggle setup/run/export in fresh child processes; notebook imports stay minimal.
+final_eval/v3/model.py,Active V3 model,Contextual word retention with an independently supervised span head.
+final_eval/v3/pipeline.py,V3 experiment or infrastructure,Staged execution with a predeclared test transition; no manual retuning loop.
+final_eval/v3/reader.py,V3 experiment or infrastructure,"One serial, process-locked cache and spending ledger across all v3 stages."
+final_eval/v3/report.py,V3 experiment or infrastructure,"Full-cohort estimates, fixed development selection, and explicit uncertainty."
+final_eval/v3/tests/__init__.py,Offline tests,"Offline protocol, real tiny-network, accounting, and integration checks."
+final_eval/v3/tests/test_kaggle.py,Offline tests,"Transfer integrity, recovery and a real tiny LLMLingua-2 adapter smoke."
+final_eval/v3/tests/test_return_audit.py,Offline tests,Reject corrupted artifacts and leaked family metadata before publication.
+final_eval/v3/tests/test_v3.py,Offline tests,test v3
+final_eval/v3/train.py,Active V3 model,"Matched initialization, two controlled objectives, and restartable optimizer steps."
+notebooks/01_eda_counterfactuals.ipynb,Historical executed notebook,Notebook workflow
+notebooks/02_train_scorer.ipynb,Historical executed notebook,Notebook workflow
+notebooks/03_main_compression.ipynb,Historical executed notebook,Notebook workflow
+notebooks/04_followup_old_v2_compression_kaggle.ipynb,Historical executed notebook,Notebook workflow
+notebooks/05_v3_students_kaggle.ipynb,Active V3 notebook,Notebook workflow
+src/__init__.py,Historical original/mid-evaluation,Package marker
+src/compressor/__init__.py,Historical original/mid-evaluation,Package marker
+src/compressor/compress.py,Historical original/mid-evaluation,"STEP 8 (revised): Budgeted compression with our scorer + baselines, all on the same problems."
+src/compressor/evaluate.py,Historical original/mid-evaluation,STEP 9 (revised): Evaluate every compressor on a target LLM and produce the paper's tables.
+src/compressor/metrics.py,Historical original/mid-evaluation,"Intrinsic (reference-free, no-LLM-call) metrics for compressed prompts."
+src/dataset_creation/01_load_data.py,Historical original/mid-evaluation,"STEP 1: Load GSM8K, GSM-IC, and the 4 BBH subtasks, sample down to the"
+src/dataset_creation/02_extract_spans.py,Historical original/mid-evaluation,"STEP 2: For each problem, find candidate spans in our target categories,"
+src/dataset_creation/03_counterfactual_labeling.py,Historical original/mid-evaluation,"STEP 3: The core loop. For every candidate span, evaluate the ORIGINAL"
+src/dataset_creation/04_build_consensus.py,Historical original/mid-evaluation,STEP 4: Aggregate per-model labels (one row per span per model) into a
+src/dataset_creation/__init__.py,Historical original/mid-evaluation,Package marker
+src/dataset_creation/test_models.py,Historical original/mid-evaluation,test_models.py -- smoke test for model API keys and reasoning correctness.
+src/scorer/__init__.py,Historical original/mid-evaluation,Package marker
+src/scorer/train_scorer.py,Historical original/mid-evaluation,STEP 7 (revised): Train a DistilBERT span scorer to predict counterfactual criticality.
+src/utils/__init__.py,Historical original/mid-evaluation,Package marker
+src/utils/answer_matching.py,Historical original/mid-evaluation,"Shared logic for turning a raw model response into a clean answer, and for"
+src/utils/api_clients.py,Historical original/mid-evaluation,"Thin wrappers around LLM providers (Groq, Google Gemini, Motapi, HuggingFace, Cerebras, OpenRouter),"
