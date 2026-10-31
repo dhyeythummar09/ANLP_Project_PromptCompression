@@ -1,0 +1,63 @@
+{
+  "reliable_spans": 13966,
+  "questions": 912,
+  "families": 778,
+  "unique_model_votes": 38603,
+  "valid_votes": 37979,
+  "original_wrong_votes": 624,
+  "consensus_rebuilt_from_raw_votes": true,
+  "saved_category_prevalence_recomputed": true,
+  "agreements_recomputed": [
+    {
+      "a": "glm-5.3-flash",
+      "b": "openai/gpt-oss-120b",
+      "n": 10765,
+      "agreement": 0.8214584300975383,
+      "kappa": 0.48705454409867266,
+      "positive_agreement": 0.5980761187787537,
+      "negative_agreement": 0.8852400286601385
+    },
+    {
+      "a": "glm-5.3-flash",
+      "b": "qwen3.7-max",
+      "n": 9907,
+      "agreement": 0.8447562329665893,
+      "kappa": 0.5780746414955614,
+      "positive_agreement": 0.6802494802494803,
+      "negative_agreement": 0.8974940015995735
+    },
+    {
+      "a": "openai/gpt-oss-120b",
+      "b": "qwen3.7-max",
+      "n": 12868,
+      "agreement": 0.8500155424308362,
+      "kappa": 0.5300866516760049,
+      "positive_agreement": 0.6223091976516634,
+      "negative_agreement": 0.906428779210705
+    }
+  ],
+  "shared_prediction_metrics_recomputed": {
+    "neural": {
+      "roc_auc": 0.9073852458438002,
+      "pr_auc": 0.7133462045726257,
+      "f1_critical": 0.6344040574809806,
+      "brier_soft": 0.06059265619256563
+    },
+    "feature_ridge": {
+      "roc_auc": 0.8217106748708686,
+      "pr_auc": 0.5487050662487533,
+      "f1_critical": 0.5422242731887402,
+      "brier_soft": 0.08617464427380662
+    },
+    "category_prior": {
+      "roc_auc": 0.7514971668689492,
+      "pr_auc": 0.35738339346536563,
+      "f1_critical": 0.0,
+      "brier_soft": 0.09975566746349375
+    }
+  },
+  "valid_critical_votes": 8271,
+  "valid_votes_with_invalid_perturbed_final": 4385,
+  "critical_votes_with_invalid_perturbed_final": 4385,
+  "scope": "Recovered consensus-filtered observations; descriptive category comparisons are not causal and categories can overlap. A failed final-answer parse is an operational failure, not a verified semantic error. No training, inference or API calls."
+}

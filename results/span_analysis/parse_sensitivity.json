@@ -1,0 +1,10 @@
+{
+  "eligible_votes": 37979,
+  "unparseable_perturbations": 4385,
+  "operational_critical_votes": 8271,
+  "parseable_semantically_wrong_votes_by_current_grader": 3886,
+  "reliable_spans_full": 13966,
+  "reliable_spans_with_at_least_two_parseable_perturbations": 12296,
+  "majority_label_changes_on_common_spans": 275,
+  "scope": "Post-hoc descriptive sensitivity using saved votes only. Excludes unparseable perturbations, changes coverage, and is not manual semantic certification or a replacement for trained targets."
+}

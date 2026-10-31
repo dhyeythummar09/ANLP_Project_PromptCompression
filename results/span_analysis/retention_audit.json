@@ -1,0 +1,15 @@
+{
+  "conditions_recomputed": 320,
+  "methods": [
+    "grouped_hybrid",
+    "llmlingua2_budgeted"
+  ],
+  "ratio": 0.5,
+  "source": "saved original/compressed texts, kept source ranges when available, recovered reliable unique spans",
+  "retention_counts_match_saved": true,
+  "critical_occurrences_per_method": 380,
+  "hybrid_kept": 302,
+  "llmlingua2_kept_lower": 267,
+  "llmlingua2_kept_upper": 270,
+  "scope": "Same 160-question v2 cohort; conservative bounds for ambiguous black-box alignments. No accuracy inference follows from retention alone."
+}

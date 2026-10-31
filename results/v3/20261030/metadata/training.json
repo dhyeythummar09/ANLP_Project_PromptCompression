@@ -1,0 +1,71 @@
+{
+  "scope": "Saved training metadata from the completed 30 October run; not a retraining.",
+  "arms": {
+    "teacher_cf": {
+      "arm": "teacher_cf",
+      "aux_weight": 0.2,
+      "ranking_weight": 0.0,
+      "initial_sha256": "803d602fc526eb457293509d7ffa8820aa0b11f84265ab24c699fdf2ee384793",
+      "best_weights_sha256": "8238ed17c58a4c117092e8e0c2185d14454611f1f91df7d0b29d0a64cf3aef37",
+      "checkpoint_selection": "minimum teacher BCE on validation families, same criterion for both arms",
+      "best_epoch": 2,
+      "validation_bce": 0.21119728755383266,
+      "history": [
+        {
+          "epoch": 1,
+          "teacher_validation_bce": 0.255165329291707
+        },
+        {
+          "epoch": 2,
+          "teacher_validation_bce": 0.21119728755383266
+        },
+        {
+          "epoch": 3,
+          "teacher_validation_bce": 0.21151295871961684
+        },
+        {
+          "epoch": 4,
+          "teacher_validation_bce": 0.2126591063681103
+        }
+      ],
+      "seconds_this_invocation": 80.727373489,
+      "peak_cuda_bytes": 3605575168,
+      "training_questions": 656,
+      "validation_questions": 168,
+      "optimization_scope": "training families only; checkpoint selection uses teacher validation loss, not test answers"
+    },
+    "teacher_only": {
+      "arm": "teacher_only",
+      "aux_weight": 0.0,
+      "ranking_weight": 0.0,
+      "initial_sha256": "803d602fc526eb457293509d7ffa8820aa0b11f84265ab24c699fdf2ee384793",
+      "best_weights_sha256": "ce04c3e2faed8297999af7c4d3471ab005f3c5486cb95d49d2ed883b5ee868e3",
+      "checkpoint_selection": "minimum teacher BCE on validation families, same criterion for both arms",
+      "best_epoch": 3,
+      "validation_bce": 0.20984172874263354,
+      "history": [
+        {
+          "epoch": 1,
+          "teacher_validation_bce": 0.25309394264505025
+        },
+        {
+          "epoch": 2,
+          "teacher_validation_bce": 0.21049146957340695
+        },
+        {
+          "epoch": 3,
+          "teacher_validation_bce": 0.20984172874263354
+        },
+        {
+          "epoch": 4,
+          "teacher_validation_bce": 0.21311710384630023
+        }
+      ],
+      "seconds_this_invocation": 53.8967064819999,
+      "peak_cuda_bytes": 3605465600,
+      "training_questions": 656,
+      "validation_questions": 168,
+      "optimization_scope": "training families only; checkpoint selection uses teacher validation loss, not test answers"
+    }
+  }
+}

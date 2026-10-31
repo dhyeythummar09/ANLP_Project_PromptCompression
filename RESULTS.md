@@ -10,6 +10,13 @@ for this publication. Earlier v2 scores, provenance and compute records remain u
 `results/tables/`, `results/metadata/` and `results/profiles/`; relevant findings
 are consolidated below.
 
+This file covers the completed studies available in this checkout, including the
+pre-scorer analysis added to the final report. Detailed tables remain linked
+below. Mid-evaluation figures are explicitly historical, not independently
+regraded here. Teammate-reported Nemotron results await their raw export and are
+excluded from the verified final claims. Compute amounts remain scoped estimates,
+not a reconciled invoice.
+
 ## V3: one Qwen reader, 64 held-out families
 
 Original accuracy: **59/64 = 92.19%**. Each family contributes one question.
@@ -48,7 +55,7 @@ retention is not identical. Failures count wrong rather than being dropped.
 | [verification.json](results/v3/20261030/verification.json) | File/source/split/budget/grading/primary-interval audit |
 | [checkpoint_smoke.json](results/v3/20261030/checkpoint_smoke.json) | Both real models load on CPU and reproduce one saved development compression |
 | [metadata/benchmark.json](results/v3/20261030/metadata/benchmark.json) | Full warm-compressor timings on 8 validation questions, 2 repeats, T4 |
-| [metadata/models/](results/v3/20261030/metadata/models/) | Actual training histories and checkpoint hashes |
+| [metadata/training.json](results/v3/20261030/metadata/training.json) | Both actual training histories, selected epochs and checkpoint hashes |
 | [claims.csv](results/v3/20261030/claims.csv) | Allowed claims and qualifications |
 | [figures/](results/v3/20261030/figures/) | PNG and PDF versions of the two figures |
 
@@ -92,6 +99,7 @@ The defensible answer to each research question is:
 
 | Question | Evidence | Conclusion |
 | --- | --- | --- |
+| Which span types show operational criticality? | Number mean 46.72%, negation 26.86%, random control 17.35%; task/category tables below | Sensitivity varies by category and task; no universally safe deletion categories established |
 | Can we learn the recovered counterfactual span labels? | Neural AUC .9074 versus ridge .8217 and category prior .7515 on the same held-out occurrences | Yes, the operational sensitivity labels are predictable beyond simple features |
 | Is criticality identical across labelers? | Pairwise agreement 82.1-85.0%, kappa .487-.578 on common eligible observations | Agreement is substantial but imperfect; universal/model-independent necessity is not established |
 | Does correcting the original scorer produce a downstream accuracy gain? | Controlled historical-v2 paired intervals all include zero | No gain established; correctness fixes do not imply accuracy gains |
@@ -156,6 +164,90 @@ separately trained scorer. V3's two checkpoints are genuinely separate trainings
 The grouped cheap reference uses category priors as well as signal/rules and
 is not identical to the standalone signal configuration.
 
+## Pre-scorer analysis: which spans are sensitive?
+
+The recovered table contains 38,603 deduplicated model/span votes. Excluding
+624 original-answer failures leaves 37,979 eligible votes. Reaggregation
+reproduces 13,966 reliable targets, each with at least two eligible readers,
+covering 912 of the 1,000 questions and 778 of the 848 canonical families.
+This describes recovered consensus-filtered observations, not a complete census
+of every attempted labeling call.
+
+For each span, the soft target is the fraction of eligible readers failing
+after masking. The following means average those fractions across spans;
+they are not rates of unanimously necessary spans.
+
+| Category | Reliable spans | Mean soft criticality | Strict-majority critical |
+| --- | ---: | ---: | ---: |
+| Number | 3,137 | 46.72% | 42.84% |
+| Negation | 358 | 26.86% | 22.35% |
+| Distractor context | 177 | 22.13% | 18.08% |
+| Entity | 3,283 | 20.36% | 16.69% |
+| Random control | 2,726 | 17.35% | 13.72% |
+| Comparison/conditional | 411 | 7.70% | 3.65% |
+| Action verb | 3,874 | 6.28% | 2.71% |
+
+Numbers and negation have higher pooled scores than random controls; several
+other curated categories do not. A low score for masking one verb does not
+establish safety when removing many verbs together. Task mix, span lengths and
+extraction coverage differ. Random controls were sampled at 1-3 tokens, rather
+than individually length-matched to every curated span.
+
+Task-specific means also differ. All entries below are mean soft criticality;
+`n` is the category's span count, not the task's total questions.
+
+| Task | Number mean (n) | Negation mean (n) | Entity mean (n) |
+| --- | ---: | ---: | ---: |
+| GSM8K | 69.47% (790) | 5.56% (6) | 7.29% (345) |
+| GSM-IC | 63.89% (714) | 20.59% (34) | 9.29% (608) |
+| BBH date understanding | 23.28% (582) | 0.00% (6) | 6.29% (236) |
+| BBH formal fallacies | 5.15% (97) | 38.36% (219) | 28.61% (596) |
+| BBH logical deduction | 19.22% (359) | No recovered spans | 12.31% (134) |
+| BBH navigation | 35.49% (371) | 5.20% (93) | No recovered spans |
+| BBH object counting | 98.88% (104) | No recovered spans | No recovered spans |
+| BBH object tracking | 13.89% (120) | No recovered spans | 28.21% (1,364) |
+
+Small categories, including the six GSM8K/date negation spans, give weak support
+for generalization. The 98.88% counting value concerns number spans, not all
+words. These are descriptive task/category comparisons, not causal category
+effects or evidence that a particular adaptive policy is optimal.
+
+Sources: [category table](results/span_analysis/criticality_by_category.csv),
+[all task/category rows](results/span_analysis/criticality_by_task_category.csv),
+[label reconstruction audit](results/span_analysis/span_audit.json).
+
+## Cross-reader agreement and target reliability
+
+| Reader pair | Common eligible spans | Overall agreement | Positive agreement | Negative agreement | Kappa |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| GLM / GPT-OSS | 10,765 | 82.15% | 59.81% | 88.52% | .487 |
+| GLM / Qwen | 9,907 | 84.48% | 68.02% | 89.75% | .578 |
+| GPT-OSS / Qwen | 12,868 | 85.00% | 62.23% | 90.64% | .530 |
+
+Overall agreement conceals lower agreement on critical observations. Among the
+reliable spans, 9,342 have zero critical votes, 1,628 are unanimously critical
+and 2,996 have mixed votes. There are 4,179 spans with two eligible readers and
+9,787 with three. A two-reader tie has soft target .5 and is not critical under
+the saved strict-majority rule (> .5).
+
+Of 8,271 eligible critical model votes, 4,385 (53.0%) have unresolved/invalid
+perturbed final answers. This is not 53% of unique span labels and does not show
+that all those observations are false positives: examples include abstention,
+truncation and invalid formatting. The target measures operational failure
+under the declared grader, not independently certified semantic necessity.
+
+An offline sensitivity analysis discarding unresolved perturbations retains
+12,296 spans with at least two remaining votes. On that common subset, 275
+strict-majority labels change. Number and random-control mean scores become
+27.37% and 9.90%. This changes coverage and is a post-hoc diagnostic; it did
+not replace the labels used for training.
+
+Sources: [full pairwise agreement](results/tables/label_agreement/pairwise.csv),
+[vote distribution](results/span_analysis/criticality_vote_distribution.csv),
+[per-reader rates](results/span_analysis/criticality_by_labeler.csv),
+[parse sensitivity counts](results/span_analysis/parse_sensitivity.json),
+[parseable-only category table](results/span_analysis/criticality_parseable_only_sensitivity.csv).
+
 ## Criticality label prediction: common held-out occurrences
 
 All rows below use the same 13,855 held-out span occurrences, five family-safe
@@ -211,6 +303,27 @@ Sources: [full accuracy](results/tables/full_cohort/accuracy.csv),
 [earlier study verification](results/verification.json).
 Report figure: [earlier two-reader comparison](results/figures/two_reader_accuracy.png).
 
+## Critical-span retention versus downstream accuracy
+
+On the same 160-question corrected-v2 cohort at the .50 ceiling:
+
+| Method | Critical spans retained | Recall | GPT-OSS accuracy | Qwen accuracy |
+| --- | ---: | ---: | ---: | ---: |
+| V2 grouped hybrid | 302/380 | 79.47% | 36.88% | 46.25% |
+| LLMLingua-2 | 267-270/380 | 70.26-71.05% | 60.00% | 69.38% |
+
+LLMLingua-2 also retains fewer tokens on average (.4689 versus approximately
+.4956). Its retention interval bounds repeated-token alignment ambiguity; it
+is not a confidence interval. Both methods cover all 160 questions here.
+The hybrid preserves more labeled-critical spans but answers fewer questions
+correctly. Thus higher recall of these individual-span targets is insufficient
+evidence of a better compression policy; it does not show that the spans are
+useless or isolate the sole cause of the downstream gap.
+
+Sources: [retention audit](results/span_analysis/retention_audit.json),
+[saved critical-span retention](results/span_analysis/saved_critical_span_retention.csv),
+[category retention and coverage](results/span_analysis/saved_category_retention.csv).
+
 ## Historical checkpoint versus corrected v2: controlled follow-up
 
 Same Qwen reader and compression implementation on an exposure-safe common
@@ -252,7 +365,7 @@ and [pooled paired results](results/followup/summary/paired_results.csv).
 | Bonus implementation audit | Number/entity bonus maximum .4; question bonus maximum .2; combined via maximum | The screenshot's additive .8-1.0 bonus claim is inaccurate |
 | Single-span mask versus deletion | 112/116 eligible cases agree (96.55%); 3 mask-only correct, 1 delete-only correct | Local operational agreement; not proof of joint-deletion safety or intrinsic necessity |
 | Reader repeatability | 99.32% correctness agreement on 731 identical-prompt successful matches across the recorded runs | Hosted answers can vary even at temperature zero |
-| Small joint-deletion/selector pilots | Sparse joint-only failures; tested simple selectors/feature student did not establish a gain | Insufficient evidence to train/claim a reliable pair reranker; no such model is in final v3 |
+| Small joint-deletion/selector pilots | One repeatable joint-only failure among 14 structured pairs with safe single deletions; zero among 15 controls; simple selectors/feature student did not establish a gain | Small exploratory evidence, insufficient to claim a reliable pair reranker; no such model is in final v3 |
 
 Sources: [bonus contrasts](results/followup/summary/bonuses_contrasts.csv),
 [mask/delete categories](results/followup/summary/mask_deletion_by_category.csv),
@@ -362,7 +475,8 @@ causal sufficiency, SOTA or accuracy guarantee is established.
 | Cross-labeler agreement, scorer ablations, mask/delete check, runtime | Completed within the recorded scopes; no joint-sufficiency guarantee |
 | Final criticality-supervised dense student and matched control | Trained and tested; added criticality benefit not established |
 | Broader logical taxonomy, full sentence pruning, language/domain expansion, learned pair policy or RL | Partial/deferred stretch work; do not claim completed |
-| Final report and slides | ACL-format report source/PDF prepared under `report/`; slides remain |
+| Final report and slides | ACL report: 7 main pages + 1 references + 1 appendix; corrected 18-slide deck in `outputs/submission_20261031/`; original PDF preserved |
+| Nemotron reader addition | Teammate-reported; raw responses/settings unavailable in this checkout, so excluded from verified report/main deck |
 | Actual grant billing justification | Estimates/ledgers ready; provider invoice reconciliation still needed |
 | One final v3 HF release | [Published combined student](https://huggingface.co/Pranav-Sriv/symbiote-v3-prompt-compressor/tree/6cd33f01c38910bbd1688a07f958d8bb801a3029); all 18 files hash-verified |
 
